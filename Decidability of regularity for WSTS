@@ -1,0 +1,107 @@
+\documentclass[a4paper,final]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{array}
+\usepackage[french]{algorithm2e}
+\usepackage{stmaryrd}
+
+\usepackage{geometry}
+\geometry{hmargin=3cm,vmargin=2cm}
+
+%\theoremstyle{definition}
+%\newtheorem{Question}{Question}
+
+\let\oldphi\phi
+\let\phi\varphi
+\let\oldepsilon\epsilon
+\let\epsilon\varepsilon
+\let\leq\leqslant
+\let\geq\geqslant
+
+%================================================================
+
+\newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
+\newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
+\newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
+\let\union\cup
+\let\inter\cap
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+
+\newcommand{\petri}{réseau de Petri\xspace}
+\newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
+\newcommand{\lang}{\ensuremath{\mathcal{L}}}
+
+%================================================================
+
+\title{Décidabilité de la rationnalité pour les WSTS}
+\author{Lucas \textsc{Bueri}}
+\date{Stage M2 - 2021}
+
+\begin{document}
+
+\maketitle
+
+%================================================================
+
+\section{Réseaux de Petri}
+
+Un \petri $N = (P,T,B,F,M_0)$ est la donnée de
+\begin{itemize}
+    \item un ensemble fini $P$ de $r$ emplacements,
+    \item un ensemble fini $T$ de $s$ transitions,
+    \item une fonction de coût $B: P\times T\to\N$,
+    \item une fonction de production $F: P\times T\to\N$,
+    \item un marquage initial $M_0: P\to\N$.
+\end{itemize}
+
+Les configurations sont les marquages $M: P\to\N$, aussi considérés comme les valeurs possibles de $r$ compteurs (vecteur de $\N^r$).
+On peut déclencher la transition $t$ à partir du marquage $M$ si et seulement si $M(p)\geq B(p,t)$ pour tout $p\in P$ (noté $M\geq B(\cdot,t)$).
+
+On obtient alors un nouveau marquage $M'$ défini par $M':=M+D(\cdot,t)$ où $D\defeq F-B$. 
+$B$ représente donc le coût de la transition (le nombre de jetons requis et consommés dans chaque emplacement), et $F$ représente sa production (les jetons créés lors du déclenchement).
+
+On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
+On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$) aux séquences de transitions, ou mots $w\in T^\ast$.
+
+On s'intéresse aux exécutions possibles de par deux manières différentes :
+\begin{enumerate}
+    \item D'abord en regardant le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ des séquences de déclenchement autorisés depuis le marquage initial, éventuellement en n'autorisant que quelques marquages finals, ou en omettant certaines transitions au travers d'un étiquetage des transitions.
+    \item Ensuite en regardant les marquages accessibles depuis $M_0$ en utilisant une séquence quelconque de transitions.
+\end{enumerate}
+
+Pour cela, on considère le graphe de couverture $CG(N)$ du \petri.
+
+%----------------------------------------------------------------
+
+\section{Graphe de couverture}
+
+On ajoute une valeur $\omega$, symbolisant une quantité aussi grande que nécessaire de jetons dans un emplacement, et on pose $\N_\omega\defeq \N\union\os{\omega}$.
+
+On commence alors par étendre la notion de marquage aux $Q:P\to\N_\omega$ ordonnés par $\leq$ en posant $Q\leq Q'$ lorsque pour tout $p\in P$, $Q'(p)=\omega$, ou $Q(p)$ et $Q'(p)$ sont deux entiers vérifiant $Q(p)\leq Q'(p)$.
+Les transitions s'appliquent également à ces nouveaux marquages :
+la transition $t$ se déclenche sur $Q$ uniquement lorsque $Q\geq B(\cdot,t)$, et aboutit au marquage $Q'$ définit par $Q':=Q+D(\cdot,t)$ où $D=F-B$ et où le $+$ est étendu à $\N_\omega$ en posant $\omega+\omega=\omega+n=n+\omega=\omega$.
+
+On donne une représentation graphique des exécutions possibles.
+Les noeuds ou sommets sont étiquetés par des marquages de $\N_\omega^r$, et les arêtes par des transitions de $T$.
+
+On commence par définir l'arbre de couverture $CT(N)$ en partant du marquage initial $r_0:M_0$ comme racine, et on construit l'arbre par induction structurelle.
+Pour chaque noeud de l'arbre $s$ associé à un marquage $Q:P\to\N_\omega$ :
+\begin{itemize}
+    \item Si $s$ est précédé par un noeud $r:Q'$ étiqueté par le même marquage $Q'=Q$, alors $s$ est une feuille.
+    Nul besoin d'indiquer l'action des transitions sur $r$ puisque cela a déjà été fait sur $s$.
+    \item Si $s$ est précédé par un noeud $r:Q'$ vérifiant $Q'>Q$, alors on remplace $Q$ par $\tilde{Q}$ pour l'étiquette de $s$ en posant $\tilde{Q}(p):=Q(p)$ pour les $p\in P$ tels que $Q(p)=Q'(p)$, et $\tilde{Q}(p)=\omega$ si $Q(p)>Q'(p)$.
+\end{itemize}
+
+%================================================================
+
+\end{document}
