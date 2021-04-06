@@ -10,6 +10,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
+\usepackage{dsfont}
 \usepackage{array}
 \usepackage[french]{algorithm2e}
 \usepackage{stmaryrd}
@@ -36,10 +37,18 @@
 \let\inter\cap
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Nomega}{\ensuremath{\mathbb{N}_\omega}}
+\newcommand{\indicatrice}[1]{\ensuremath{\mathds{1}_{#1}}}
 
 \newcommand{\petri}{réseau de Petri\xspace}
 \newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
 \newcommand{\lang}{\ensuremath{\mathcal{L}}}
+\newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
+\newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\ensaction}{\ensuremath{\mathbf{A}}}
+\newcommand{\reach}[1]{\ensuremath{\mathit{Reach}(#1)}}
 
 %================================================================
 
@@ -73,17 +82,20 @@ $B$ représente donc le coût de la transition (le nombre de jetons requis et co
 On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
 On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$) aux séquences de transitions, ou mots $w\in T^\ast$.
 
-On s'intéresse aux exécutions possibles de par deux manières différentes :
+On s'intéresse aux exécutions possibles au travers de deux manières différentes :
 \begin{enumerate}
     \item D'abord en regardant le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ des séquences de déclenchement autorisés depuis le marquage initial, éventuellement en n'autorisant que quelques marquages finals, ou en omettant certaines transitions au travers d'un étiquetage des transitions.
     \item Ensuite en regardant les marquages accessibles depuis $M_0$ en utilisant une séquence quelconque de transitions.
 \end{enumerate}
 
-Pour cela, on considère le graphe de couverture $CG(N)$ du \petri.
+Pour cela, on considèrera le graphe de couverture $CG(N)$ du \petri.
+
+Enfin, on définit la notion de rationnalité qui va nous intéresser sur un \petri :
+On dit qu'un \petri $N$ est \emph{rationnel} lorsque le langage $\lang(N)$ des séquences de déclenchement autorisés est un langage rationnel sur l'alphabet $T$.
 
 %----------------------------------------------------------------
 
-\section{Graphe de couverture}
+\section{Graphe de couverture (pour les \petri)}
 
 On ajoute une valeur $\omega$, symbolisant une quantité aussi grande que nécessaire de jetons dans un emplacement, et on pose $\N_\omega\defeq \N\union\os{\omega}$.
 
@@ -94,12 +106,81 @@ la transition $t$ se déclenche sur $Q$ uniquement lorsque $Q\geq B(\cdot,t)$, e
 On donne une représentation graphique des exécutions possibles.
 Les noeuds ou sommets sont étiquetés par des marquages de $\N_\omega^r$, et les arêtes par des transitions de $T$.
 
-On commence par définir l'arbre de couverture $CT(N)$ en partant du marquage initial $r_0:M_0$ comme racine, et on construit l'arbre par induction structurelle.
-Pour chaque noeud de l'arbre $s$ associé à un marquage $Q:P\to\N_\omega$ :
+Le graphe de couverture est alors obtenu en indiquant les voisins (ou fils) de chaque sommet du graphe (associé à un marquage), et ce par induction structurelle : 
+On part d'un unique sommet $r_0:M_0$ associé au marquage initial $M_0\in \N_\omega^P$.
+Pour chaque noeud $s:Q$ associé à $Q:P\to\N_\omega$, on fait partir autant d'arêtes que de transitions de $T$ qui peuvent se déclencher sur $Q$.
+Le sommet d'arrivée de l'arête associée à une transition $t$ est déterminé ainsi :
 \begin{itemize}
-    \item Si $s$ est précédé par un noeud $r:Q'$ étiqueté par le même marquage $Q'=Q$, alors $s$ est une feuille.
-    Nul besoin d'indiquer l'action des transitions sur $r$ puisque cela a déjà été fait sur $s$.
-    \item Si $s$ est précédé par un noeud $r:Q'$ vérifiant $Q'>Q$, alors on remplace $Q$ par $\tilde{Q}$ pour l'étiquette de $s$ en posant $\tilde{Q}(p):=Q(p)$ pour les $p\in P$ tels que $Q(p)=Q'(p)$, et $\tilde{Q}(p)=\omega$ si $Q(p)>Q'(p)$.
+    \item Si $\fire{Q}{t}Q'$ (déclencher $t$ aboutit au marquage $Q':P\to\N_\omega$) et qu'il existe un sommet déjà existant $s':Q'$ associé au marquage $Q'$, alors on crée une arête étiquetée par $t$ de $s:Q$ vers $s':Q'$ ;
+    \item Si $\fire{Q}{t}Q'$ et qu'il existe déjà un sommet $s'':Q''$ qui soit un antécédent de $s$ (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $s''$ à $s$) avec $Q'>Q''$, alors on crée un nouveau sommet $s':\widetilde{Q'}$ et une arête de $s:Q$ vers $s':\widetilde{Q'}$ étiquetée par $t$, 
+    où $\widetilde{Q'}:P\to\N_\omega$ est le marquage défini par $\widetilde{Q'}(p):=Q'(p)$ pour les $p\in P$ tels que $Q'(p)=Q''(p)$, et $\widetilde{Q'}(p)=\omega$ si $Q'(p)>Q''(p)$ ;
+    \item Si $Q'$ n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':Q'$ et une arête de $s$ à $s'$ étiquetée par $t$.
+\end{itemize}
+
+%----------------------------------------------------------------
+
+\section{VAS}
+
+Un \emph{système d'addition de vecteurs} (VAS) de dimension $d\in\N$ est la donnée d'un ensemble fini $\ensaction$ d'\emph{actions} $\action{a}$ de $\Z^d$.
+Sémantiquement, un VAS donne un système de transitions dont les configurations sont les vecteurs de $\N^d$ (à coordonnées positives).
+On a alors une transition entre $\vect{u}$ et $\vect{v}\in\N^d$ étiquetée par l'action $\action{a}\in\ensaction$ lorsque $\vect{u} + \action{a} = \vect{v}$, où l'addition agit composante par composante.
+
+De manière équivalente, on dira que l'action $\action{a}\in\ensaction$ peut se déclencher sur la configuration $\vect{u}\in \N^d$ lorsque $\vect{u} + \action{a} \leq \vect{0}$,
+et son déclenchement aboutit à la configuration $\vect{v} := \vect{u} + \action{a}$ à travers la transition $(\vect{u},\action{a},\vect{v})\in \N^d\times \ensaction\times \N^d$.
+On notera $\vect{u}\trans{\action{a}}{} \vect{v}$ lorsqu'un tel déclenchement est possible.
+
+Lorsqu'une séquence d'actions $\sigma\in\ensaction^\ast$ permet d'aller de $\vect{u}$ à $\vect{v}$ par la séquence de transition $\vect{u}= \vect{u}_0\trans{\action{a_1}}{} \vect{u_1}\trans{\action{a_2}}{} \dots\trans{\action{a_k}}{} \vect{u_k}=\vect{v}$
+(où $\vect{u_0},\dots,\vect{u_k} \in\N^d$, $\sigma=\action{a_1}\cdots \action{a_k}$ et $\vect{u_{i-1}}+\action{a_i}= \vect{u_i}$ pour tout $1\leq i\leq k$),
+on dit que $\sigma$ se déclenche sur $\vect{u}$, et qu'on a une exécution $\rho :\vect{u}\trans{\sigma}{} \vect{v}$.
+
+On obtient dans ce cas $\vect{u}+\sum^k_{i=1} \action{a_i} = \vect{v}$ (mais la réciproque est fausse, l'égalité n'induit pas toujours une telle exécution).
+
+Deux aspects complémentaires vont nous intéresser :
+\begin{enumerate}
+    \item D'abord, regarder le langage $\lang(\ensaction)\defeq \set{\action{a}\in \ensaction^\ast} {\exists \vect{u}\in\N^d, \vect{u_0}\trans{\action{a}}{}\vect{u}}$ des séquences d'actions autorisés depuis une configuration initiale $\vect{u_0}$, éventuellement en n'autorisant que certaines configurations finales (ou en autorisant des transitions supplémentaires non-étiquetés par une action).
+    \item Ensuite en regardant les configurations accessibles depuis une configuration initiale $\vect{u_0}$, en utilisant une séquence quelconque de transitions successives.
+\end{enumerate}
+
+Enfin, on dit qu'un VAS $\ensaction$ est \emph{rationnel} lorsque le langage $\lang(\ensaction)$ des séquences d'actions autorisés est un langage rationnel sur $\ensaction^\ast$.
+
+%----------------------------------------------------------------
+
+\section{Graphe de couverture (pour les VAS)}
+
+On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
+Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
+
+Le \emph{graphe de converture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $\ensaction$.
+Il est obtenu en partant d'un sommet initial $s_0:\vect{u_0}$ étiqueté par la configuration initiale $\vect{u_0}\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
+
+Pour chaque noeud $s:\vect{u}$ associé à la configuration $\vect{u}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $\action{a}\in \ensaction$ qui peuvent se déclencher sur $\vect{u}$.
+Le sommet d'arrivée de l'arête associée à une action $\action{a}$ est déterminé ainsi :
+\begin{itemize}
+    \item Si $\vect{u}\trans{\action{a}}{} \vect{v}$ (déclencher $\action{a}$ aboutit à la configuration $\vect{v} := \vect{u} + \action{a}$) et qu'il existe un sommet déjà existant $r:\vect{v}$ associé à cette configuration, alors on crée une arête étiquetée par $\action{a}$ de $s:\vect{u}$ vers $r:\vect{v}$ ;
+    \item Si $\vect{u}\trans{\action{a}}{} \vect{v}$ et qu'il existe un ancêtre $r:\vect{v'}$ de $s$  (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $r$ à $s$) avec $\vect{v}>\vect{v'}$, alors on crée un nouveau sommet $s':\vect{\tilde{v}}$ et une arête de $s:\vect{u}$ vers $s':\vect{\tilde{v}}$ étiquetée par $\action{a}$, 
+    où $\vect{\tilde{v}}\in \Nomega^d$ est la configuration de coordonnées $\vect{\tilde{v}}(i):=\vect{v}(i)$ pour les $1\leq i\leq d$ tels que $\vect{v}(i)=\vect{v'}(i)$, et $\vect{\tilde{v}}(i):=\omega$ si $\vect{v}(i)>\vect{v'}(i)$ ;
+    \item Si la configuration $\vect{v}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{v}$ et une arête de $s$ à $s'$ étiquetée par $\action{a}$.
+\end{itemize}
+
+%----------------------------------------------------------------
+
+\section{Bornes}
+
+Détaillons maintenant plusieurs propriétés de bornes sur les coordonnées des vecteurs configurations.
+On regarde $\os{1,\dots,d}$ l'ensemble des indices des vecteurs codant les configurations d'un VAS $\ensaction$.
+On peut voir ces coordonnées comme des emplacements accueillant un certain nombre de jetons, qui sont ajoutés ou retirés lors du déclenchement d'une action (lien avec les réseaux de Petri).
+
+Soit $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices d'un VAS $\ensaction$, et $\vect{u}$ une configuration de départ donnée.
+On dira que
+\begin{itemize}
+    \item $I$ est \emph{borné} pour $\vect{u}\in \Nomega^d$ lorsqu'il existe toujours une coordonnée d'indice dans $I$ qui soit bornée pour toute configuration accessible depuis $\vect{u}$ dans le VAS $\ensaction$ :
+    $$\exists k\in\N, \forall \vect{v}\in\reach{\vect{u}}, \exists i\in I, \vect{v}(i)\leq k$$
+    
+    \item $I$ est \emph{uniformément borné} pour $\vect{u}\in \Nomega^d$ lorsque toutes les coordonnées d'indice dans $I$ sont bornées pour toute configuration accessible depuis $\vect{u}$ :
+    $$\exists k\in\N, \forall \vect{v}\in\reach{\vect{u}}, \forall i\in I, \vect{v}(i)\leq k$$
+    
+    \item $I$ est \emph{borné inférieurement} pour $\vect{u}\in \Nomega^d$ lorsqu'on a une borne sur la diminution d'une coordonnée de toute configuration accessible depuis $\vect{u}$, même en augmentant la valeur initiale sur ces coordonnées :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{v}\in\reach{\vect{u} + n\cdot\indicatrice{I}}, \exists i\in I, \vect{v}(i)\geq \vect{u}(i)+n-k$$
 \end{itemize}
 
 %================================================================
