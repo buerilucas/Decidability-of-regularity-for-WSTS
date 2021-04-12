@@ -178,8 +178,11 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 Une manière équivalente de formuler cette caractérisation serait
 $$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall \vect{y}\in\conf{A,\vect{x}}, \quad
 \vect{y}\geq \vect{x} -\vect{k}$$
-où $\vect{k} = (k,k,...,k)\in\N^d$.
+%	\alain{pourquoi demande-t-on que $\vect{x}\in\conf{S}$ et pas seulement $\vect{x}\in \N^d$ ?}
 
+\alain{pourrait aussi s'écrire avec des fleches: $ \exists k\in\N, \forall \vect{x,y}\in \N^d$ si $\vect{x_0}\trans{*}{} \vect{x} \trans{*}{} \vect{y}$ alors $\vect{y}\geq \vect{x} -\vect{k}$}
+
+où $\vect{k} = (k,k,...,k)\in\N^d$.
 \textbf{Méthode de Valk et Vidal-Naquet :}
 
 On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
