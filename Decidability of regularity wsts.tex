@@ -14,12 +14,18 @@
 \usepackage{array}
 \usepackage[french]{algorithm2e}
 \usepackage{stmaryrd}
+\usepackage[normalem]{ulem}
 
 \usepackage{geometry}
 \geometry{hmargin=3cm,vmargin=2cm}
 
-%\theoremstyle{definition}
-%\newtheorem{Question}{Question}
+\theoremstyle{definition}
+\newtheorem{Question}{Question}
+\newtheorem{Definition}{Définition}
+\newtheorem{Theorem}{Théorème}
+\newtheorem{Proposition}{Proposition}
+\newtheorem{Lemma}{Lemme}
+\newtheorem{Property}{Propriété}
 
 \let\oldphi\phi
 \let\phi\varphi
@@ -29,6 +35,11 @@
 \let\geq\geqslant
 
 %================================================================
+
+\newcommand{\alain}[1]{\textcolor{blue}{#1}}
+\newcommand{\lucas}[1]{\textcolor{purple}{#1}}
+\newcommand{\rayer}[1]{\sout{\textcolor{red}{#1}}}
+
 
 \newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
 \newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
@@ -47,8 +58,12 @@
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
-\newcommand{\ensaction}{\ensuremath{\mathbf{A}}}
-\newcommand{\reach}[1]{\ensuremath{\mathit{Reach}(#1)}}
+\newcommand{\conf}[1]{\ensuremath{\mathcal{R}(#1)}}
+\newcommand{\rel}{\ensuremath{E}}
+\newcommand{\ssi}{\ensuremath{\text{ ssi }}}
+\newcommand{\equivaut}{\ensuremath{\Leftrightarrow}}
+\newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
+\newcommand{\valeur}[1]{\ensuremath{\overline{#1}}}
 
 %================================================================
 
@@ -66,15 +81,16 @@
 
 Un \petri $N = (P,T,B,F,M_0)$ est la donnée de
 \begin{itemize}
-    \item un ensemble fini $P$ de $r$ emplacements,
-    \item un ensemble fini $T$ de $s$ transitions,
+    \item un ensemble fini $P$ de $d$ emplacements,
+    \item un ensemble fini $T$ de transitions,
     \item une fonction de coût $B: P\times T\to\N$,
     \item une fonction de production $F: P\times T\to\N$,
     \item un marquage initial $M_0: P\to\N$.
 \end{itemize}
 
-Les configurations sont les marquages $M: P\to\N$, aussi considérés comme les valeurs possibles de $r$ compteurs (vecteur de $\N^r$).
-On peut déclencher la transition $t$ à partir du marquage $M$ si et seulement si $M(p)\geq B(p,t)$ pour tout $p\in P$ (noté $M\geq B(\cdot,t)$).
+Les configurations sont les marquages $M: P\to\N$, aussi considérés comme les valeurs possibles de $d$ compteurs (vecteur de $\N^d$).
+On peut déclencher la transition $t$ à partir du marquage $M$ si et
+seulement si $M(p)\geq B(p,t)$ pour tout $p\in P$ (noté $M\geq B(\cdot,t)$).
 
 On obtient alors un nouveau marquage $M'$ défini par $M':=M+D(\cdot,t)$ où $D\defeq F-B$. 
 $B$ représente donc le coût de la transition (le nombre de jetons requis et consommés dans chaque emplacement), et $F$ représente sa production (les jetons créés lors du déclenchement).
@@ -82,105 +98,139 @@ $B$ représente donc le coût de la transition (le nombre de jetons requis et co
 On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
 On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$) aux séquences de transitions, ou mots $w\in T^\ast$.
 
-On s'intéresse aux exécutions possibles au travers de deux manières différentes :
-\begin{enumerate}
-    \item D'abord en regardant le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ des séquences de déclenchement autorisés depuis le marquage initial, éventuellement en n'autorisant que quelques marquages finals, ou en omettant certaines transitions au travers d'un étiquetage des transitions.
-    \item Ensuite en regardant les marquages accessibles depuis $M_0$ en utilisant une séquence quelconque de transitions.
-\end{enumerate}
-
-Pour cela, on considèrera le graphe de couverture $CG(N)$ du \petri.
-
-Enfin, on définit la notion de rationnalité qui va nous intéresser sur un \petri :
-On dit qu'un \petri $N$ est \emph{rationnel} lorsque le langage $\lang(N)$ des séquences de déclenchement autorisés est un langage rationnel sur l'alphabet $T$.
-
-%----------------------------------------------------------------
-
-\section{Graphe de couverture (pour les \petri)}
-
-On ajoute une valeur $\omega$, symbolisant une quantité aussi grande que nécessaire de jetons dans un emplacement, et on pose $\N_\omega\defeq \N\union\os{\omega}$.
-
-On commence alors par étendre la notion de marquage aux $Q:P\to\N_\omega$ ordonnés par $\leq$ en posant $Q\leq Q'$ lorsque pour tout $p\in P$, $Q'(p)=\omega$, ou $Q(p)$ et $Q'(p)$ sont deux entiers vérifiant $Q(p)\leq Q'(p)$.
-Les transitions s'appliquent également à ces nouveaux marquages :
-la transition $t$ se déclenche sur $Q$ uniquement lorsque $Q\geq B(\cdot,t)$, et aboutit au marquage $Q'$ définit par $Q':=Q+D(\cdot,t)$ où $D=F-B$ et où le $+$ est étendu à $\N_\omega$ en posant $\omega+\omega=\omega+n=n+\omega=\omega$.
-
-On donne une représentation graphique des exécutions possibles.
-Les noeuds ou sommets sont étiquetés par des marquages de $\N_\omega^r$, et les arêtes par des transitions de $T$.
-
-Le graphe de couverture est alors obtenu en indiquant les voisins (ou fils) de chaque sommet du graphe (associé à un marquage), et ce par induction structurelle : 
-On part d'un unique sommet $r_0:M_0$ associé au marquage initial $M_0\in \N_\omega^P$.
-Pour chaque noeud $s:Q$ associé à $Q:P\to\N_\omega$, on fait partir autant d'arêtes que de transitions de $T$ qui peuvent se déclencher sur $Q$.
-Le sommet d'arrivée de l'arête associée à une transition $t$ est déterminé ainsi :
-\begin{itemize}
-    \item Si $\fire{Q}{t}Q'$ (déclencher $t$ aboutit au marquage $Q':P\to\N_\omega$) et qu'il existe un sommet déjà existant $s':Q'$ associé au marquage $Q'$, alors on crée une arête étiquetée par $t$ de $s:Q$ vers $s':Q'$ ;
-    \item Si $\fire{Q}{t}Q'$ et qu'il existe déjà un sommet $s'':Q''$ qui soit un antécédent de $s$ (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $s''$ à $s$) avec $Q'>Q''$, alors on crée un nouveau sommet $s':\widetilde{Q'}$ et une arête de $s:Q$ vers $s':\widetilde{Q'}$ étiquetée par $t$, 
-    où $\widetilde{Q'}:P\to\N_\omega$ est le marquage défini par $\widetilde{Q'}(p):=Q'(p)$ pour les $p\in P$ tels que $Q'(p)=Q''(p)$, et $\widetilde{Q'}(p)=\omega$ si $Q'(p)>Q''(p)$ ;
-    \item Si $Q'$ n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':Q'$ et une arête de $s$ à $s'$ étiquetée par $t$.
-\end{itemize}
+Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\conf{N}\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
 
 %----------------------------------------------------------------
 
 \section{VAS}
 
-Un \emph{système d'addition de vecteurs} (VAS) de dimension $d\in\N$ est la donnée d'un ensemble fini $\ensaction$ d'\emph{actions} $\action{a}$ de $\Z^d$.
-Sémantiquement, un VAS donne un système de transitions dont les configurations sont les vecteurs de $\N^d$ (à coordonnées positives).
-On a alors une transition entre $\vect{u}$ et $\vect{v}\in\N^d$ étiquetée par l'action $\action{a}\in\ensaction$ lorsque $\vect{u} + \action{a} = \vect{v}$, où l'addition agit composante par composante.
+Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d$-VAS) $S=(A,\xinit)$ est la donnée d'un vecteur initial $\xinit\in\N^d$ et d'un ensemble fini $A$ d'\emph{actions}.
+À chaque action $a\in A$ est associé un unique vecteur $\valeur{a}\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur de $\Z^d$.
+\vspace{3mm}
 
-De manière équivalente, on dira que l'action $\action{a}\in\ensaction$ peut se déclencher sur la configuration $\vect{u}\in \N^d$ lorsque $\vect{u} + \action{a} \leq \vect{0}$,
-et son déclenchement aboutit à la configuration $\vect{v} := \vect{u} + \action{a}$ à travers la transition $(\vect{u},\action{a},\vect{v})\in \N^d\times \ensaction\times \N^d$.
-On notera $\vect{u}\trans{\action{a}}{} \vect{v}$ lorsqu'un tel déclenchement est possible.
+Les \emph{configurations} de $S$ sont alors les vecteurs de $\N^d$ (à coordonnées positives), 
+et chaque action $a\in A$ agit sur $\N^d$ en additionnant à la configuration courante le vecteur $\valeur{a}$ associé.
+On a alors une transition entre $\vect{x}$ et $\vect{y}$ étiquetée par l'action $a$ lorsque $\vect{x} + \valeur{a} = \vect{y}$.
 
-Lorsqu'une séquence d'actions $\sigma\in\ensaction^\ast$ permet d'aller de $\vect{u}$ à $\vect{v}$ par la séquence de transition $\vect{u}= \vect{u}_0\trans{\action{a_1}}{} \vect{u_1}\trans{\action{a_2}}{} \dots\trans{\action{a_k}}{} \vect{u_k}=\vect{v}$
-(où $\vect{u_0},\dots,\vect{u_k} \in\N^d$, $\sigma=\action{a_1}\cdots \action{a_k}$ et $\vect{u_{i-1}}+\action{a_i}= \vect{u_i}$ pour tout $1\leq i\leq k$),
-on dit que $\sigma$ se déclenche sur $\vect{u}$, et qu'on a une exécution $\rho :\vect{u}\trans{\sigma}{} \vect{v}$.
+De manière équivalente, on dira que l'action $a\in A$ est \emph{franchissable} 
+à partir de la configuration $\vect{x}\in \N^d$ lorsque $\vect{x} + \valeur{a} \geq \vect{0}$,
+et son déclenchement aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$ à travers la transition $(\vect{x},a,\vect{y})\in \N^d\times A\times \N^d$.
+On notera $\vect{x}\trans{a}{} \vect{y}$ lorsqu'un tel déclenchement est possible.
+\vspace{3mm}
 
-On obtient dans ce cas $\vect{u}+\sum^k_{i=1} \action{a_i} = \vect{v}$ (mais la réciproque est fausse, l'égalité n'induit pas toujours une telle exécution).
+Lorsqu'une séquence d'actions $w= a_1\cdots a_k\in A^\ast$ permet d'aller de $\vect{x}$ à $\vect{y}$ par la séquence de transition $\vect{x}= \vect{x_0}\trans{a_1}{} \vect{x_1}\trans{a_2}{} \dots\trans{a_k}{} \vect{x_k}=\vect{y}$
+(où $\vect{x_0},\dots,\vect{x_k} \in\N^d$ et $\vect{x_{i-1}} +\valeur{a_i} =\vect{x_i}$ pour tout $1\leq i\leq k$),
+on dit que $w$ est franchissable à partir de $\vect{x}$, et qu'on a une \emph{exécution} $\rho :\vect{x}\trans{w}{} \vect{y}$.
+$\vect{y}$ est alors dit accessible à partir de $\vect{x}$.
 
-Deux aspects complémentaires vont nous intéresser :
+De plus, en notant $\valeur{w}\defeq \sum^k_{i=1} \valeur{a_i}$ le vecteur associé à $w$, on obtient $\vect{x} +\valeur{w} = \vect{y}$.
+Cependant, l'égalité peut-être vérifiée même si $w$ n'est pas franchissable.
+\vspace{3mm}
+
+Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\xinit)$ :
 \begin{enumerate}
-    \item D'abord, regarder le langage $\lang(\ensaction)\defeq \set{\action{a}\in \ensaction^\ast} {\exists \vect{u}\in\N^d, \vect{u_0}\trans{\action{a}}{}\vect{u}}$ des séquences d'actions autorisés depuis une configuration initiale $\vect{u_0}$, éventuellement en n'autorisant que certaines configurations finales (ou en autorisant des transitions supplémentaires non-étiquetés par une action).
-    \item Ensuite en regardant les configurations accessibles depuis une configuration initiale $\vect{u_0}$, en utilisant une séquence quelconque de transitions successives.
+    \item 
+    $\lang(S)\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \xinit\trans{w}{}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de $\xinit$,
+    
+    \item $\conf{S}\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \xinit\trans{w}{} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\xinit$. 
 \end{enumerate}
 
-Enfin, on dit qu'un VAS $\ensaction$ est \emph{rationnel} lorsque le langage $\lang(\ensaction)$ des séquences d'actions autorisés est un langage rationnel sur $\ensaction^\ast$.
-
+% A déplacer ?
+\begin{Definition}
+Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
+\end{Definition}
 %----------------------------------------------------------------
 
-\section{Graphe de couverture (pour les VAS)}
+\section{Un algorithme de calcul du Graphe de couverture (pour les VAS)}
 
 On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
 Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
 
-Le \emph{graphe de converture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $\ensaction$.
-Il est obtenu en partant d'un sommet initial $s_0:\vect{u_0}$ étiqueté par la configuration initiale $\vect{u_0}\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
+Le \emph{graphe de couverture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
-Pour chaque noeud $s:\vect{u}$ associé à la configuration $\vect{u}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $\action{a}\in \ensaction$ qui peuvent se déclencher sur $\vect{u}$.
-Le sommet d'arrivée de l'arête associée à une action $\action{a}$ est déterminé ainsi :
+Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
+Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ainsi :
 \begin{itemize}
-    \item Si $\vect{u}\trans{\action{a}}{} \vect{v}$ (déclencher $\action{a}$ aboutit à la configuration $\vect{v} := \vect{u} + \action{a}$) et qu'il existe un sommet déjà existant $r:\vect{v}$ associé à cette configuration, alors on crée une arête étiquetée par $\action{a}$ de $s:\vect{u}$ vers $r:\vect{v}$ ;
-    \item Si $\vect{u}\trans{\action{a}}{} \vect{v}$ et qu'il existe un ancêtre $r:\vect{v'}$ de $s$  (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $r$ à $s$) avec $\vect{v}>\vect{v'}$, alors on crée un nouveau sommet $s':\vect{\tilde{v}}$ et une arête de $s:\vect{u}$ vers $s':\vect{\tilde{v}}$ étiquetée par $\action{a}$, 
-    où $\vect{\tilde{v}}\in \Nomega^d$ est la configuration de coordonnées $\vect{\tilde{v}}(i):=\vect{v}(i)$ pour les $1\leq i\leq d$ tels que $\vect{v}(i)=\vect{v'}(i)$, et $\vect{\tilde{v}}(i):=\omega$ si $\vect{v}(i)>\vect{v'}(i)$ ;
-    \item Si la configuration $\vect{v}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{v}$ et une arête de $s$ à $s'$ étiquetée par $\action{a}$.
+    \item Si $\vect{x}\trans{a}{} \vect{y}$ (déclencher $a$ aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$) 
+    et qu'il existe un sommet déjà existant $r:\vect{y}$ associé à cette configuration, alors on crée une arête étiquetée par $a$ de $s:\vect{x}$ vers $r:\vect{y}$ ;
+    \item Si $\vect{x}\trans{a}{} \vect{y}$ et qu'il existe un ancêtre $r:\vect{z}$ de $s$ (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $r$ à $s$) avec $\vect{y}>\vect{z}$, 
+    alors on crée un nouveau sommet $s':\vect{y'}$ et une arête de $s:\vect{y}$ vers $s':\vect{y'}$ étiquetée par $a$, 
+    où $\vect{y'}\in \Nomega^d$ est la configuration de coordonnées $\vect{y'}(i):=\vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i):=\omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
+    \item Si la configuration $\vect{y}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{y}$ et une arête de $s$ à $s'$ étiquetée par $a$.
 \end{itemize}
+
+%----------------------------------------------------------------
+
+\section{Une caractérisation pour la rationnalité}
+
+La preuve de décidabilité se divise en deux étapes.
+Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
+On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne sur la décroissance possible des coordonnées des configurations.
+
+\begin{Theorem}
+    Soit $S=(A,\xinit)$ un VAS.
+    Alors $\lang(S)$ est rationnel si et seulement si 
+    $$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall w\in A^\ast, 
+    \Big( (\vect{x} +\valeur{w})\in\conf{S} \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
+\end{Theorem}
+
+Une manière équivalente de formuler cette caractérisation serait
+$$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall \vect{y}\in\conf{A,\vect{x}}, \quad
+\vect{y}\geq \vect{x} -\vect{k}$$
+où $\vect{k} = (k,k,...,k)\in\N^d$.
+
+\textbf{Méthode de Valk et Vidal-Naquet :}
+
+On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
+Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
+L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+
+
+\textbf{Méthode de Ginzburg et Yoeli :}
+
+On introduit une relation $\rel$ sur les configurations de $\conf{S}$ par
+$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, 
+\Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
+
+L'objectif est de traduire les caractérisations usuelles de rationnalité dans le modèle des configurations.
+La relation $\rel$ correspond en fait à la congruence de Nérode sur le langage $\lang(S)$.
+On obtient donc le résultat suivant :
+
+\begin{Theorem}
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel$ est fini.
+\end{Theorem}
+
+Preuve : 
+Dans un sens, construit l'automate (explicitement) en associant un état à chaque classe d'équivalence.
+Dans l'autre, utilise le fait que la congruence de Nérode est connue être finie pour les langages rationnels.
+
+% On peut s'affranchir de la construction de l'automate, et passer directement de la congruence sur les mots à la relation $\rel$.
+
+On prouve ensuite l'équivalence entre $\conf{S}/\rel$ fini et la caractérisation du théorème 1.
 
 %----------------------------------------------------------------
 
 \section{Bornes}
 
 Détaillons maintenant plusieurs propriétés de bornes sur les coordonnées des vecteurs configurations.
-On regarde $\os{1,\dots,d}$ l'ensemble des indices des vecteurs codant les configurations d'un VAS $\ensaction$.
+On regarde $\os{1,\dots,d}$ l'ensemble des indices des vecteurs codant les configurations d'un VAS $S=(A,\xinit)$.
 On peut voir ces coordonnées comme des emplacements accueillant un certain nombre de jetons, qui sont ajoutés ou retirés lors du déclenchement d'une action (lien avec les réseaux de Petri).
 
-Soit $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices d'un VAS $\ensaction$, et $\vect{u}$ une configuration de départ donnée.
+Soit $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices.
 On dira que
 \begin{itemize}
-    \item $I$ est \emph{borné} pour $\vect{u}\in \Nomega^d$ lorsqu'il existe toujours une coordonnée d'indice dans $I$ qui soit bornée pour toute configuration accessible depuis $\vect{u}$ dans le VAS $\ensaction$ :
-    $$\exists k\in\N, \forall \vect{v}\in\reach{\vect{u}}, \exists i\in I, \vect{v}(i)\leq k$$
+    \item $I$ est \emph{borné} pour $\vect{x}\in \Nomega^d$ lorsqu'il existe toujours une coordonnée d'indice dans $I$ qui soit bornée pour toute configuration accessible depuis $\vect{x}$ :
+    $$\exists k\in\N, \forall \vect{y}\in\conf{\vect{x}}, \exists i\in I, \vect{y}(i)\leq k$$
     
-    \item $I$ est \emph{uniformément borné} pour $\vect{u}\in \Nomega^d$ lorsque toutes les coordonnées d'indice dans $I$ sont bornées pour toute configuration accessible depuis $\vect{u}$ :
-    $$\exists k\in\N, \forall \vect{v}\in\reach{\vect{u}}, \forall i\in I, \vect{v}(i)\leq k$$
+    \item $I$ est \emph{uniformément borné} pour $\vect{x}\in \Nomega^d$ lorsque toutes les coordonnées d'indice dans $I$ sont bornées pour toute configuration accessible depuis $\vect{x}$ :
+    $$\exists k\in\N, \forall \vect{y}\in\conf{\vect{x}}, \forall i\in I, \vect{y}(i)\leq k$$
     
-    \item $I$ est \emph{borné inférieurement} pour $\vect{u}\in \Nomega^d$ lorsqu'on a une borne sur la diminution d'une coordonnée de toute configuration accessible depuis $\vect{u}$, même en augmentant la valeur initiale sur ces coordonnées :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{v}\in\reach{\vect{u} + n\cdot\indicatrice{I}}, \exists i\in I, \vect{v}(i)\geq \vect{u}(i)+n-k$$
+    \item $I$ est \emph{borné inférieurement} pour $\vect{x}\in \Nomega^d$ lorsqu'au moins une coordonnée dans $I$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf{\vect{x} + n\cdot\indicatrice{I}}, \exists i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
+    
+    \item $I$ est \emph{uniformément borné inférieurement} pour $\vect{u}\in \Nomega^d$ lorsque toutes les coordonnées de $I$ ne décroissent pas plus d'une certaine valeur :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf{\vect{x} + n\cdot\indicatrice{I}}, \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
 \end{itemize}
 
 %================================================================
