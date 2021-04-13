@@ -147,7 +147,7 @@ Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
 Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
 
-Le \emph{graphe de couverture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+Le \emph{graphe de couverture} \alain{graphe ou arbre ?} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
 Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
@@ -173,13 +173,17 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 Ginzburg et Yoeli choisissent dans \cite{giyo80} d'introduire une relation sur les configurations :
 
 \begin{Definition}[\cite{giyo80} section 3]
-On définit la relation $\rel$ sur $\conf{S}$ par
-$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x}+w\in\conf{S} \equivaut \vect{y}+w\in\conf{S} \Big)$$
+Soit $S$ un VASS. On définit une relation d'équivalence $\rel$ sur l'ensemble des configurations $\conf{S}$ par
+$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x}+w\in\conf{S} \equivaut \vect{y}+w\in\conf{S} \Big)$$  \alain{manquent les barres}
 \end{Definition}
 
-On remarque que $\rel$ compare les mots franchissables sur chaque configuration, ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).
+On remarque que $\rel$ compare les vecteurs associés aux mots franchissables $w$ à partir de chaque configuration \alain{confus} , ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).\alain{à prouver}
 On rappelle qu'une congruence est une relation d'équivalence compatible avec les transitions : 
-dans notre cas, $\vect{x}\rel\vect{y}$ implique $\forall a\in A, \vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+dans notre cas, on a : $\vect{x}\rel\vect{y}$ implique $\forall a\in A, \vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+
+\begin{Lemma}
+ $\rel$ est une congruence.
+\end{Lemma}
 
 \begin{Proposition}
 Soit $\vect{x},\vect{y}\in\conf{S}$.
