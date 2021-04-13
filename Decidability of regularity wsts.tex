@@ -20,12 +20,13 @@
 \geometry{hmargin=3cm,vmargin=2cm}
 
 \theoremstyle{definition}
-\newtheorem{Question}{Question}
-\newtheorem{Definition}{Définition}
 \newtheorem{Theorem}{Théorème}
-\newtheorem{Proposition}{Proposition}
-\newtheorem{Lemma}{Lemme}
-\newtheorem{Property}{Propriété}
+\newtheorem{Definition}[Theorem]{Définition}
+\newtheorem{Question}[Theorem]{Question}
+\newtheorem{Proposition}[Theorem]{Proposition}
+\newtheorem{Lemma}[Theorem]{Lemme}
+\newtheorem{Property}[Theorem]{Propriété}
+%\newtheorem{Proof}{Preuve}
 
 \let\oldphi\phi
 \let\phi\varphi
@@ -59,7 +60,7 @@
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\conf}[1]{\ensuremath{\mathcal{R}(#1)}}
-\newcommand{\rel}{\ensuremath{E}}
+\newcommand{\rel}{\ensuremath{\equiv}}
 \newcommand{\ssi}{\ensuremath{\text{ ssi }}}
 \newcommand{\equivaut}{\ensuremath{\Leftrightarrow}}
 \newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
@@ -168,51 +169,86 @@ La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne sur la décroissance possible des coordonnées des configurations.
 
-\begin{Theorem}\cite{}
-    Soit $S=(A,\xinit)$ un VAS.
-    Alors $\lang(S)$ est rationnel si et seulement si 
-    $$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall w\in A^\ast, 
-    \Big( (\vect{x} +\valeur{w})\in\conf{S} \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
+Ginzburg et Yoeli choisissent dans \cite{giyo80} d'introduire une relation sur les configurations :
+
+\begin{Definition}[\cite{giyo80} section 3]
+On définit la relation $\rel$ sur $\conf{S}$ par
+$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x}+w\in\conf{S} \equivaut \vect{y}+w\in\conf{S} \Big)$$
+\end{Definition}
+
+On remarque que $\rel$ compare les mots franchissables sur chaque configuration, ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).
+On rappelle qu'une congruence est une relation d'équivalence compatible avec les transitions : 
+dans notre cas, $\vect{x}\rel\vect{y}$ implique $\forall a\in A, \vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+
+\begin{Proposition}
+Soit $\vect{x},\vect{y}\in\conf{S}$.
+Alors
+$$\vect{x}\rel\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$$
+\end{Proposition}
+
+\alain{Est-ce que la relation d'ordre associée $x \sqsubseteq  y$ if $\lang(S,x) \subseteq \lang(S,y)$ est intéressante à regarder ?}
+
+On peut désormais utiliser les résultats connus sur cette congruence, ce qui nous donne :
+
+\begin{Theorem}[\cite{giyo80} théorème 1]
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel$ est fini.
 \end{Theorem}
 
-Une manière équivalente de formuler cette caractérisation serait
-$$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall \vect{y}\in\conf{A,\vect{x}}, \quad
-\vect{y}\geq \vect{x} -\vect{k}$$
-%	\alain{pourquoi demande-t-on que $\vect{x}\in\conf{S}$ et pas seulement $\vect{x}\in \N^d$ ?}
+%--------------
+Pour obtenir un nombre fini de classes d'équivalence pour $\rel$, on cherche une borne à partir de laquelle les configurations sont indiscernables.
+Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puisse pas trop décroître.
+Ginzburg et Yoeli proposent une telle caractérisation :
 
-\alain{pourrait aussi s'écrire avec des fleches: $ \exists k\in\N, \forall \vect{x,y}\in \N^d$ si $\vect{x_0}\trans{*}{} \vect{x} \trans{*}{} \vect{y}$ alors $\vect{y}\geq \vect{x} -\vect{k}$}
+\begin{Lemma}[\cite{giyo80} lemme 1]
+    Supposons que dans un VAS $S=(A,\xinit)$ $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
+    Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf{S}$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
+    $(\vect{x} +\valeur{w})\in\conf{S} \implies \vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
+    Alors $\conf{S}/\rel$ est fini.
+\end{Lemma}
 
-où $\vect{k} = (k,k,...,k)\in\N^d$.
+On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
+On montrera donc le théorème suivant :
+
+%begin{Theorem}
+%    Soit $S=(A,\xinit)$ un VAS.
+%    Alors $\lang(S)$ est rationnel si et seulement si 
+%    $$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall w\in A^\ast, 
+%    \Big( (\vect{x} +\valeur{w})\in\conf{S} \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
+%\end{Theorem}
+
+%Une manière équivalente de formuler cette caractérisation serait
+
+\begin{Theorem}
+    Soit $S=(A,\xinit)$ un VAS.
+    Alors $\lang(S)$ est rationnel si et seulement si
+    \begin{equation}
+        \exists k\in\N, \forall \vect{x},\vect{y}\in\N^d, 
+\big( \xinit\trans{*}{} \vect{x} \trans{*}{} \vect{y}\implies
+\vect{y}\geq \vect{x} -\vect{k} \big)
+    \label{eq:caracterisation}
+    \end{equation}
+    %-----Une formulation en français-----:
+    %il existe un $k\in\N$ tel que pour toutes configurations $\vect{x},\vect{y}\in\N^d$, si $\xinit\trans{*}{} \vect{x} \trans{*}{} \vect{y}$, alors $\vect{y}\geq \vect{x} -\vect{k}$
+    où $\vect{k}$ désigne le vecteur $(k,k,...,k)\in\N^d$.
+\end{Theorem}
+
+\begin{proof}(caractérisation $\Rightarrow$ rationnel)
+Soit $S$ un VAS vérifiant la caractérisation \eqref{eq:caracterisation} pour un $k\in\N$.
+
+Si $\vect{x},\vect{y}\in\conf{S}$ vérifient 
+$\vect{x}(i)=\vect{y}(i)$ ou $\vect{x}\geq k \land \vect{y}\geq k$
+pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel\vect{y}$. 
+En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
+puisque les coordonnées qui diffèrent ne peuvent devenir négatives.
+
+Ainsi, $\rel$ admet au plus $k\times d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
+\end{proof}
+
 \textbf{Méthode de Valk et Vidal-Naquet :}
 
 On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
 Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
-
-
-\textbf{Méthode de Ginzburg et Yoeli :}
-
-On introduit une relation $\rel$ sur les configurations de $\conf{S}$ par
-$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, 
-\Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
-
-\alain{Ca a l'air d'être équivalent à $\lang(S,x)=\lang(S,y)$. Est-ce que la relation d'ordre associée $x \sqsubseteq  y$ if $\lang(S,x) \subseteq \lang(S,y)$ est intéressante à regarder ?}
-
-L'objectif est de traduire les caractérisations usuelles de rationnalité dans le modèle des configurations.
-La relation $\rel$ correspond en fait à la congruence de Nérode sur le langage $\lang(S)$.
-On obtient donc le résultat suivant :
-
-\begin{Theorem}
-    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel$ est fini.
-\end{Theorem}
-
-Preuve : 
-Dans un sens, construit l'automate (explicitement) en associant un état à chaque classe d'équivalence.
-Dans l'autre, utilise le fait que la congruence de Nérode est connue être finie pour les langages rationnels.
-
-% On peut s'affranchir de la construction de l'automate, et passer directement de la congruence sur les mots à la relation $\rel$.
-
-On prouve ensuite l'équivalence entre $\conf{S}/\rel$ fini et la caractérisation du théorème 1.
 
 %----------------------------------------------------------------
 
@@ -238,10 +274,25 @@ On dira que
     $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf{\vect{x} + n\cdot\indicatrice{I}}, \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
 \end{itemize}
 
-mes commentaires \\
+\section{Commentaires}
 biblio à commencer\\
 vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
 vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
+
 %================================================================
+
+\begin{thebibliography}{10}
+
+\bibitem{vavi81}
+R. Valk and G. Vidal-Naquet.
+\newblock Petri Nets and Regular Languages.
+\newblock {\em Journal of Computer and System Science} 23, pages 299-325, 1981.
+
+\bibitem{giyo80}
+A. Ginzburg and M. Yoeli.
+\newblock Vector Addition Systems and Regular Languages.
+\newblock {\em Journal of Computer and System Science} 20, pages 277-284, 1980.
+
+\end{thebibliography}
 
 \end{document}
