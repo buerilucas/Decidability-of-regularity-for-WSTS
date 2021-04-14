@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.7)  13 APR 2021 22:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.10.7)  15 APR 2021 00:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,7 +716,7 @@ Here is how much of TeX's memory you used:
  9738 multiletter control sequences out of 15000+600000
  21412 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,15n,35p,351b,2573s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,15n,35p,383b,2573s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm
 -super-t1.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
@@ -741,7 +741,7 @@ ocal/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/loc
 al/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local
 /texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti0700.pfb></usr/local/t
 exlive/2016/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "Decidability of regularity wsts.pdf" (4 pages, 262105 bytes)
+Output written on "Decidability of regularity wsts.pdf" (4 pages, 262126 bytes)
 .
 PDF statistics:
  110 PDF objects out of 1000 (max. 8388607)

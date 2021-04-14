@@ -170,14 +170,14 @@ Tout d'abord, on va donner une caractérisation mathématique équivalente à la
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne sur la décroissance possible des coordonnées des configurations.
 \alain{je dirais un VAS est rationnel si et seulement s'il existe un entier $k$ tel que pour toutes configurations accessibles $x,y$, si $y$ est accessible à partir de $x$ alors $y$ n'est pas en dessous de $x-k$}.
 
-Ginzburg et Yoeli choisissent dans \cite{giyo80} d'introduire une relation sur les configurations :
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence sur les configurations :
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S$ un VASS. On définit une relation d'équivalence $\rel$ sur l'ensemble des configurations $\conf{S}$ par
+On associe à un VASS $S$ la relation suivante $\rel$ sur l'ensemble des configurations $\conf{S}$ par
 $$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x}+w\in\conf{S} \equivaut \vect{y}+w\in\conf{S} \Big)$$  \alain{manquent les barres}
 \end{Definition}
 
-On remarque que $\rel$ compare les vecteurs associés aux mots franchissables $w$ à partir de chaque configuration \alain{confus} , ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).\alain{à prouver}
+On remarque que $\rel$ est une relation d'équivalence compare les vecteurs associés aux mots franchissables $w$ à partir de chaque configuration \alain{confus} , ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).\alain{à prouver}
 On rappelle qu'une congruence est une relation d'équivalence compatible avec les transitions : 
 dans notre cas, on a : $\vect{x}\rel\vect{y}$ implique $\forall a\in A, \vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
 
