@@ -147,7 +147,8 @@ Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
 Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
 
-Le \emph{graphe de couverture} \alain{graphe ou arbre ?} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+Le \emph{graphe de couverture} \alain{graphe ou arbre ?} \lucas{Graphe, car dans le premier point on fait déjà le regroupement des sommets identiques.}
+a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
 Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
@@ -169,31 +170,52 @@ La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne sur la décroissance possible des coordonnées des configurations.
 \alain{je dirais un VAS est rationnel si et seulement s'il existe un entier $k$ tel que pour toutes configurations accessibles $x,y$, si $y$ est accessible à partir de $x$ alors $y$ n'est pas en dessous de $x-k$}.
+\lucas{Ce n'est pas tout à fait équivalent ($\leq$ n'est pas totale sur $\Z^d$). Je propose :
+ssi il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.}
+
+\lucas{Mais mon idée ici était d'énoncer intuitivement le résultat sans notation, avant de voir les détails formels.}
 
 Ginzburg et Yoeli choisissent dans \cite{giyo80} d'introduire une relation sur les configurations :
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S$ un VASS. On définit une relation d'équivalence $\rel$ sur l'ensemble des configurations $\conf{S}$ par
-$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x}+w\in\conf{S} \equivaut \vect{y}+w\in\conf{S} \Big)$$  \alain{manquent les barres}
+Soit $S$ un VASS. On définit une relation d'équivalence $\rel$ sur l'ensemble des configurations $\N^d$ par
+$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
 \end{Definition}
 
-On remarque que $\rel$ compare les vecteurs associés aux mots franchissables $w$ à partir de chaque configuration \alain{confus} , ce qui nous permet de reconnaître en $\rel$ la plus grande congruence sur $\conf{S}$ au sens de l'inclusion (aussi appelée congruence de Nérode).\alain{à prouver}
-On rappelle qu'une congruence est une relation d'équivalence compatible avec les transitions : 
-dans notre cas, on a : $\vect{x}\rel\vect{y}$ implique $\forall a\in A, \vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+On appelle \emph{congruence} sur un VAS $S$ une relation d'équivalence $\rel_0$ qui est compatible avec les transitions, c'est-à-dire $\vect{x}\rel_0 \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_0 \vect{y} +\valeur{a}$.
 
 \begin{Lemma}
- $\rel$ est une congruence.
+ $\rel$ est une congruence sur le système de transitions $S$.
 \end{Lemma}
+
+\begin{proof}
+$\rel$ est bien une relation d'équivalence sur $\N^d$.
+De plus, $\rel$ est stable par les déclenchements : 
+si $\vect{x}\rel\vect{y}$, alors pour toute action $a\in A$ et tout mot $w\in A^\ast$, 
+on a $$(\vect{x} +\valeur{a}) +\valeur{w} \in\conf{S} 
+    \equivaut \vect{x} +\valeur{aw} \in\conf{S}
+    \equivaut \vect{y} +\valeur{aw} \in\conf{S}
+    \equivaut (\vect{y} +\valeur{a}) +\valeur{w} \in\conf{S}$$
+d'où $\vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+\end{proof}
 
 \begin{Proposition}
 Soit $\vect{x},\vect{y}\in\conf{S}$.
-Alors
-$$\vect{x}\rel\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$$
+Alors $\vect{x}\rel\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$, 
+et $\rel$ est la plus grande congruence sur $S$ au sens de l'inclusion.
 \end{Proposition}
+
+\begin{proof}
+Montrons d'abord que l'ensemble des congruences sur $S$ est dirigé :
+Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ ... \lucas{À finir}
+
+\end{proof}
 
 \alain{Est-ce que la relation d'ordre associée $x \sqsubseteq  y$ if $\lang(S,x) \subseteq \lang(S,y)$ est intéressante à regarder ?}
 
-On peut désormais utiliser les résultats connus sur cette congruence, ce qui nous donne :
+%----------
+
+On peut désormais utiliser les résultats connus sur cette congruence \lucas{référence ?}, ce qui nous donne :
 
 \begin{Theorem}[\cite{giyo80} théorème 1]
     Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel$ est fini.
@@ -207,7 +229,7 @@ Ginzburg et Yoeli proposent une telle caractérisation :
 \begin{Lemma}[\cite{giyo80} lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$ $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf{S}$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
-    $(\vect{x} +\valeur{w})\in\conf{S} \implies \vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
+    si $(\vect{x} +\valeur{w})\in\conf{S}$ alors $\vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
     Alors $\conf{S}/\rel$ est fini.
 \end{Lemma}
 
@@ -249,11 +271,29 @@ puisque les coordonnées qui diffèrent ne peuvent devenir négatives.
 Ainsi, $\rel$ admet au plus $k\times d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
 \end{proof}
 
-\textbf{Méthode de Valk et Vidal-Naquet :}
+Réciproquement, si $S$ ne vérifie pas la caractérisation \eqref{eq:caracterisation}, 
+on a pour tout $k\in\N$ l'existence d'une configuration $\vect{x}$, d'un mot $w\in A^\ast$ et d'une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
-On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
-Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
-L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p}$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
+On a alors $\vect{x}=\vect{x_0} \trans{a_1}{}\vect{x_1} \trans{a_2}{}\dots \trans{a_n}{}\vect{x_n}= \vect{x} +\valeur{w}$.
+
+Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $j$ possible par une action.
+Alors, au moins $k/\xi$ configurations $\vect{x_p}$ voient leur coordonnée $j$ décroître,
+et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(m)}(j)$ où $m\geq k/\xi$.
+
+Ces configurations ne sont pas équivalentes pour $\rel$ :
+En effet, si on avait $\vect{x}_{\phi(p)}\rel \vect{x}_{\phi(q)}$ avec $0\leq p\leq q\leq m$, en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
+on aurait $\vect{x}_{\phi(p)}\rel (\vect{x}_{\phi(p)} +\valeur{u})=\vect{x}_{\phi(q)}$, d'où $\vect{x}_{\phi(p)}+r\cdot \valeur{u}\rel \vect{x}_{\phi(p)}+(r+1)\cdot \valeur{u}$ pour tout $r\in\N$ (car $\rel$ est une congruence).
+
+Or $r\cdot\valeur{u}(j) =r\cdot(\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, ce qui prouve que $(\vect{x}_{\phi(p)}+r\cdot \valeur{u})(j)<0$ à partir d'un certain $r\in\N$, et donc $\vect{x}_{\phi(p)}+r\cdot \valeur{u} \not\rel \vect{x}_{\phi(p)}$, d'où une contradiction.
+
+On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel$ (et ce pour tout $k\in\N$), d'où $\conf{S}/\rel$ est infini.
+
+%\textbf{Méthode de Valk et Vidal-Naquet :}
+
+%On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
+%Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
+%L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
 
 %----------------------------------------------------------------
 
