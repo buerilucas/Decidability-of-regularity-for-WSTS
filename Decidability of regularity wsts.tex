@@ -147,7 +147,7 @@ Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
 Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
 
-Le \emph{graphe de couverture} \alain{graphe ou arbre ?} \lucas{Graphe, car dans le premier point on fait déjà le regroupement des sommets identiques.}
+Le \emph{graphe de couverture} \lucas{À revoir.}
 a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
@@ -168,46 +168,58 @@ Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ain
 
 La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
-On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne sur la décroissance possible des coordonnées des configurations.
-\alain{je dirais un VAS est rationnel si et seulement s'il existe un entier $k$ tel que pour toutes configurations accessibles $x,y$, si $y$ est accessible à partir de $x$ alors $y$ n'est pas en dessous de $x-k$}.
-\lucas{Ce n'est pas tout à fait équivalent ($\leq$ n'est pas totale sur $\Z^d$). Je propose :
-ssi il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.}
-
-\lucas{Mais mon idée ici était d'énoncer intuitivement le résultat sans notation, avant de voir les détails formels.}
+On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.
+%ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 
 Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence sur les configurations :
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S$ un VASS. On définit une relation d'équivalence $\rel$ sur l'ensemble des configurations $\N^d$ par
-$$\vect{x}\rel\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
+Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\rel_S$ sur l'ensemble des configurations $\N^d$ par
+$$\vect{x}\rel_S\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
 \end{Definition}
 
-On appelle \emph{congruence} sur un VAS $S$ une relation d'équivalence $\rel_0$ qui est compatible avec les transitions, c'est-à-dire $\vect{x}\rel_0 \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_0 \vect{y} +\valeur{a}$.
+On peut remarquer que cette relation revient simplement à regarder l'égalité des langages :
+par définition, on a $\vect{x}\rel_S\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$ pour tout $\vect{x},\vect{y}\in\N^d$.
+
+% graphe de couverture : arbre, s'arrêter quand noeud=pred
+% comparer clover/graphe
+% donner toutes les différences
+% papier 1977 Valk,Vidal-Naquet
+
+\begin{Definition}
+Soit $S=(A,\xinit)$ un $d$-VAS.
+On appelle \emph{congruence sur $S$} une relation d'équivalence $\rel$ sur les configurations de $\N^d$ qui est compatible avec les actions, 
+c'est-à-dire telle que $\vect{x}\rel \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel \vect{y} +\valeur{a}$.
+\end{Definition}
+
+% On donne la preuve de congruence (qui n'est pas donnée dans 2)
+\lucas{Ajouter similaire à Nérode + on donne la preuve dans ce cas infini.}
+
 
 \begin{Lemma}
- $\rel$ est une congruence sur le système de transitions $S$.
+ $\rel_S$ est une congruence sur le VAS $S$.
 \end{Lemma}
 
 \begin{proof}
-$\rel$ est bien une relation d'équivalence sur $\N^d$.
-De plus, $\rel$ est stable par les déclenchements : 
-si $\vect{x}\rel\vect{y}$, alors pour toute action $a\in A$ et tout mot $w\in A^\ast$, 
+$\rel_S$ est bien une relation d'équivalence sur $\N^d$.
+De plus, $\rel_S$ est stable par les déclenchements : 
+si $\vect{x}\rel_S \vect{y}$, alors pour toute action $a\in A$ et tout mot $w\in A^\ast$, 
 on a $$(\vect{x} +\valeur{a}) +\valeur{w} \in\conf{S} 
     \equivaut \vect{x} +\valeur{aw} \in\conf{S}
     \equivaut \vect{y} +\valeur{aw} \in\conf{S}
     \equivaut (\vect{y} +\valeur{a}) +\valeur{w} \in\conf{S}$$
-d'où $\vect{x}+\valeur{a} \rel \vect{y}+\valeur{a}$.
+d'où $\vect{x}+\valeur{a} \rel_S \vect{y}+\valeur{a}$.
 \end{proof}
 
 \begin{Proposition}
-Soit $\vect{x},\vect{y}\in\conf{S}$.
-Alors $\vect{x}\rel\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$, 
-et $\rel$ est la plus grande congruence sur $S$ au sens de l'inclusion.
+Soit un VAS $S=(A,\xinit)$.
+Alors $\rel_S$ est la plus grande congruence sur $S$ au sens de l'inclusion.
 \end{Proposition}
 
 \begin{proof}
 Montrons d'abord que l'ensemble des congruences sur $S$ est dirigé :
-Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ ... \lucas{À finir}
+Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ la clôture transitive de l'union des deux relations $\rel_1\union\rel_2$.
+\lucas{À finir}
 
 \end{proof}
 
@@ -218,7 +230,7 @@ Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$
 On peut désormais utiliser les résultats connus sur cette congruence \lucas{référence ?}, ce qui nous donne :
 
 \begin{Theorem}[\cite{giyo80} théorème 1]
-    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel$ est fini.
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel_S$ est fini.
 \end{Theorem}
 
 %--------------
@@ -227,14 +239,16 @@ Comme la seule règle sur les actions franchissables est un test de positivité,
 Ginzburg et Yoeli proposent une telle caractérisation :
 
 \begin{Lemma}[\cite{giyo80} lemme 1]
-    Supposons que dans un VAS $S=(A,\xinit)$ $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
+    Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf{S}$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
     si $(\vect{x} +\valeur{w})\in\conf{S}$ alors $\vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
-    Alors $\conf{S}/\rel$ est fini.
+    Alors $\conf{S}/\rel_S$ est fini.
 \end{Lemma}
 
-On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
-On montrera donc le théorème suivant :
+Ginzburg et Yoeli donne aussi la réciproque de ce résultat.
+On va en prouver une version simplifiée, notamment en considérant le maximum $k:= \text{max}\os{k_1,\dots,k_n}$, ce qui nous donne la caractérisation suivante :
+
+% On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
 
 %begin{Theorem}
 %    Soit $S=(A,\xinit)$ un VAS.
@@ -259,18 +273,20 @@ On montrera donc le théorème suivant :
     où $\vect{k}$ désigne le vecteur $(k,k,...,k)\in\N^d$.
 \end{Theorem}
 
-\begin{proof}(caractérisation $\Rightarrow$ rationnel)
+\begin{proof}
+(caractérisation $\Rightarrow$ rationnel)
 Soit $S$ un VAS vérifiant la caractérisation \eqref{eq:caracterisation} pour un $k\in\N$.
 
 Si $\vect{x},\vect{y}\in\conf{S}$ vérifient 
 $\vect{x}(i)=\vect{y}(i)$ ou $\vect{x}\geq k \land \vect{y}\geq k$
-pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel\vect{y}$. 
+pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
 puisque les coordonnées qui diffèrent ne peuvent devenir négatives.
 
-Ainsi, $\rel$ admet au plus $k\times d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
-\end{proof}
+Ainsi, $\rel_S$ admet au plus $k\times d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
 
+\vspace{2mm}\noindent
+(rationnel $\Rightarrow$ caractérisation)
 Réciproquement, si $S$ ne vérifie pas la caractérisation \eqref{eq:caracterisation}, 
 on a pour tout $k\in\N$ l'existence d'une configuration $\vect{x}$, d'un mot $w\in A^\ast$ et d'une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
@@ -281,13 +297,14 @@ Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus g
 Alors, au moins $k/\xi$ configurations $\vect{x_p}$ voient leur coordonnée $j$ décroître,
 et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(m)}(j)$ où $m\geq k/\xi$.
 
-Ces configurations ne sont pas équivalentes pour $\rel$ :
-En effet, si on avait $\vect{x}_{\phi(p)}\rel \vect{x}_{\phi(q)}$ avec $0\leq p\leq q\leq m$, en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
-on aurait $\vect{x}_{\phi(p)}\rel (\vect{x}_{\phi(p)} +\valeur{u})=\vect{x}_{\phi(q)}$, d'où $\vect{x}_{\phi(p)}+r\cdot \valeur{u}\rel \vect{x}_{\phi(p)}+(r+1)\cdot \valeur{u}$ pour tout $r\in\N$ (car $\rel$ est une congruence).
+Ces configurations ne sont pas équivalentes pour $\rel_S$ :
+En effet, si on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)}$ avec $0\leq p\leq q\leq m$, en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
+on aurait $\vect{x}_{\phi(p)}\rel_S (\vect{x}_{\phi(p)} +\valeur{u})=\vect{x}_{\phi(q)}$, d'où $\vect{x}_{\phi(p)}+r\cdot \valeur{u}\rel_S \vect{x}_{\phi(p)}+(r+1)\cdot \valeur{u}$ pour tout $r\in\N$ (car $\rel_S$ est une congruence).
 
-Or $r\cdot\valeur{u}(j) =r\cdot(\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, ce qui prouve que $(\vect{x}_{\phi(p)}+r\cdot \valeur{u})(j)<0$ à partir d'un certain $r\in\N$, et donc $\vect{x}_{\phi(p)}+r\cdot \valeur{u} \not\rel \vect{x}_{\phi(p)}$, d'où une contradiction.
+Or $r\cdot\valeur{u}(j) =r\cdot(\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, ce qui prouve que $(\vect{x}_{\phi(p)}+r\cdot \valeur{u})(j)<0$ à partir d'un certain $r\in\N$, et donc $\vect{x}_{\phi(p)}+r\cdot \valeur{u} \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
-On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel$ (et ce pour tout $k\in\N$), d'où $\conf{S}/\rel$ est infini.
+On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), d'où $\conf{S}/\rel_S$ est infini.
+\end{proof}
 
 %\textbf{Méthode de Valk et Vidal-Naquet :}
 
