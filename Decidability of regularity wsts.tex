@@ -218,9 +218,19 @@ Alors $\rel_S$ est la plus grande congruence sur $S$ au sens de l'inclusion.
 
 \begin{proof}
 Montrons d'abord que l'ensemble des congruences sur $S$ est dirigé :
-Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ la clôture transitive de l'union des deux relations $\rel_1\union\rel_2$.
-\lucas{À finir}
 
+Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ la clôture transitive de l'union des deux relations $\rel_1\union\rel_2$.
+$\rel_{1+2}$ est bien une relation d'équivalence, 
+et si $\vect{x}\rel_{1+2}\vect{y}$, alors il existe une séquence finie de vecteurs ${(\vect{x}_i)}_{0\leq i\leq n}$ tels que 
+$\vect{x}=\vect{x}_0$, $\vect{y}=\vect{x}_n$ et pour tout $0\leq i<n$, $\vect{x}_i\rel_1\vect{x}_{i+1}$ ou $\vect{x}_i\rel_2\vect{x}_{i+1}$.
+
+On a alors $\vect{x}_i +\valeur{a} \rel_1 \vect{x}_{i+1} +\valeur{a}$ ou $\vect{x}_i +\valeur{a} \rel_2 \vect{x}_{i+1} +\valeur{a}$ pour tout $0\leq i<n$, 
+d'où $\vect{x} +\valeur{a} \rel_{1+2} \vect{y} +\valeur{a}$, 
+et $\rel_{1+2}$ est bien une congruence sur $S$ contenant $\rel_1$ et $\rel_2$.
+
+Maintenant, si $\rel_1$ est une congruence sur $S$, pour tout $\vect{x}\rel_1\vect{y}$ et $w=a_1\dots a_n\in A$, on a 
+$\vect{x} +\valeur{a_1\dots a_i} \rel_1\vect{y} +\valeur{a_1\dots a_i}$ par récurrence sur $1\leq i\leq n$, d'où $\vect{x} +\valeur{w} \rel_1\vect{y} +\valeur{w}$.
+Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence sur $S$.
 \end{proof}
 
 \alain{Est-ce que la relation d'ordre associée $x \sqsubseteq  y$ if $\lang(S,x) \subseteq \lang(S,y)$ est intéressante à regarder ?}
@@ -311,6 +321,31 @@ On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (
 %On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+
+\section{Décider la caractérisation}
+
+La procédure de décision nécessite de connaître deux choses :
+\begin{enumerate}
+    \item D'abord, la liste des éléments maximaux de l'arbre de  associé au VAS,
+    \item Ensuite, une procédure pour décider si les configurations accessibles d'un VAS sont bornés.
+\end{enumerate}
+
+\begin{Definition}
+Soit $S=(A,\xinit)$ un $d$-VAS.
+Pour tout élément maximal $\vect{m}\in\Nomega$ de l'arbre de couverture, notons $I_\vect{m}:=\set{j}{\vect{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\vect{m}$.
+On écrit $I_\vect{m}=\os{j_1,\dots,j_p}$.
+Pour tout $i\notin I_\vect{m}$, on définit un $(p+1)$-VAS $S_{(\vect{m},i)} =(A_{(\vect{m},i)}, \vect{x}_{(\vect{m},i)})$ en posant
+$A_{(\vect{m},i)} :=\set{a(\vect{m},i)}{a\in A}$ avec $\valeur{a(\vect{m},i)} :=(a(j_1),\dots,a(j_p),-a(i))$, 
+et $\vect{x}_{(\vect{m},i)} :=(\vect{m}(j_1),\dots,\vect{m}(j_p),0)$.
+\end{Definition}
+
+On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
+Le théorème suivant est alors obtenu :
+
+\begin{Theorem}
+    Soit $S=(A,\xinit)$ un $d$-VAS.
+    Alors $S$ satisfait la caractérisation \eqref{eq:caracterisation} si et seulement si tous les VAS $S_{(\vect{m},i)}$ définis ci-dessus sont bornés pour tout élément maximal $\vect{m}$ et tout $i\notin I_\vect{m}$.
+\end{Theorem}
 
 %----------------------------------------------------------------
 
