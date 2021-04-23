@@ -26,6 +26,7 @@
 \newtheorem{Proposition}[Theorem]{Proposition}
 \newtheorem{Lemma}[Theorem]{Lemme}
 \newtheorem{Property}[Theorem]{Propriété}
+\newtheorem{Example}[Theorem]{Exemple}
 %\newtheorem{Proof}{Preuve}
 
 \let\oldphi\phi
@@ -38,9 +39,9 @@
 %================================================================
 
 \newcommand{\alain}[1]{\textcolor{blue}{#1}}
-\newcommand{\lucas}[1]{\textcolor{purple}{#1}}
-\newcommand{\rayer}[1]{\sout{\textcolor{red}{#1}}}
-
+\newcommand{\lucas}[1]{\textcolor{olive}{#1}}
+\newcommand{\rayer}[1]{\textcolor{red}{#1}}
+% \sout pour rayer
 
 \newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
 \newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
@@ -56,11 +57,12 @@
 \newcommand{\petri}{réseau de Petri\xspace}
 \newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
 \newcommand{\lang}{\ensuremath{\mathcal{L}}}
+\newcommand{\conf}{\ensuremath{\mathcal{R}}}
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
-\newcommand{\conf}[1]{\ensuremath{\mathcal{R}(#1)}}
 \newcommand{\rel}{\ensuremath{\equiv}}
+\newcommand{\relGY}{\ensuremath{\equiv_\text{GY}}}
 \newcommand{\ssi}{\ensuremath{\text{ ssi }}}
 \newcommand{\equivaut}{\ensuremath{\Leftrightarrow}}
 \newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
@@ -99,15 +101,16 @@ $B$ représente donc le coût de la transition (le nombre de jetons requis et co
 On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
 On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$) aux séquences de transitions, ou mots $w\in T^\ast$.
 
-Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\conf{N}\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
+Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\conf(N)\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
 
 %----------------------------------------------------------------
 
 \section{VAS}
 
-Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d$-VAS) $S=(A,\xinit)$ est la donnée d'un vecteur initial $\xinit\in\N^d$ et d'un ensemble fini $A$ d'\emph{actions}.
+Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d-$VAS) $S=(A,\xinit)$ est la donnée d'un vecteur initial $\xinit\in\N^d$ et d'un ensemble fini $A$ d'\emph{actions}.
 À chaque action $a\in A$ est associé un unique vecteur $\valeur{a}\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur de $\Z^d$.
 \vspace{3mm}
+% On pourra préciser ce qu'il se passe si deux actions sont étiquetés par le même vecteur.
 
 Les \emph{configurations} de $S$ sont alors les vecteurs de $\N^d$ (à coordonnées positives), 
 et chaque action $a\in A$ agit sur $\N^d$ en additionnant à la configuration courante le vecteur $\valeur{a}$ associé.
@@ -116,25 +119,27 @@ On a alors une transition entre $\vect{x}$ et $\vect{y}$ étiquetée par l'actio
 De manière équivalente, on dira que l'action $a\in A$ est \emph{franchissable} 
 à partir de la configuration $\vect{x}\in \N^d$ lorsque $\vect{x} + \valeur{a} \geq \vect{0}$,
 et son déclenchement aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$ à travers la transition $(\vect{x},a,\vect{y})\in \N^d\times A\times \N^d$.
-On notera $\vect{x}\trans{a}{} \vect{y}$ lorsqu'un tel déclenchement est possible.
+On notera $\vect{x}\trans{a}{S} \vect{y}$ lorsqu'un tel déclenchement est possible (ou simplement $\vect{x}\trans{a}{} \vect{y}$ s'il n'y a pas ambiguité sur $S$).
 \vspace{3mm}
 
 Lorsqu'une séquence d'actions $w= a_1\cdots a_k\in A^\ast$ permet d'aller de $\vect{x}$ à $\vect{y}$ par la séquence de transition $\vect{x}= \vect{x_0}\trans{a_1}{} \vect{x_1}\trans{a_2}{} \dots\trans{a_k}{} \vect{x_k}=\vect{y}$
 (où $\vect{x_0},\dots,\vect{x_k} \in\N^d$ et $\vect{x_{i-1}} +\valeur{a_i} =\vect{x_i}$ pour tout $1\leq i\leq k$),
-on dit que $w$ est franchissable à partir de $\vect{x}$, et qu'on a une \emph{exécution} $\rho :\vect{x}\trans{w}{} \vect{y}$.
+on dit que $w$ est franchissable à partir de $\vect{x}$, et qu'on a une \emph{exécution} $\rho :\vect{x}\trans{w}{S} \vect{y}$.
 $\vect{y}$ est alors dit accessible à partir de $\vect{x}$.
 
 De plus, en notant $\valeur{w}\defeq \sum^k_{i=1} \valeur{a_i}$ le vecteur associé à $w$, on obtient $\vect{x} +\valeur{w} = \vect{y}$.
-Cependant, l'égalité peut-être vérifiée même si $w$ n'est pas franchissable.
+Attention, cette égalité peut-être vérifiée même si $w$ n'est pas franchissable.
 \vspace{3mm}
 
 Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\xinit)$ :
 \begin{enumerate}
     \item 
-    $\lang(S)\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \xinit\trans{w}{}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de $\xinit$,
+    $\lang(A,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de la configuration $\vect{x}$,
     
-    \item $\conf{S}\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \xinit\trans{w}{} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\xinit$. 
+    \item $\conf(A,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
+
+En particulier, on regardera $\lang(S):=\lang(A,\xinit)$ le langage du VAS $S$, et $\conf(S):=\conf(A,\xinit)$ l'ensemble d'accessibilité de $S$.
 
 % A déplacer ?
 \begin{Definition}
@@ -171,20 +176,80 @@ Tout d'abord, on va donner une caractérisation mathématique équivalente à la
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 
-Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence sur les configurations :
+Ginzburg et Yoeli proposent dans \cite{giyo80} une relation d'équivalence sur les configurations :
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\rel_S$ sur l'ensemble des configurations $\N^d$ par
-$$\vect{x}\rel_S\vect{y} \ssi \forall w\in A^\ast, \Big( \vect{x} +\valeur{w}\in\conf{S} \equivaut \vect{y} +\valeur{w}\in\conf{S} \Big)$$
+Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\relGY$ sur l'ensemble des configurations accessibles $\conf(S)$ par
+$$\forall \vect{x},\vect{y}\in\conf(S), \Big(
+\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big) \Big)$$
 \end{Definition}
 
-On peut remarquer que cette relation revient simplement à regarder l'égalité des langages :
-par définition, on a $\vect{x}\rel_S\vect{y} \ssi \lang(A,\vect{x})=\lang(A,\vect{y})$ pour tout $\vect{x},\vect{y}\in\N^d$.
+On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
+Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
+Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
+voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$
+
+On donne ci-dessous un contre-exemple pour illustrer ce point :
+
+\begin{Example}
+Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+Le langage reconnu $\lang(S)=\set{a^n}{n\in\N}$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
+
+Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
+Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \conf(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \conf(S)$.
+
+La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$.
+\end{Example}
+
+Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
+
+\begin{Definition}
+Soit $S=(A,\xinit)$ un VAS. On introduit la relation $\rel_S$ sur les configurations de $\N^d$ par
+$$\forall \vect{x},\vect{y}\in\N^d, \Big(
+\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y}) \Big)$$
+\end{Definition}
+
+% Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
+
+On fait ainsi immédiatement le lien avec la relation de Nérode bien connue sur les langages :
+
+\begin{Theorem}[Nérode]
+    Un langage $L$ sur un alphabet fini $A$ est rationnel si et seulement si la relation $\sim_L$ sur les mots définie par
+    $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
+    qui est une relation d'équivalence invariante par composition à droite, 
+    admet un nombre fini de classes d'équivalences.
+\end{Theorem}
+
+\begin{Lemma}
+    Soit $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
+    Alors $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
+\end{Lemma}
+
+\begin{proof}
+On utilise le fait que si $u\in\lang(S)$, alors
+$uw\in\lang(S)$ si et seulement si $w\in\lang(A,\xinit +\valeur{u})$.
+
+Attention, le résultat devient faux si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
+\end{proof}
+
+\begin{Theorem}
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\rel_S$ restreint aux configurations accessibles $\conf(S)$ admet un nombre fini de classes d'équivalence.
+\end{Theorem}
+
+\begin{proof}
+$\lang(S)$ est rationnel 
+ssi $A^\ast/\sim_{\lang(S)}$ est fini 
+ssi $\lang(S)/\sim_{\lang(S)}$ est fini 
+ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme pour cette dernière équivalence).
+\end{proof}
 
 % graphe de couverture : arbre, s'arrêter quand noeud=pred
 % comparer clover/graphe
 % donner toutes les différences
 % papier 1977 Valk,Vidal-Naquet
+
+\lucas{Partie à supprimer :}
+\color{red} % Début de la partie à supprimer
 
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d$-VAS.
@@ -193,7 +258,7 @@ c'est-à-dire telle que $\vect{x}\rel \vect{y}$ implique $\forall a\in A, \vect{
 \end{Definition}
 
 % On donne la preuve de congruence (qui n'est pas donnée dans 2)
-\lucas{Ajouter similaire à Nérode + on donne la preuve dans ce cas infini.}
+%Ajouter similaire à Nérode + on donne la preuve dans ce cas infini
 
 
 \begin{Lemma}
@@ -204,10 +269,10 @@ c'est-à-dire telle que $\vect{x}\rel \vect{y}$ implique $\forall a\in A, \vect{
 $\rel_S$ est bien une relation d'équivalence sur $\N^d$.
 De plus, $\rel_S$ est stable par les déclenchements : 
 si $\vect{x}\rel_S \vect{y}$, alors pour toute action $a\in A$ et tout mot $w\in A^\ast$, 
-on a $$(\vect{x} +\valeur{a}) +\valeur{w} \in\conf{S} 
-    \equivaut \vect{x} +\valeur{aw} \in\conf{S}
-    \equivaut \vect{y} +\valeur{aw} \in\conf{S}
-    \equivaut (\vect{y} +\valeur{a}) +\valeur{w} \in\conf{S}$$
+on a $$(\vect{x} +\valeur{a}) +\valeur{w} \in\conf(S) 
+    \equivaut \vect{x} +\valeur{aw} \in\conf(S)
+    \equivaut \vect{y} +\valeur{aw} \in\conf(S)
+    \equivaut (\vect{y} +\valeur{a}) +\valeur{w} \in\conf(S)$$
 d'où $\vect{x}+\valeur{a} \rel_S \vect{y}+\valeur{a}$.
 \end{proof}
 
@@ -233,26 +298,20 @@ $\vect{x} +\valeur{a_1\dots a_i} \rel_1\vect{y} +\valeur{a_1\dots a_i}$ par réc
 Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence sur $S$.
 \end{proof}
 
-\alain{Est-ce que la relation d'ordre associée $x \sqsubseteq  y$ if $\lang(S,x) \subseteq \lang(S,y)$ est intéressante à regarder ?}
-
-%----------
-
-On peut désormais utiliser les résultats connus sur cette congruence \lucas{référence ?}, ce qui nous donne :
-
-\begin{Theorem}[\cite{giyo80} théorème 1]
-    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si le quotient $\conf{S}/\rel_S$ est fini.
-\end{Theorem}
+\color{black} % Fin de la partie à supprimer
 
 %--------------
-Pour obtenir un nombre fini de classes d'équivalence pour $\rel$, on cherche une borne à partir de laquelle les configurations sont indiscernables.
+Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
 Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puisse pas trop décroître.
 Ginzburg et Yoeli proposent une telle caractérisation :
 
+\lucas{La suite reste encore à modifier pour prendre en compte les changements.}
+
 \begin{Lemma}[\cite{giyo80} lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
-    Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf{S}$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
-    si $(\vect{x} +\valeur{w})\in\conf{S}$ alors $\vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
-    Alors $\conf{S}/\rel_S$ est fini.
+    Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
+    si $(\vect{x} +\valeur{w})\in\conf(S)$ alors $\vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
+    Alors $\conf(S)/\rel_S$ est fini.
 \end{Lemma}
 
 Ginzburg et Yoeli donne aussi la réciproque de ce résultat.
@@ -263,8 +322,8 @@ On va en prouver une version simplifiée, notamment en considérant le maximum $
 %begin{Theorem}
 %    Soit $S=(A,\xinit)$ un VAS.
 %    Alors $\lang(S)$ est rationnel si et seulement si 
-%    $$\exists k\in\N, \forall \vect{x}\in\conf{S}, \forall w\in A^\ast, 
-%    \Big( (\vect{x} +\valeur{w})\in\conf{S} \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
+%    $$\exists k\in\N, \forall \vect{x}\in\conf(S), \forall w\in A^\ast, 
+%    \Big( (\vect{x} +\valeur{w})\in\conf(S) \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
 %\end{Theorem}
 
 %Une manière équivalente de formuler cette caractérisation serait
@@ -287,7 +346,7 @@ On va en prouver une version simplifiée, notamment en considérant le maximum $
 (caractérisation $\Rightarrow$ rationnel)
 Soit $S$ un VAS vérifiant la caractérisation \eqref{eq:caracterisation} pour un $k\in\N$.
 
-Si $\vect{x},\vect{y}\in\conf{S}$ vérifient 
+Si $\vect{x},\vect{y}\in\conf(S)$ vérifient 
 $\vect{x}(i)=\vect{y}(i)$ ou $\vect{x}\geq k \land \vect{y}\geq k$
 pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
@@ -313,7 +372,7 @@ on aurait $\vect{x}_{\phi(p)}\rel_S (\vect{x}_{\phi(p)} +\valeur{u})=\vect{x}_{\
 
 Or $r\cdot\valeur{u}(j) =r\cdot(\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, ce qui prouve que $(\vect{x}_{\phi(p)}+r\cdot \valeur{u})(j)<0$ à partir d'un certain $r\in\N$, et donc $\vect{x}_{\phi(p)}+r\cdot \valeur{u} \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
-On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), d'où $\conf{S}/\rel_S$ est infini.
+On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), d'où $\conf(S)/\rel_S$ est infini.
 \end{proof}
 
 %\textbf{Méthode de Valk et Vidal-Naquet :}
@@ -359,16 +418,16 @@ Soit $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices.
 On dira que
 \begin{itemize}
     \item $I$ est \emph{borné} pour $\vect{x}\in \Nomega^d$ lorsqu'il existe toujours une coordonnée d'indice dans $I$ qui soit bornée pour toute configuration accessible depuis $\vect{x}$ :
-    $$\exists k\in\N, \forall \vect{y}\in\conf{\vect{x}}, \exists i\in I, \vect{y}(i)\leq k$$
+    $$\exists k\in\N, \forall \vect{y}\in\conf(S,\vect{x}), \exists i\in I, \vect{y}(i)\leq k$$
     
     \item $I$ est \emph{uniformément borné} pour $\vect{x}\in \Nomega^d$ lorsque toutes les coordonnées d'indice dans $I$ sont bornées pour toute configuration accessible depuis $\vect{x}$ :
-    $$\exists k\in\N, \forall \vect{y}\in\conf{\vect{x}}, \forall i\in I, \vect{y}(i)\leq k$$
+    $$\exists k\in\N, \forall \vect{y}\in\conf(S,\vect{x}), \forall i\in I, \vect{y}(i)\leq k$$
     
     \item $I$ est \emph{borné inférieurement} pour $\vect{x}\in \Nomega^d$ lorsqu'au moins une coordonnée dans $I$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf{\vect{x} + n\cdot\indicatrice{I}}, \exists i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf(S,\vect{x} + n\cdot\indicatrice{I}), \exists i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
     
     \item $I$ est \emph{uniformément borné inférieurement} pour $\vect{u}\in \Nomega^d$ lorsque toutes les coordonnées de $I$ ne décroissent pas plus d'une certaine valeur :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf{\vect{x} + n\cdot\indicatrice{I}}, \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf(S,\vect{x} + n\cdot\indicatrice{I}), \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
 \end{itemize}
 
 \section{Commentaires}
