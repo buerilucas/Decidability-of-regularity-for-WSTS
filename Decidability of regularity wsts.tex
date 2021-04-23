@@ -187,7 +187,10 @@ $$\forall \vect{x},\vect{y}\in\conf(S), \Big(
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
 Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
 Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
-voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$
+voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
+
+\lucas{Endroit qui coince pour Ginzburg et Yoeli :}
+À l'antepenultième ligne de la preuve du théorème 1 de \cite{giyo80}, savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ ne permet pas d'en déduire que $uw\in\lang(S)$.
 
 On donne ci-dessous un contre-exemple pour illustrer ce point :
 
@@ -242,11 +245,6 @@ ssi $A^\ast/\sim_{\lang(S)}$ est fini
 ssi $\lang(S)/\sim_{\lang(S)}$ est fini 
 ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme pour cette dernière équivalence).
 \end{proof}
-
-% graphe de couverture : arbre, s'arrêter quand noeud=pred
-% comparer clover/graphe
-% donner toutes les différences
-% papier 1977 Valk,Vidal-Naquet
 
 \lucas{Partie à supprimer :}
 \color{red} % Début de la partie à supprimer
