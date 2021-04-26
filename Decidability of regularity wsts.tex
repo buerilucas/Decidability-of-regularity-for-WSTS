@@ -176,9 +176,9 @@ Tout d'abord, on va donner une caractérisation mathématique équivalente à la
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 
-\subsection{Une relation sur les configurations}
+\subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
-Ginzburg et Yoeli proposent dans \cite{giyo80} une relation d'équivalence sur les configurations :
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que de plus l'énoncé est faux. Nous le corrigerons en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
 
 \begin{Definition}[\cite{giyo80} section 3]
 Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\relGY$ sur l'ensemble des configurations accessibles $\conf(S)$ par
@@ -192,6 +192,7 @@ Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à
 voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
 
 \lucas{Endroit qui coince pour Ginzburg et Yoeli :}
+\alain{il fait être plus préçis le théorème 1 est faux}
 À l'antépénultième ligne de la preuve du théorème 1 de \cite{giyo80}, savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ ne permet pas d'en déduire que $uw\in\lang(S)$.
 
 On donne ci-dessous un contre-exemple pour illustrer ce point :
@@ -206,6 +207,7 @@ Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'e
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$.
 \end{Example}
 
+\subsection{Une autre relation d'équivalence qui est d'index fini}
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
 
 \begin{Definition}
@@ -216,14 +218,12 @@ $$\forall \vect{x},\vect{y}\in\N^d, \Big(
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
 
-On fait ainsi immédiatement le lien avec la relation de Nérode bien connue sur les langages :
-
-\begin{Theorem}[Nérode - \cite{rasc59} théorème 2]
-    Un langage $L$ sur un alphabet fini $A$ est rationnel si et seulement si la relation $\sim_L$ sur les mots définie par
+On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L$ et bien connue sur les langages.
     $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
-    qui est une relation d'équivalence invariante par composition à droite, 
-    admet un nombre fini de classes d'équivalences.
-\end{Theorem}
+On sait que $\sim_L$ est une relation d'équivalence invariante par composition à droite et qu'un langage $L \subseteq A^*$ est rationnel si et seulement si $A^*/\sim_L$ est fini (\cite{rasc59}, Théorème 2).
+
+%	admet un nombre fini de classes d'équivalences.
+
 
 \begin{Lemma}
     Soit $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
@@ -251,7 +251,7 @@ ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme pour cette dernière équi
 Enfin, on donne une propriété de cette relation qui sera utile pour la suite.
 
 \begin{Proposition}
-La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible avec les actions :
+La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible/monotone avec les actions :
 Pour tout $\vect{x},\vect{y}\in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_S \vect{y} +\valeur{a}$.
 \end{Proposition}
 
