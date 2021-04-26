@@ -178,13 +178,17 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
-Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que de plus l'énoncé est faux. Nous le corrigerons en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\conf(S)$ (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que de plus l'énoncé est faux car $\conf(S)/\relGY$ peut être infini. Nous proposerons de reprendre l'idée de GY mais en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\relGY$ sur l'ensemble des configurations accessibles $\conf(S)$ par
+Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ \alain{S doit apparaitre dans GY mais c'est lourd ou alors la noter juste E comme GY}  est définie pour tout $\vect{x},\vect{y}\in\conf(S)$ par : $ \vect{x}\relGY\vect{y}$  ssi 
+ $ \forall w\in A^\ast, \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S)$
+
 $$\forall \vect{x},\vect{y}\in\conf(S), \Big(
 \vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big) \Big)$$
-\end{Definition}
+\end{Definition}\alain{ça donne quoi si on définit E sur tout $\N^d$ ? Une classe de plus seulement ?}
+
+Remark: $\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles \alain{et sur $\N^d - \conf(S)$ ??? et sur tout $\N^d$ ???}
 
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
 Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
@@ -206,6 +210,8 @@ Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'e
 
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$.
 \end{Example}
+
+Remark: La relation $\relGY$ peut admettre une infinité de classes d'équivalences.
 
 \subsection{Une autre relation d'équivalence qui est d'index fini}
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
