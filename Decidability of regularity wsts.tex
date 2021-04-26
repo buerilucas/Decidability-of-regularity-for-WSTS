@@ -226,29 +226,31 @@ On sait que $\sim_L$ est une relation d'équivalence invariante par composition 
 
 
 \begin{Lemma}
-    Soit $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
+    Soient $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
     Alors $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
 \end{Lemma}
 
 \begin{proof}
 On utilise le fait que si $u\in\lang(S)$, alors
 $uw\in\lang(S)$ si et seulement si $w\in\lang(A,\xinit +\valeur{u})$.
-
-Attention, le résultat devient faux si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
 \end{proof}
 
+Attention, le résultat devient faux si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
+
+
 \begin{Theorem}
-    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\rel_S$ restreint aux configurations accessibles $\conf(S)$ admet un nombre fini de classes d'équivalence.
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\conf(S)/\rel_S$ est fini.
+%	restreint aux configurations accessibles $\conf(S)$ admet un nombre fini de classes d'équivalence.
 \end{Theorem}
 
 \begin{proof}
 $\lang(S)$ est rationnel 
 ssi $A^\ast/\sim_{\lang(S)}$ est fini 
 ssi $\lang(S)/\sim_{\lang(S)}$ est fini 
-ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme pour cette dernière équivalence).
+ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme \alain{lequel ?} pour cette dernière équivalence).
 \end{proof}
 
-Enfin, on donne une propriété de cette relation qui sera utile pour la suite.
+Enfin, on donne une propriété de cette relation qui sera utile pour la suite. \alain{à donner quand on en a besoin}
 
 \begin{Proposition}
 La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible/monotone avec les actions :
@@ -312,12 +314,12 @@ Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence 
 \subsection{Borne sur la décroissance}
 
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
-Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puisse pas trop décroître.
+Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puissent pas trop décroître.
 Ginzburg et Yoeli proposent une caractérisation dans ce sens :
 
 % Définir borné
 
-\begin{Lemma}[\cite{giyo80} lemme 1]
+\begin{Lemma}[\cite{giyo80} Lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
    %si $(\vect{x} +\valeur{w})\in\conf(S)$ 
@@ -326,7 +328,7 @@ Ginzburg et Yoeli proposent une caractérisation dans ce sens :
     Alors $\conf(S)/\rel_S$ est fini.
 \end{Lemma}
 
-Ginzburg et Yoeli donne aussi la réciproque de ce résultat.
+Ginzburg et Yoeli donne aussi la réciproque de ce résultat.\alain{pourquoi ne pas la donnert ?}
 On va en prouver une version simplifiée, notamment en considérant le maximum $k:= \text{max}\os{k_1,\dots,k_n}$, ce qui nous donne la caractérisation suivante :
 
 % On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
@@ -340,6 +342,8 @@ On va en prouver une version simplifiée, notamment en considérant le maximum $
 
 %Une manière équivalente de formuler cette caractérisation serait
 
+Notation:  Soit $k \in \N$, alors $\vect{k}$ désigne le vecteur $(k,k,...,k)\in\N^d$.
+
 \begin{Theorem}
     Soit $S=(A,\xinit)$ un VAS.
     Alors $\lang(S)$ est rationnel si et seulement si
@@ -351,12 +355,11 @@ On va en prouver une version simplifiée, notamment en considérant le maximum $
     \end{equation}
     %-----Une formulation en français-----:
     %il existe un $k\in\N$ tel que pour toutes configurations $\vect{x},\vect{y}\in\N^d$, si $\xinit\trans{*}{} \vect{x} \trans{*}{} \vect{y}$, alors $\vect{y}\geq \vect{x} -\vect{k}$
-    où $\vect{k}$ désigne le vecteur $(k,k,...,k)\in\N^d$.
 \end{Theorem}
 
 \begin{proof}
-(caractérisation $\Rightarrow$ rationnel)
-Soit $S$ un VAS vérifiant la caractérisation \eqref{eq:caracterisation} pour un $k\in\N$.
+Prouvons (1) $\Rightarrow \lang(S)$ est rationnel
+Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
 Si $\vect{x},\vect{y}\in\conf(S)$ vérifient 
 $\vect{x}(i)=\vect{y}(i)$ ou $\vect{x}(i)\geq k \land \vect{y}(i)\geq k$
@@ -367,9 +370,9 @@ puisque les coordonnées qui diffèrent entre $\vect{x}$ et $\vect{y}$ ne peuven
 Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
 
 \vspace{2mm}\noindent
-(rationnel $\Rightarrow$ caractérisation)
-Réciproquement, si $S$ ne vérifie pas la caractérisation \eqref{eq:caracterisation}, 
-on a pour tout $k\in\N$ l'existence d'une configuration accessible $\vect{x}$, d'un mot $w\in \lang(A,\vect{x})$ et d'une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
+Prouvons maintenant $\lang(S)$ rationnel $\Rightarrow$ (1) et de façon équivalente
+\xout{Réciproquement,} si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
+pour tout $k\in\N$ il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p}$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x_0} \trans{a_1}{}\vect{x_1} \trans{a_2}{}\dots \trans{a_n}{}\vect{x_n}= \vect{x} +\valeur{w}$.
