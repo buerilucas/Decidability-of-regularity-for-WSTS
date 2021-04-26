@@ -198,7 +198,7 @@ voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xin
 On donne ci-dessous un contre-exemple pour illustrer ce point :
 
 \begin{Example}
-Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+Soit le $3-VAS S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
 Le langage reconnu $\lang(S)=\set{a^n}{n\in\N}$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
 
 Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
@@ -329,6 +329,7 @@ Ginzburg et Yoeli proposent une caractérisation dans ce sens :
 \end{Lemma}
 
 Ginzburg et Yoeli donne aussi la réciproque de ce résultat.\alain{pourquoi ne pas la donnert ?}
+\alain{identifier précisément où est l'erreur de YG dans leur preuve du Théorème 1}
 On va en prouver une version simplifiée, notamment en considérant le maximum $k:= \text{max}\os{k_1,\dots,k_n}$, ce qui nous donne la caractérisation suivante :
 
 % On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
@@ -372,7 +373,7 @@ Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$
 \vspace{2mm}\noindent
 Prouvons maintenant $\lang(S)$ rationnel $\Rightarrow$ (1) et de façon équivalente
 \xout{Réciproquement,} si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
-pour tout $k\in\N$ il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
+pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p}$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x_0} \trans{a_1}{}\vect{x_1} \trans{a_2}{}\dots \trans{a_n}{}\vect{x_n}= \vect{x} +\valeur{w}$.
