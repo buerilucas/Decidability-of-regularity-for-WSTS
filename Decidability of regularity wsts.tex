@@ -22,11 +22,11 @@
 \theoremstyle{definition}
 \newtheorem{Theorem}{Théorème}
 \newtheorem{Definition}[Theorem]{Définition}
-\newtheorem{Question}[Theorem]{Question}
 \newtheorem{Proposition}[Theorem]{Proposition}
 \newtheorem{Lemma}[Theorem]{Lemme}
 \newtheorem{Property}[Theorem]{Propriété}
 \newtheorem{Example}[Theorem]{Exemple}
+\newtheorem*{Remark}{Remarque}
 %\newtheorem{Proof}{Preuve}
 
 \let\oldphi\phi
@@ -183,7 +183,7 @@ Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\
 
 S'il est vrai que $\conf(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\conf(S)/\relGY$ est infini. 
 Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
-mais en définissant une autre relation d'équivalence \alain{avec la congruence de Nérode} pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
+mais en définissant une autre relation d'équivalence \alain{/avec la congruence de Nérode/} pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
 Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y}\in\conf(S)$ par : $ \vect{x}\relGY\vect{y}$  ssi 
@@ -191,9 +191,12 @@ Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x
 
 $$\forall \vect{x},\vect{y}\in\conf(S), \Big(
 \vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big) \Big)$$
-\end{Definition}\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
+\end{Definition}
+\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
 
-Remark: $\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles.
+\begin{Remark}
+$\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles.
+\end{Remark}
 
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
 Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
@@ -217,7 +220,7 @@ Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'e
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$.
 \end{Example}
 
-Remark: La relation $\relGY$ peut admettre une infinité de classes d'équivalences.
+\alain{Remark: La relation $\relGY$ peut admettre une infinité de classes d'équivalences.}
 
 \subsection{Une autre relation d'équivalence qui est d'index fini}
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
@@ -242,13 +245,13 @@ Supposons $x\relGY y$ et montrons $\lang(A,x)\subseteq \lang(A,y)$ par récurren
 
 $x,y\in\lang(S)$ assure que le mot vide $\epsilon$ appartient aux deux langages.
 
-Soit $w\in\lang(A,x)$.
+Soit $w\in\lang(A,x)$. \lucas{À finir}
 \end{proof}
 
 On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. Pour tous $u,v\in A^\ast$, on définit: 
- $$ u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L $$
+$$ u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L $$
 
- $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
+%$$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
 
 On sait que $\sim_L$ est une relation d'équivalence invariante par composition à droite et qu'un langage $L \subseteq A^*$ est rationnel si et seulement si $A^*/\sim_L$ est fini (\cite{rasc59}, Théorème 2).
 
@@ -262,12 +265,20 @@ La congruence de Nérode est liée à l'équivalence $ \rel_S$ sur les VAS de la
 \end{Lemma}
 
 \begin{proof}
-L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tous $u,v \in A^*$. Pour l'implication réciproque, on utilise le fait que si $u\in\lang(S)$, alors
-$uw\in\lang(S)$ si et seulement si $w\in\lang(A,\xinit +\valeur{u})$.
+%L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tous $u,v \in A^*$.
+Si $u\in\lang(S)$, alors pour tout mot $w\in A^\ast$, on a l'équivalence :
+$$uw\in\lang(S) \equivaut w\in\lang(A,\xinit +\valeur{u})$$
+
+On en déduit immédiatement le résultat en reprenant les définitions de chaque relation.
 \end{proof}
 
 \alain{à relire et corriger}
 Remarque:  L'implication réciproque \alain{préciser quel sens:  $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ n'implique pas $u\sim_{\lang(S)}v$. est-ce suffisant qu'un des deux mots ne soit pas dans L(S) ? } si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
+
+\begin{Remark}
+La relation de Nérode ne s'intéresse qu'aux mots du langage, et $\set{w\in A^\ast}{w\notin\lang(S)}$ forme une unique classe d'équivalence pour $\sim_{\lang(S)}$.
+Ainsi, le lemme \ref{lien avec Nérode} devient faux dès lors que $u,v\notin\lang(S)$, puisque l'on a toujours $u\sim_{\lang(S)}v$ dans ce cas sans que $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ ne soit nécessairement vrai.
+\end{Remark}
 
 
 \begin{Theorem}
