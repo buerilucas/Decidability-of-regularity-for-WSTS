@@ -177,18 +177,18 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
-
-Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\conf(S)$ (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que de plus l'énoncé est faux car $\conf(S)/\relGY$ peut être infini. Nous proposerons de reprendre l'idée de GY mais en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
+\alain{pour simplifier les notations, je propose de noter $\relGY$ par $\equiv$ et celle de Nérode par $\sim_L$, short $\sim$}
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\conf(S)$ (\cite{giyo80}, Théorème 1). S'il est vrai que $\conf(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\conf(S)/\relGY$ est infini. Nous proposerons de reprendre l'idée de Ginzburg et Yoeli mais avec la congruence de Nérode pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette congruence.
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ \alain{S doit apparaitre dans GY mais c'est lourd ou alors la noter juste E comme GY}  est définie pour tout $\vect{x},\vect{y}\in\conf(S)$ par : $ \vect{x}\relGY\vect{y}$  ssi 
+Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y}\in\conf(S)$ par : $ \vect{x}\relGY\vect{y}$  ssi 
  $ \forall w\in A^\ast, \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S)$
 
 $$\forall \vect{x},\vect{y}\in\conf(S), \Big(
 \vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big) \Big)$$
-\end{Definition}\alain{ça donne quoi si on définit E sur tout $\N^d$ ? Une classe de plus seulement ?}
+\end{Definition}\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
 
-Remark: $\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles \alain{et sur $\N^d - \conf(S)$ ??? et sur tout $\N^d$ ???}
+Remark: $\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles.
 
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
 Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
@@ -196,8 +196,7 @@ Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à
 voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
 
 \lucas{Endroit qui coince pour Ginzburg et Yoeli :}
-\alain{il fait être plus préçis le théorème 1 est faux}
-À l'antépénultième ligne de la preuve du théorème 1 de \cite{giyo80}, savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ ne permet pas d'en déduire que $uw\in\lang(S)$.
+À l'antépénultième ligne de la preuve du théorème 1 de \cite{giyo80}, le fait que $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ n'implique pas que $uw\in\lang(S)$.
 
 On donne ci-dessous un contre-exemple pour illustrer ce point :
 
@@ -224,16 +223,19 @@ $$\forall \vect{x},\vect{y}\in\N^d, \Big(
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
 
-On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L$ et bien connue sur les langages.
-    $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
+On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. Pour tous $u,v\in A^\ast$, on définit: 
+ $$ u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L $$
+
+ $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
 On sait que $\sim_L$ est une relation d'équivalence invariante par composition à droite et qu'un langage $L \subseteq A^*$ est rationnel si et seulement si $A^*/\sim_L$ est fini (\cite{rasc59}, Théorème 2).
 
 %	admet un nombre fini de classes d'équivalences.
 
+La congruence de Nérode est liée à l'équivalence $ \rel_S$ sur les VAS de la manière suivante.
 
 \begin{Lemma}
     Soient $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
-    Alors $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
+    On a $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
 \end{Lemma}
 
 \begin{proof}
