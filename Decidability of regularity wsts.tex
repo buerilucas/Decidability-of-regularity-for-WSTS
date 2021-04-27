@@ -239,11 +239,12 @@ La congruence de Nérode est liée à l'équivalence $ \rel_S$ sur les VAS de la
 \end{Lemma}
 
 \begin{proof}
-On utilise le fait que si $u\in\lang(S)$, alors
+L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tous $u,v \in A^*$. Pour l'implication réciproque, on utilise le fait que si $u\in\lang(S)$, alors
 $uw\in\lang(S)$ si et seulement si $w\in\lang(A,\xinit +\valeur{u})$.
 \end{proof}
 
-Attention, le résultat devient faux si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
+\alain{à relire et corriger}
+Remarque:  L'implication réciproque \alain{préciser quel sens:  $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ n'implique pas $u\sim_{\lang(S)}v$. est-ce suffisant qu'un des deux mots ne soit pas dans L(S) ? } si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
 
 
 \begin{Theorem}
