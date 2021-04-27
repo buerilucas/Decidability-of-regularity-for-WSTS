@@ -178,7 +178,7 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
-Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que de plus l'énoncé est faux. Nous le corrigerons en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence (\cite{giyo80}, Théorème 1). Nous allons montrer que la preuve de ce théorème contient une erreur et que l'énoncé est inexact. Nous le corrigerons en définissant une autre relation d'équivalence pour laquelle on obtient l'équivalence entre la rationnalité du langage et le quotient fini.
 
 \begin{Definition}[\cite{giyo80} section 3]
 Soit $S=(A,\xinit)$ un VAS. On définit une relation d'équivalence $\relGY$ sur l'ensemble des configurations accessibles $\conf(S)$ par
@@ -191,15 +191,16 @@ Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\as
 Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
 voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
 
-\lucas{Endroit qui coince pour Ginzburg et Yoeli :}
-\alain{il fait être plus préçis le théorème 1 est faux}
-À l'antépénultième ligne de la preuve du théorème 1 de \cite{giyo80}, savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ ne permet pas d'en déduire que $uw\in\lang(S)$.
+Plus précisément sur la preuve de Ginzburg et Yoeli, 
+avoir $\conf(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prouvé en construisant explicitement l'automate.
+Par contre, la réciproque est fausse : 
+L'erreur (avant-dernière ligne de la preuve de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
 
 On donne ci-dessous un contre-exemple pour illustrer ce point :
 
 \begin{Example}
 Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
-Le langage reconnu $\lang(S)=\set{a^n}{n\in\N}$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
+Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
 
 Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
 Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \conf(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \conf(S)$.
@@ -218,6 +219,21 @@ $$\forall \vect{x},\vect{y}\in\N^d, \Big(
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
 
+Constatons déjà que cette nouvelle relation est plus grande que celle de Ginzburg et Yoeli (au sens de l'inclusion) :
+
+\begin{Proposition}
+Soit $S=(A,\xinit)$ un VAS et $x,y\in\lang(S)$.
+Si $x\relGY y$ alors $x\rel_S y$.
+\end{Proposition}
+
+\begin{proof}
+Supposons $x\relGY y$ et montrons $\lang(A,x)\subseteq \lang(A,y)$ par récurrence sur la longueur des mots.
+
+$x,y\in\lang(S)$ assure que le mot vide $\epsilon$ appartient aux deux langages.
+
+Soit $w\in\lang(A,x)$.
+\end{proof}
+
 On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L$ et bien connue sur les langages.
     $$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
 On sait que $\sim_L$ est une relation d'équivalence invariante par composition à droite et qu'un langage $L \subseteq A^*$ est rationnel si et seulement si $A^*/\sim_L$ est fini (\cite{rasc59}, Théorème 2).
@@ -225,7 +241,7 @@ On sait que $\sim_L$ est une relation d'équivalence invariante par composition 
 %	admet un nombre fini de classes d'équivalences.
 
 
-\begin{Lemma}
+\begin{Lemma}\label{lien avec Nérode}
     Soient $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
     Alors $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
 \end{Lemma}
@@ -247,7 +263,7 @@ Attention, le résultat devient faux si $u,v\notin\lang(S)$, auquel cas on a tou
 $\lang(S)$ est rationnel 
 ssi $A^\ast/\sim_{\lang(S)}$ est fini 
 ssi $\lang(S)/\sim_{\lang(S)}$ est fini 
-ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme \alain{lequel ?} pour cette dernière équivalence).
+ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme \ref{lien avec Nérode} pour cette dernière équivalence).
 \end{proof}
 
 Enfin, on donne une propriété de cette relation qui sera utile pour la suite. \alain{à donner quand on en a besoin}
@@ -312,6 +328,7 @@ Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence 
 %--------------
 
 \subsection{Borne sur la décroissance}
+\lucas{À modifier}
 
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
 Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puissent pas trop décroître.
@@ -319,16 +336,22 @@ Ginzburg et Yoeli proposent une caractérisation dans ce sens :
 
 % Définir borné
 
-\begin{Lemma}[\cite{giyo80} Lemme 1]
+\begin{Proposition}[\cite{giyo80} Lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
-   %si $(\vect{x} +\valeur{w})\in\conf(S)$ 
-    si $w\in\lang(A,\vect{x})$ 
-    $\vect{x}(i) - (\vect{x} +\valeur{w})(i)\geq k_i$.
-    Alors $\conf(S)/\rel_S$ est fini.
-\end{Lemma}
+    $(\vect{x} +\valeur{w})\in\conf(S)$ implique
+    %si $w\in\lang(A,\vect{x})$ 
+    $\vect{x}(i) - (\vect{x} +\valeur{w})(i) \leq k_i$.
+    Alors $\conf(S)/\relGY$ est fini.
+\end{Proposition}
 
-Ginzburg et Yoeli donne aussi la réciproque de ce résultat.\alain{pourquoi ne pas la donnert ?}
+\begin{Proposition}[\cite{giyo80} Lemme 2]
+    Soit $S=(A,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
+    pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\conf(S)$ et un mot $w\in A^\ast$ tels que 
+    $(\vect{x} +\valeur{w}) \in\conf(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
+    Alors l'ensemble $\conf(S)/\relGY$ est fini.
+\end{Proposition}
+
 On va en prouver une version simplifiée, notamment en considérant le maximum $k:= \text{max}\os{k_1,\dots,k_n}$, ce qui nous donne la caractérisation suivante :
 
 % On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
