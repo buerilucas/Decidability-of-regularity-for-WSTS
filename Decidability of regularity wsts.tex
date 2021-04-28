@@ -237,16 +237,26 @@ $$\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y})$$
 Constatons déjà que cette nouvelle relation est plus grande que celle de Ginzburg et Yoeli (au sens de l'inclusion) :
 
 \begin{Proposition}
-Soit $S=(A,\xinit)$ un VAS et $x,y\in\lang(S)$.
-Si $x\relGY y$ alors $x\rel_S y$.
+Soit $S=(A,\xinit)$ un VAS et $\vect{x},y \in\lang(S)$.
+Si $\vect{x} \relGY y$ alors $\vect{x} \rel_S y$.
 \end{Proposition}
 
 \begin{proof}
-Supposons $x\relGY y$ et montrons $\lang(A,x)\subseteq \lang(A,y)$ par récurrence sur la longueur des mots.
+Supposons $\vect{x} \relGY \vect{y}$ et montrons $\lang(A,\vect{x}) \subseteq \lang(A,\vect{y})$ par récurrence sur la longueur des mots.
+Soit $w\in\lang(A,\vect{x})$.
 
-$x,y\in\lang(S)$ assure que le mot vide $\epsilon$ appartient aux deux langages.
+Si $w=\epsilon$ est le mot vide, $\vect{y} \in\lang(S)$ assure que $\epsilon\in\lang(S,\vect{y})$.
 
-Soit $w\in\lang(A,x)$. \lucas{À finir}
+Sinon, on écrit $w=ua$ avec $u\in A^\ast$ et $a\in A$.
+$u\in\lang(A,\vect{x})$ est plus court que $w$, donc par hypothèse de récurrence on a également $u\in\lang(A,\vect{y})$.
+$u$ est donc franchissable depuis $\vect{y}$.
+Mais $ua\in\lang(A,\vect{x})$, ce qui assure que $\vect{x} +\valeur{ua}\in\conf(S)$.
+
+Comme $\vect{x} \relGY \vect{y}$, on obtient que $\vect{y} +\valeur{ua} \in\conf(S)$, aboutissant à $\vect{y} +\valeur{ua} \geq\vect{0}$.
+L'action $a$ est donc franchissable depuis $\vect{y} +\valeur{u}$.
+En résumé, on a les transitions valides $\vect{x} \trans{u}{S} \vect{x} +\valeur{u} \trans{a}{S} \vect{x} +\valeur{w}$, d'où $w\in\lang(A,y)$.
+
+On conclut enfin que $\lang(A,\vect{x}) = \lang(A,\vect{y})$ par symétrie.
 \end{proof}
 
 On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. 
@@ -285,7 +295,7 @@ Ainsi, le lemme \ref{lien avec Nérode} devient faux dès lors que $u,v\notin\la
 \end{Remark}
 
 
-\begin{Theorem}
+\begin{Theorem}\label{lien relation-rationnel}
     Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\conf(S)/\rel_S$ est fini.
 %	restreint aux configurations accessibles $\conf(S)$ admet un nombre fini de classes d'équivalence.
 \end{Theorem}
@@ -297,9 +307,9 @@ ssi $\lang(S)/\sim_{\lang(S)}$ est fini
 ssi $\conf(S)/\rel_S$ est fini (en utilisant le lemme \ref{lien avec Nérode} pour cette dernière équivalence).
 \end{proof}
 
-Enfin, on donne une propriété de cette relation qui sera utile pour la suite. \alain{à donner quand on en a besoin}
+Enfin, on donne une propriété de monotonie pour cette relation, qui appuie son intérêt pour l'étude du système de transition $S$.
 
-\begin{Proposition}
+\begin{Proposition}\label{Monotonie relation}
 La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible/monotone avec les actions :
 Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_S \vect{y} +\valeur{a}$.
 \end{Proposition}
@@ -428,30 +438,30 @@ La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les m
 Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
-Si $\vect{x},\vect{y}\in\conf(S)$ vérifient 
-$\vect{x}(i)=\vect{y}(i)$ ou $\vect{x}(i)\geq k \land \vect{y}(i)\geq k$
+Si pour $\vect{x},\vect{y}\in\conf(S)$, on a 
+$\vect{x}(i)=\vect{y}(i)$ ou $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$
 pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
 puisque les coordonnées qui diffèrent entre $\vect{x}$ et $\vect{y}$ ne peuvent devenir négatives.
 
-Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
+Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel (théorème \ref{lien relation-rationnel}).
 
-\vspace{2mm}\noindent
+\vspace{4mm}\noindent
 Prouvons maintenant $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$, c'est-à-dire si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
-On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p}$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
-On a alors $\vect{x}=\vect{x_0} \trans{a_1}{}\vect{x_1} \trans{a_2}{}\dots \trans{a_n}{}\vect{x_n}= \vect{x} +\valeur{w}$.
+On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\conf(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
+On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
 Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $j$ possible par une action.
-Alors, au moins $k/\xi$ configurations $\vect{x_p}$ voient leur coordonnée $j$ décroître,
+Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $j$ décroître,
 et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(m)}(j)$ où $m\geq k/\xi$.
 
 % revoir ici
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
 En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)}$ avec $0\leq p\leq q\leq m$, en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
-on aurait $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u}) =\vect{x}_{\phi(q)}$, d'où
-$\vect{x}_{\phi(p)} +\valeur{u^r}\rel_S \vect{x}_{\phi(p)} +\valeur{u^{r+1}}$ pour tout $r\in\N$ (d'après la proposition).
+on aurait $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
+$\vect{x}_{\phi(p)} +\valeur{u^r}\rel_S \vect{x}_{\phi(p)} +\valeur{u^{r+1}}$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
 
 Or $\valeur{u^r}(j) = r\times\valeur{u}(j) = r\times (\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, 
 ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(j)<0$ à partir d'un certain $r\in\N$, 
