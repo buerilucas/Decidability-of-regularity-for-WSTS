@@ -27,6 +27,7 @@
 \newtheorem{Property}[Theorem]{Propriété}
 \newtheorem{Example}[Theorem]{Exemple}
 \newtheorem*{Remark}{Remarque}
+\newtheorem*{Statement}{Énoncé}
 %\newtheorem{Proof}{Preuve}
 
 \let\oldphi\phi
@@ -173,8 +174,9 @@ Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ain
 
 La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
-On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$.
+On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
+($\vect{k}$ désignera le vecteur $(k,k,...,k)\in\N^d$).
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 \alain{pour simplifier les notations, je propose de noter $\relGY$ par $\equiv$ et celle de Nérode par $\sim_L$, short $\sim$}
@@ -186,11 +188,8 @@ Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
 mais en définissant une autre relation d'équivalence \alain{/avec la congruence de Nérode/} pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y}\in\conf(S)$ par : $ \vect{x}\relGY\vect{y}$  ssi 
- $ \forall w\in A^\ast, \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S)$
-
-$$\forall \vect{x},\vect{y}\in\conf(S), \Big(
-\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big) \Big)$$
+Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\conf(S)$ par : 
+$$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big)$$
 \end{Definition}
 \alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
 
@@ -208,7 +207,10 @@ avoir $\conf(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prou
 Par contre, la réciproque est fausse : 
 L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
 
-On donne ci-dessous un contre-exemple pour illustrer ce point :
+\vspace{5mm}
+
+On donne ci-dessous un contre-exemple pour illustrer ce point.
+Il est nécessaire de se placer au moins en dimension 3, car le résultat de Ginzburg et Yoeli reste vrai en dimension inférieure.
 
 \begin{Example}
 Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
@@ -226,9 +228,8 @@ La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un VAS. On introduit la relation $\rel_S$ sur les configurations de $\N^d$ par
-$$\forall \vect{x},\vect{y}\in\N^d, \Big(
-\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y}) \Big)$$
+Soit $S=(A,\xinit)$ un VAS. On introduit la relation $\rel_S$ sur les configurations en posant pour tout $\vect{x},\vect{y} \in\N^d$ :
+$$\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y})$$
 \end{Definition}
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
@@ -248,7 +249,8 @@ $x,y\in\lang(S)$ assure que le mot vide $\epsilon$ appartient aux deux langages.
 Soit $w\in\lang(A,x)$. \lucas{À finir}
 \end{proof}
 
-On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. Pour tous $u,v\in A^\ast$, on définit: 
+On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. 
+Pour tout $u,v\in A^\ast$, on définit: 
 $$ u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L $$
 
 %$$\forall u,v\in A^\ast, \Big( u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L \Big)$$
@@ -257,7 +259,7 @@ On sait que $\sim_L$ est une relation d'équivalence invariante par composition 
 
 %	admet un nombre fini de classes d'équivalences.
 
-La congruence de Nérode est liée à l'équivalence $ \rel_S$ sur les VAS de la manière suivante.
+La congruence de Nérode concerne donc les mots plutôt que les configurations, mais est liée à l'équivalence $ \rel_S$ sur les VAS de la manière suivante :
 
 \begin{Lemma}\label{lien avec Nérode}
     Soient $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
@@ -265,15 +267,17 @@ La congruence de Nérode est liée à l'équivalence $ \rel_S$ sur les VAS de la
 \end{Lemma}
 
 \begin{proof}
-%L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tous $u,v \in A^*$.
+%L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tout $u,v \in A^*$.
 Si $u\in\lang(S)$, alors pour tout mot $w\in A^\ast$, on a l'équivalence :
 $$uw\in\lang(S) \equivaut w\in\lang(A,\xinit +\valeur{u})$$
 
 On en déduit immédiatement le résultat en reprenant les définitions de chaque relation.
 \end{proof}
 
-\alain{à relire et corriger}
-Remarque:  L'implication réciproque \alain{préciser quel sens:  $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ n'implique pas $u\sim_{\lang(S)}v$. est-ce suffisant qu'un des deux mots ne soit pas dans L(S) ? } si $u,v\notin\lang(S)$, auquel cas on a toujours $u\sim_{\lang(S)}v$.
+%\alain{à relire et corriger}
+%Remarque:  L'implication réciproque \alain{préciser quel sens:  $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$
+%n'implique pas $u\sim_{\lang(S)}v$} si $u,v\notin\lang(S)$ \alain{est-ce suffisant qu'un des deux mots ne soit pas dans L(S) ? }, 
+%auquel cas on a toujours $u\sim_{\lang(S)}v$.
 
 \begin{Remark}
 La relation de Nérode ne s'intéresse qu'aux mots du langage, et $\set{w\in A^\ast}{w\notin\lang(S)}$ forme une unique classe d'équivalence pour $\sim_{\lang(S)}$.
@@ -297,8 +301,12 @@ Enfin, on donne une propriété de cette relation qui sera utile pour la suite. 
 
 \begin{Proposition}
 La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible/monotone avec les actions :
-Pour tout $\vect{x},\vect{y}\in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_S \vect{y} +\valeur{a}$.
+Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_S \vect{y} +\valeur{a}$.
 \end{Proposition}
+
+\begin{Remark}
+La relation $\relGY$ de Ginzburg et Yoeli vérifie également cette propriété.
+\end{Remark}
 
 \lucas{Partie à supprimer :}
 \color{red} % Début de la partie à supprimer
@@ -355,33 +363,40 @@ Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence 
 %--------------
 
 \subsection{Borne sur la décroissance}
-\lucas{À modifier}
 
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
-Comme la seule règle sur les actions franchissables est un test de positivité, on va vouloir que les configurations ne puissent pas trop décroître.
-Ginzburg et Yoeli proposent une caractérisation dans ce sens :
+Comme la seule règle restreignant les actions franchissables est un test de positivité, on va exiger que les configurations ne puissent pas trop décroître.
 
-% Définir borné
+Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suivants :
 
-\begin{Proposition}[\cite{giyo80} Lemme 1]
+% Définir borné ?
+
+\begin{Statement}[\cite{giyo80} Lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
     $(\vect{x} +\valeur{w})\in\conf(S)$ implique
     %si $w\in\lang(A,\vect{x})$ 
     $\vect{x}(i) - (\vect{x} +\valeur{w})(i) \leq k_i$.
     Alors $\conf(S)/\relGY$ est fini.
-\end{Proposition}
+\end{Statement}
 
-\begin{Proposition}[\cite{giyo80} Lemme 2]
+Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
+Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.
+
+\begin{Statement}[\cite{giyo80} Lemme 2]
     Soit $S=(A,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
     pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\conf(S)$ et un mot $w\in A^\ast$ tels que 
     $(\vect{x} +\valeur{w}) \in\conf(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
-    Alors l'ensemble $\conf(S)/\relGY$ est fini.
-\end{Proposition}
+    Alors l'ensemble $\conf(S)/\relGY$ est infini.
+\end{Statement}
 
-\alain{identifier précisément où est l'erreur de YG dans leur preuve du Théorème 1}
+Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
+Il est affirmé que si $\vect{x} +\valeur{w} \in\conf{S}$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
+Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
 
-On va en prouver une version simplifiée, notamment en considérant le maximum $k:= \text{max}\os{k_1,\dots,k_n}$, ce qui nous donne la caractérisation suivante :
+\vspace{5mm}
+
+
 
 % On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
 
@@ -392,9 +407,8 @@ On va en prouver une version simplifiée, notamment en considérant le maximum $
 %    \Big( (\vect{x} +\valeur{w})\in\conf(S) \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
 %\end{Theorem}
 
-%Une manière équivalente de formuler cette caractérisation serait
-
-Notation:  Soit $k \in \N$, alors $\vect{k}$ désigne le vecteur $(k,k,...,k)\in\N^d$.
+Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
+La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.
 
 \begin{Theorem}
     Soit $S=(A,\xinit)$ un VAS.
@@ -409,8 +423,9 @@ Notation:  Soit $k \in \N$, alors $\vect{k}$ désigne le vecteur $(k,k,...,k)\in
     %il existe un $k\in\N$ tel que pour toutes configurations $\vect{x},\vect{y}\in\N^d$, si $\xinit\trans{*}{} \vect{x} \trans{*}{} \vect{y}$, alors $\vect{y}\geq \vect{x} -\vect{k}$
 \end{Theorem}
 
+\lucas{À modifier}
 \begin{proof}
-Prouvons (1) $\Rightarrow \lang(S)$ est rationnel
+Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
 Si $\vect{x},\vect{y}\in\conf(S)$ vérifient 
@@ -422,8 +437,7 @@ puisque les coordonnées qui diffèrent entre $\vect{x}$ et $\vect{y}$ ne peuven
 Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel.
 
 \vspace{2mm}\noindent
-Prouvons maintenant $\lang(S)$ rationnel $\Rightarrow$ (1) et de façon équivalente
-\xout{Réciproquement,} si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
+Prouvons maintenant $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$, c'est-à-dire si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p}$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
