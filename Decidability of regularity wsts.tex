@@ -392,11 +392,11 @@ On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \tran
 
 Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $j$ possible par une action.
 Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $j$ décroître,
-et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(m)}(j)$ où $m\geq k/\xi$.
+et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(h)}(j)$ où $h\geq k/\xi$.
 
 
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
-En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}_{\phi(p)} +\valeur{u})$ avec $0\leq p\leq q\leq m$ et en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
+En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}_{\phi(p)} +\valeur{u})$ avec $0\leq p\leq q\leq h$ et en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
 %cela donne $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
 alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
 
@@ -424,25 +424,61 @@ La procédure de décision nécessite de connaître deux choses :
 
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
-Pour tout élément maximal $\vect{m}\in\Nomega$ de l'arbre de couverture, notons $I_\vect{m}:=\set{j}{\vect{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\vect{m}$.
-On écrit $I_\vect{m}=\os{j_1,\dots,j_p}$.
+Pour tout élément maximal $\mathfrak{m}\in\Nomega$ de l'arbre de couverture, notons $J_\mathfrak{m}:=\set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\mathfrak{m}$.
+On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
-Pour tout $i\notin I_\vect{m}$, on définit un $(p+1)-$VAS $S(\vect{m},i) = \big(A(\vect{m},i), \xinit(\vect{m},i)\big)$ en posant
-$\xinit(\vect{m},i) := \big(\vect{m}(j_1), \dots, \vect{m}(j_p), 0\big)$,
-et $A(\vect{m},i) := \set{a(\vect{m},i)} {a\in A}$ 
-les actions étiquetés par $\valeur{a(\vect{m},i)} := \big(a(j_1),\dots,a(j_p),-a(i) \big)$.
+Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big(A(\mathfrak{m},i), \vect{x}_\mathfrak{m}\big)$ en posant
+\begin{itemize}
+    \item $A(\mathfrak{m},i) := \set{a(\mathfrak{m},i)} {a\in A}$ 
+    les actions étiquetées par $\valeur{a(\mathfrak{m},i)} := \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
+    \item $\vect{x}_\mathfrak{m} := \big(\mathfrak{m}(j_1), \dots, \mathfrak{m}(j_r), 0\big) \in \N^{r+1}$ la configuration initiale.
+\end{itemize}
 \end{Definition}
 
-On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
+\noindent On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
+
+On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
+pour $w = a_1\dots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) := a_1(\mathfrak{m},i) \dots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
+
+\begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
+    Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
+    Supposons qu'il existe une configuration $\vect{x}\in \conf(S)$ et un mot $u\in\lang(A,\vect{x})$ franchissable tel que $\valeur{u}(i) < -k$ pour un certain $i$.
+    Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{w'}(i) \leq 0$ pour tout préfixe $w'$ de $w$.
+\end{Lemma}
+
+\begin{proof}
+Notons $v$ le plus long préfixe de $u$ tel que $\valeur{v}(i) \geq 0$.
+On a alors $u = vw$, et le mot $w$ ainsi obtenu est franchissable à partir de $\vect{y} := \vect{x} + \valeur{v}$, 
+et vérifie $\valeur{w}(i) = \valeur{u}(i) - \valeur{v}(i) \leq \valeur{u}(i) \leq k$.
+De plus, pour tout préfixe $w'$ de $w$, on a $\valeur{w'}(i) = \valeur{vw'}(i) - \valeur{v}(i) \leq \valeur{vw'}(i) < 0$ puisque $vw'$ est un préfixe de $u$ plus long que $v$.
+\end{proof}
+
 Le théorème suivant est alors obtenu :
 
-\begin{Theorem}
+\begin{Theorem}[\cite{giyo80} théorème 2]
     Soit $S=(A,\xinit)$ un $d-$VAS.
-    Alors $S$ satisfait la caractérisation \eqref{eq:caracterisation} si et seulement si tous les VAS $S(\vect{m},i)$ définis ci-dessus sont bornés pour tout élément maximal $\vect{m}$ et tout $i\notin I_\vect{m}$.
+    Alors $S$ satisfait la propriété \eqref{eq:caracterisation} si et seulement si 
+    tous les VAS $S(\mathfrak{m},i)$ définis ci-dessus sont bornés pour tout élément maximal $\mathfrak{m}$ et tout $i\notin J_\mathfrak{m}$.
 \end{Theorem}
 
 \begin{proof}
-\lucas{À faire}
+Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné.
+La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
+Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
+
+Alors on peut trouver une configuration $\vect{x}\in\conf(S)$ de $\mathfrak{m}$ telle que $w\in\lang(A,\vect{x})$.
+En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$, 
+et les autres coordonnées peuvent être choisies aussi grandes que nécessaire dans $\mathfrak{m}$ pour que chaque préfixe de $w$ reste franchissable.
+
+Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$.
+
+%----Réciproque
+On suppose maintenant qu'il existe $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
+Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
+Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{w'}(i) \leq 0$ pour tout préfixe $w'$ de $w$.
+
+\lucas{À finir}
+
 \end{proof}
 
 %----------------------------------------------------------------
