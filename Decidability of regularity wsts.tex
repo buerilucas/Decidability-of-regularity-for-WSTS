@@ -63,7 +63,7 @@
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\rel}{\ensuremath{\equiv}}
-\newcommand{\relGY}{\ensuremath{\equiv_\text{GY}}}
+\newcommand{\relGY}{\ensuremath{\equiv^\text{GY}_S}}
 \newcommand{\ssi}{\ensuremath{\text{ ssi }}}
 \newcommand{\equivaut}{\ensuremath{\Leftrightarrow}}
 \newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
@@ -179,13 +179,12 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 ($\vect{k}$ désignera le vecteur $(k,k,...,k)\in\N^d$).
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
-\alain{pour simplifier les notations, je propose de noter $\relGY$ par $\equiv$ et celle de Nérode par $\sim_L$, short $\sim$}
 
 Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\conf(S)$ (\cite{giyo80}, Théorème 1).
 
 S'il est vrai que $\conf(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\conf(S)/\relGY$ est infini. 
 Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
-mais en définissant une autre relation d'équivalence \alain{/avec la congruence de Nérode/} pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
+mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
 Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\conf(S)$ par : 
@@ -212,6 +211,8 @@ L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) �
 On donne ci-dessous un contre-exemple pour illustrer ce point.
 Il est nécessaire de se placer au moins en dimension 3, car le résultat de Ginzburg et Yoeli reste vrai en dimension inférieure.
 
+\lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
+
 \begin{Example}
 Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
 Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
@@ -219,10 +220,9 @@ Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations access
 Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
 Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \conf(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \conf(S)$.
 
-La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$.
+La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
 \end{Example}
 
-\alain{Remark: La relation $\relGY$ peut admettre une infinité de classes d'équivalences.}
 
 \subsection{Une autre relation d'équivalence qui est d'index fini}
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
@@ -319,58 +319,6 @@ Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\fora
 La relation $\relGY$ de Ginzburg et Yoeli vérifie également cette propriété.
 \end{Remark}
 
-\lucas{Partie à supprimer :}
-\color{red} % Début de la partie à supprimer
-
-\begin{Definition}
-Soit $S=(A,\xinit)$ un $d$-VAS.
-On appelle \emph{congruence sur $S$} une relation d'équivalence $\rel$ sur les configurations de $\N^d$ qui est compatible avec les actions, 
-c'est-à-dire telle que $\vect{x}\rel \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel \vect{y} +\valeur{a}$.
-\end{Definition}
-
-% On donne la preuve de congruence (qui n'est pas donnée dans 2)
-%Ajouter similaire à Nérode + on donne la preuve dans ce cas infini
-
-
-\begin{Lemma}
- $\rel_S$ est une congruence sur le VAS $S$.
-\end{Lemma}
-
-\begin{proof}
-$\rel_S$ est bien une relation d'équivalence sur $\N^d$.
-De plus, $\rel_S$ est stable par les déclenchements : 
-si $\vect{x}\rel_S \vect{y}$, alors pour toute action $a\in A$ et tout mot $w\in A^\ast$, 
-on a $$(\vect{x} +\valeur{a}) +\valeur{w} \in\conf(S) 
-    \equivaut \vect{x} +\valeur{aw} \in\conf(S)
-    \equivaut \vect{y} +\valeur{aw} \in\conf(S)
-    \equivaut (\vect{y} +\valeur{a}) +\valeur{w} \in\conf(S)$$
-d'où $\vect{x}+\valeur{a} \rel_S \vect{y}+\valeur{a}$.
-\end{proof}
-
-\begin{Proposition}
-Soit un VAS $S=(A,\xinit)$.
-Alors $\rel_S$ est la plus grande congruence sur $S$ au sens de l'inclusion.
-\end{Proposition}
-
-\begin{proof}
-Montrons d'abord que l'ensemble des congruences sur $S$ est dirigé :
-
-Si $\rel_1$ et $\rel_2$ sont deux congruences sur $S$, alors notons $\rel_{1+2}$ la clôture transitive de l'union des deux relations $\rel_1\union\rel_2$.
-$\rel_{1+2}$ est bien une relation d'équivalence, 
-et si $\vect{x}\rel_{1+2}\vect{y}$, alors il existe une séquence finie de vecteurs ${(\vect{x}_i)}_{0\leq i\leq n}$ tels que 
-$\vect{x}=\vect{x}_0$, $\vect{y}=\vect{x}_n$ et pour tout $0\leq i<n$, $\vect{x}_i\rel_1\vect{x}_{i+1}$ ou $\vect{x}_i\rel_2\vect{x}_{i+1}$.
-
-On a alors $\vect{x}_i +\valeur{a} \rel_1 \vect{x}_{i+1} +\valeur{a}$ ou $\vect{x}_i +\valeur{a} \rel_2 \vect{x}_{i+1} +\valeur{a}$ pour tout $0\leq i<n$, 
-d'où $\vect{x} +\valeur{a} \rel_{1+2} \vect{y} +\valeur{a}$, 
-et $\rel_{1+2}$ est bien une congruence sur $S$ contenant $\rel_1$ et $\rel_2$.
-
-Maintenant, si $\rel_1$ est une congruence sur $S$, pour tout $\vect{x}\rel_1\vect{y}$ et $w=a_1\dots a_n\in A$, on a 
-$\vect{x} +\valeur{a_1\dots a_i} \rel_1\vect{y} +\valeur{a_1\dots a_i}$ par récurrence sur $1\leq i\leq n$, d'où $\vect{x} +\valeur{w} \rel_1\vect{y} +\valeur{w}$.
-Ainsi, $\rel_1\subseteq \rel_S$, et $\rel_S$ est bien la plus grande congruence sur $S$.
-\end{proof}
-
-\color{black} % Fin de la partie à supprimer
-
 %--------------
 
 \subsection{Borne sur la décroissance}
@@ -407,17 +355,6 @@ Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la
 
 \vspace{5mm}
 
-
-
-% On peut simplifier ce résultat en prenant une borne $k\in\N$ commune à toutes les coordonnées.
-
-%begin{Theorem}
-%    Soit $S=(A,\xinit)$ un VAS.
-%    Alors $\lang(S)$ est rationnel si et seulement si 
-%    $$\exists k\in\N, \forall \vect{x}\in\conf(S), \forall w\in A^\ast, 
-%    \Big( (\vect{x} +\valeur{w})\in\conf(S) \implies \forall i\in\os{1,\dots,d}, \valeur{w}(i)\geq -k\Big)$$
-%\end{Theorem}
-
 Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
 La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.
 
@@ -434,7 +371,6 @@ La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les m
     %il existe un $k\in\N$ tel que pour toutes configurations $\vect{x},\vect{y}\in\N^d$, si $\xinit\trans{*}{} \vect{x} \trans{*}{} \vect{y}$, alors $\vect{y}\geq \vect{x} -\vect{k}$
 \end{Theorem}
 
-\lucas{À modifier}
 \begin{proof}
 Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
@@ -458,15 +394,15 @@ Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus g
 Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $j$ décroître,
 et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(m)}(j)$ où $m\geq k/\xi$.
 
-% revoir ici
+
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
-En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)}$ avec $0\leq p\leq q\leq m$, en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
-on aurait $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
-$\vect{x}_{\phi(p)} +\valeur{u^r}\rel_S \vect{x}_{\phi(p)} +\valeur{u^{r+1}}$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
+En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}_{\phi(p)} +\valeur{u})$ avec $0\leq p\leq q\leq m$ et en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
+%cela donne $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
+alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
 
 Or $\valeur{u^r}(j) = r\times\valeur{u}(j) = r\times (\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, 
 ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(j)<0$ à partir d'un certain $r\in\N$, 
-et donc $\vect{x}_{\phi(p)} +\valeur{u^r} \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
+et donc $(\vect{x}_{\phi(p)} +\valeur{u^r}) \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
 On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), 
 ainsi $\conf(S)/\rel_S$ est infini.
@@ -483,25 +419,31 @@ ainsi $\conf(S)/\rel_S$ est infini.
 La procédure de décision nécessite de connaître deux choses :
 \begin{enumerate}
     \item D'abord, la liste des éléments maximaux de l'arbre de  associé au VAS,
-    \item Ensuite, une procédure pour décider si les configurations accessibles d'un VAS sont bornés.
+    \item Ensuite, une procédure pour décider si les configurations accessibles d'un VAS sont bornées.
 \end{enumerate}
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un $d$-VAS.
+Soit $S=(A,\xinit)$ un $d-$VAS.
 Pour tout élément maximal $\vect{m}\in\Nomega$ de l'arbre de couverture, notons $I_\vect{m}:=\set{j}{\vect{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\vect{m}$.
 On écrit $I_\vect{m}=\os{j_1,\dots,j_p}$.
-Pour tout $i\notin I_\vect{m}$, on définit un $(p+1)$-VAS $S_{(\vect{m},i)} =(A_{(\vect{m},i)}, \vect{x}_{(\vect{m},i)})$ en posant
-$A_{(\vect{m},i)} :=\set{a(\vect{m},i)}{a\in A}$ avec $\valeur{a(\vect{m},i)} :=(a(j_1),\dots,a(j_p),-a(i))$, 
-et $\vect{x}_{(\vect{m},i)} :=(\vect{m}(j_1),\dots,\vect{m}(j_p),0)$.
+
+Pour tout $i\notin I_\vect{m}$, on définit un $(p+1)-$VAS $S(\vect{m},i) = \big(A(\vect{m},i), \xinit(\vect{m},i)\big)$ en posant
+$\xinit(\vect{m},i) := \big(\vect{m}(j_1), \dots, \vect{m}(j_p), 0\big)$,
+et $A(\vect{m},i) := \set{a(\vect{m},i)} {a\in A}$ 
+les actions étiquetés par $\valeur{a(\vect{m},i)} := \big(a(j_1),\dots,a(j_p),-a(i) \big)$.
 \end{Definition}
 
 On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
 Le théorème suivant est alors obtenu :
 
 \begin{Theorem}
-    Soit $S=(A,\xinit)$ un $d$-VAS.
-    Alors $S$ satisfait la caractérisation \eqref{eq:caracterisation} si et seulement si tous les VAS $S_{(\vect{m},i)}$ définis ci-dessus sont bornés pour tout élément maximal $\vect{m}$ et tout $i\notin I_\vect{m}$.
+    Soit $S=(A,\xinit)$ un $d-$VAS.
+    Alors $S$ satisfait la caractérisation \eqref{eq:caracterisation} si et seulement si tous les VAS $S(\vect{m},i)$ définis ci-dessus sont bornés pour tout élément maximal $\vect{m}$ et tout $i\notin I_\vect{m}$.
 \end{Theorem}
+
+\begin{proof}
+\lucas{À faire}
+\end{proof}
 
 %----------------------------------------------------------------
 
@@ -528,9 +470,8 @@ On dira que
 \end{itemize}
 
 \section{Commentaires}
-biblio à commencer\\
-vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
-vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
+Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
+Vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
 
 %================================================================
 
