@@ -54,6 +54,7 @@
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \newcommand{\Nomega}{\ensuremath{\mathbb{N}_\omega}}
 \newcommand{\indicatrice}[1]{\ensuremath{\mathds{1}_{#1}}}
+\newcommand{\card}[1]{|#1|}
 
 \newcommand{\petri}{réseau de Petri\xspace}
 \newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
@@ -350,7 +351,7 @@ Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les 
 \end{Statement}
 
 Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
-Il est affirmé que si $\vect{x} +\valeur{w} \in\conf{S}$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
+Il est affirmé que si $\vect{x} +\valeur{w} \in\conf(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
 Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
 
 \vspace{5mm}
@@ -422,6 +423,21 @@ La procédure de décision nécessite de connaître deux choses :
     \item Ensuite, une procédure pour décider si les configurations accessibles d'un VAS sont bornées.
 \end{enumerate}
 
+\begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
+    Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
+    Supposons qu'il existe une configuration $\vect{x}\in \conf(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i$.
+    Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
+\end{Lemma}
+
+\begin{proof}
+Notons $z$ le plus long préfixe de $v$ tel que $\valeur{z}(i) \geq 0$.
+On a alors $v = zw$, et le mot $w$ ainsi obtenu est franchissable à partir de $\vect{y} := \vect{x} + \valeur{z}$, 
+et vérifie $\valeur{w}(i) = \valeur{v}(i) - \valeur{z}(i) \leq \valeur{v}(i) \leq k$.
+De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \valeur{z}(i) \leq \valeur{zu}(i) < 0$ puisque $zu$ est un préfixe de $v$ plus long que $z$.
+\end{proof}
+
+\lucas{Introduire avant l'ensemble de couverture et les idéaux maximaux.}
+
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
 Pour tout élément maximal $\mathfrak{m}\in\Nomega$ de l'arbre de couverture, notons $J_\mathfrak{m}:=\set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\mathfrak{m}$.
@@ -438,46 +454,48 @@ Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i
 \noindent On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
 
 On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
-pour $w = a_1\dots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) := a_1(\mathfrak{m},i) \dots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
-
-\begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
-    Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
-    Supposons qu'il existe une configuration $\vect{x}\in \conf(S)$ et un mot $u\in\lang(A,\vect{x})$ franchissable tel que $\valeur{u}(i) < -k$ pour un certain $i$.
-    Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{w'}(i) \leq 0$ pour tout préfixe $w'$ de $w$.
-\end{Lemma}
-
-\begin{proof}
-Notons $v$ le plus long préfixe de $u$ tel que $\valeur{v}(i) \geq 0$.
-On a alors $u = vw$, et le mot $w$ ainsi obtenu est franchissable à partir de $\vect{y} := \vect{x} + \valeur{v}$, 
-et vérifie $\valeur{w}(i) = \valeur{u}(i) - \valeur{v}(i) \leq \valeur{u}(i) \leq k$.
-De plus, pour tout préfixe $w'$ de $w$, on a $\valeur{w'}(i) = \valeur{vw'}(i) - \valeur{v}(i) \leq \valeur{vw'}(i) < 0$ puisque $vw'$ est un préfixe de $u$ plus long que $v$.
-\end{proof}
+pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) := a_1(\mathfrak{m},i) \cdots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
 
 \begin{Theorem}[\cite{giyo80} théorème 2]
     Soit $S=(A,\xinit)$ un $d-$VAS.
     Alors $S$ satisfait la propriété \eqref{eq:caracterisation} si et seulement si 
-    tous les VAS $S(\mathfrak{m},i)$ définis ci-dessus sont bornés pour tout élément maximal $\mathfrak{m}$ et tout $i\notin J_\mathfrak{m}$.
+    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout élément maximal $\mathfrak{m}$ et tout $i\notin J_\mathfrak{m}$.
 \end{Theorem}
 
 \begin{proof}
-Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné.
+Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r:=\card{J_\mathfrak{m}}$.
 La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
 Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
 
 Alors on peut trouver une configuration $\vect{x}\in\conf(S)$ de $\mathfrak{m}$ telle que $w\in\lang(A,\vect{x})$.
-En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$, 
-et les autres coordonnées peuvent être choisies aussi grandes que nécessaire dans $\mathfrak{m}$ pour que chaque préfixe de $w$ reste franchissable.
+En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$,
+puisque pour tout $x\in\conf(S)$ et tout préfixe $u$ de $w$, on a
+$(\vect{x} +\valeur{u})(j_p) = 
+\mathfrak{m}(j_p) +\valeur{u}(j_p) = 
+%(\vect{x}(\mathfrak{m},i) +\valeur{u(\mathfrak{m},i)})(p) = 
+%\mathfrak{m}(j_p) +\valeur{u(\mathfrak{m},i)})(p) = 
+\vect{x}_\mathfrak{m}(p) +\valeur{u(\mathfrak{m},i)})(p) \geq 0$.
+Les autres coordonnées (non-bornées dans $\mathfrak{m}$) peuvent ensuite être choisies aussi grandes que nécessaire pour franchir $w$.
 
-Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$.
+Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, on sait que $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$.
 
 %----Réciproque
+\vspace{3mm}
 On suppose maintenant qu'il existe $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
 Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
-Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{w'}(i) \leq 0$ pour tout préfixe $w'$ de $w$.
+Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 
-\lucas{À finir}
+Soit $\mathfrak{m}$ un élément maximal \lucas{précisions} au dessus de $\vect{y}$.
+Alors il existe une configuration $\vect{z}\in\mathfrak{m}$ vérifiant $\vect{y} \leq \vect{z}$.
+Dans le VAS $S(\mathfrak{m},i)$, le mot $w(\mathfrak{m},i)$ appartient au langage $\lang(S(\mathfrak{m},i))$ 
+puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a 
+\begin{itemize}
+    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable sur $\vect{y}$,
+    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r:=\card{J_\mathfrak{m}}$.
+\end{itemize}
+Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \conf(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
 
 \end{proof}
 
