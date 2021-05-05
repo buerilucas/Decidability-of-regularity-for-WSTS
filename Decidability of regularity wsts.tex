@@ -359,7 +359,7 @@ Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la
 Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
 La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.
 
-\begin{Theorem}
+\begin{Theorem}\label{caractérisation}
     Soit $S=(A,\xinit)$ un VAS.
     Alors $\lang(S)$ est rationnel si et seulement si
     \begin{equation}
@@ -460,7 +460,7 @@ Le théorème suivant est alors obtenu :
 
 \begin{Theorem}[\cite{giyo80} théorème 2]
     Soit $S=(A,\xinit)$ un $d-$VAS.
-    Alors $S$ satisfait la propriété \eqref{eq:caracterisation} si et seulement si 
+    Alors $S$ est rationnel si et seulement si 
     tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout élément maximal $\mathfrak{m}$ et tout $i\notin J_\mathfrak{m}$.
 \end{Theorem}
 
@@ -479,7 +479,8 @@ $(\vect{x} +\valeur{u})(j_p) =
 \vect{x}_\mathfrak{m}(p) +\valeur{u(\mathfrak{m},i)})(p) \geq 0$.
 Les autres coordonnées (non-bornées dans $\mathfrak{m}$) peuvent ensuite être choisies aussi grandes que nécessaire pour franchir $w$.
 
-Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, on sait que $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$.
+Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, on sait que $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$, 
+ce qui assure que $\lang(S)$ n'est pas rationnel (par le théorème \ref{caractérisation}).
 
 %----Réciproque
 \vspace{3mm}
