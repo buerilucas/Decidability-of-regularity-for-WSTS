@@ -59,7 +59,9 @@
 \newcommand{\petri}{réseau de Petri\xspace}
 \newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
 \newcommand{\lang}{\ensuremath{\mathcal{L}}}
-\newcommand{\conf}{\ensuremath{\mathcal{R}}}
+\newcommand{\reach}{\ensuremath{\mathcal{R}}}
+\newcommand{\cover}{\ensuremath{\mathcal{C}}}
+\newcommand{\clover}{\textit{Clover}}
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
@@ -103,11 +105,13 @@ $B$ représente donc le coût de la transition (le nombre de jetons requis et co
 On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
 On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$) aux séquences de transitions, ou mots $w\in T^\ast$.
 
-Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\conf(N)\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
+Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\reach(N)\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
 
 %----------------------------------------------------------------
 
 \section{VAS}
+
+\subsection{La structure}
 
 Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d-$VAS) $S=(A,\xinit)$ est la donnée d'un vecteur initial $\xinit\in\N^d$ et d'un ensemble fini $A$ d'\emph{actions}.
 À chaque action $a\in A$ est associé un unique vecteur $\valeur{a}\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur de $\Z^d$.
@@ -138,24 +142,59 @@ Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\xin
     \item 
     $\lang(A,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de la configuration $\vect{x}$,
     
-    \item $\conf(A,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
+    \item $\reach(A,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
 
-En particulier, on regardera $\lang(S):=\lang(A,\xinit)$ le langage du VAS $S$, et $\conf(S):=\conf(A,\xinit)$ l'ensemble d'accessibilité de $S$.
+En particulier, on regardera $\lang(S):=\lang(A,\xinit)$ le langage du VAS $S$, et $\reach(S):=\reach(A,\xinit)$ l'ensemble d'accessibilité de $S$.
 
 % A déplacer ?
 \begin{Definition}
 Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 \end{Definition}
+
+\begin{Definition}
+Soit $S = (A,\xinit)$ un $d-$VAS et $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices.
+\begin{itemize}
+    \item $S$ est \emph{borné} sur $I$ lorsque toute configuration accessible a ses coordonnées de $I$ bornées :
+    $$\exists k\in\N, \forall \vect{y}\in\reach(S), \forall i\in I, \vect{y}(i)\leq k$$
+    
+    \item $S$ est \emph{borné inférieurement} sur $I$ lorsque toutes les coordonnées de $I$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{I}), \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
+\end{itemize}
+\end{Definition}
 %----------------------------------------------------------------
 
-\section{Un algorithme de calcul du Graphe de couverture (pour les VAS)}
+\subsection{Clover et le graphe de couverture}
 
-On étend les configurations des VAS aux vecteurs à coordonnées dans $\Nomega\defeq \N\union\os{\omega}$.
-Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
+On aimerait avoir un meilleur aperçu des configurations accessibles, et notamment décrire de manière finie les capacités pour le VAS d'atteindre des configurations non-bornées.
+Rappelons d'abord la notion d'idéal :
 
-Le \emph{graphe de couverture} \lucas{À revoir.}
-a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+\begin{Definition}
+Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
+\begin{itemize}
+    \item $E$ est dit \emph{dirigé} lorsque pour tous $x,y\in E$ il existe un $z\in E$ vérifiant $x\leq z$ et $u\leq z$.
+    \item $E$ est dit \emph{clos par le bas} lorsqu'il est égal à sa clôture par le bas $\downarrow E \defeq \set{x\in X}{\exists y\in E, x\leq y}$.
+    \item Enfin, $E$ est un \emph{idéal} s'il est dirigé et clos par le bas.
+\end{itemize}
+\end{Definition}
+
+On peut maintenant introduire l'ensemble de couverture $\cover(A,x) \defeq \downarrow \reach(A,x)$ d'un VAS.
+Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
+
+Les idéaux de $\N^d$ peuvent se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
+
+\begin{Definition}
+Soit $S=(A,\xinit)$ un $d-$VAS.
+On définit $\clover(S) \subseteq \Nomega^d$ comme l'ensemble des idéaux maximaux inclus dans $\cover(S)$.
+C'est aussi l'unique ensemble de taille minimale d'idéaux dont l'union correspond à $\cover(S)$.
+\end{Definition}
+
+%-----------
+
+%Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
+\lucas{À revoir.}
+
+Le \emph{graphe de couverture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
 Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
@@ -181,31 +220,31 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
-Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\conf(S)$ (\cite{giyo80}, Théorème 1).
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\reach(S)$ (\cite{giyo80}, Théorème 1).
 
-S'il est vrai que $\conf(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\conf(S)/\relGY$ est infini. 
+S'il est vrai que $\reach(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\reach(S)/\relGY$ est infini. 
 Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
 mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\conf(S)$ par : 
-$$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\conf(S) \equivaut \vect{y} +\valeur{w}\in\conf(S) \big)$$
+Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
+$$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$$
 \end{Definition}
 \alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
 
 \begin{Remark}
-$\relGY$ est une relation d'équivalence sur l'ensemble $\conf(S)$ des configurations accessibles.
+$\relGY$ est une relation d'équivalence sur l'ensemble $\reach(S)$ des configurations accessibles.
 \end{Remark}
 
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
-Cela est malheureusement faux, puisque pour $\vect{x}\in\conf(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\conf(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
+Cela est malheureusement faux, puisque pour $\vect{x}\in\reach(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\reach(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
 Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
 voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
 
 Plus précisément sur la preuve de Ginzburg et Yoeli, 
-avoir $\conf(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prouvé en construisant explicitement l'automate.
+avoir $\reach(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prouvé en construisant explicitement l'automate.
 Par contre, la réciproque est fausse : 
-L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\conf(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
+L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\reach(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
 
 \vspace{5mm}
 
@@ -219,7 +258,7 @@ Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont éti
 Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
 
 Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
-Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \conf(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \conf(S)$.
+Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \reach(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \reach(S)$.
 
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
 \end{Example}
@@ -251,9 +290,9 @@ Si $w=\epsilon$ est le mot vide, $\vect{y} \in\lang(S)$ assure que $\epsilon\in\
 Sinon, on écrit $w=ua$ avec $u\in A^\ast$ et $a\in A$.
 $u\in\lang(A,\vect{x})$ est plus court que $w$, donc par hypothèse de récurrence on a également $u\in\lang(A,\vect{y})$.
 $u$ est donc franchissable depuis $\vect{y}$.
-Mais $ua\in\lang(A,\vect{x})$, ce qui assure que $\vect{x} +\valeur{ua}\in\conf(S)$.
+Mais $ua\in\lang(A,\vect{x})$, ce qui assure que $\vect{x} +\valeur{ua}\in\reach(S)$.
 
-Comme $\vect{x} \relGY \vect{y}$, on obtient que $\vect{y} +\valeur{ua} \in\conf(S)$, aboutissant à $\vect{y} +\valeur{ua} \geq\vect{0}$.
+Comme $\vect{x} \relGY \vect{y}$, on obtient que $\vect{y} +\valeur{ua} \in\reach(S)$, aboutissant à $\vect{y} +\valeur{ua} \geq\vect{0}$.
 L'action $a$ est donc franchissable depuis $\vect{y} +\valeur{u}$.
 En résumé, on a les transitions valides $\vect{x} \trans{u}{S} \vect{x} +\valeur{u} \trans{a}{S} \vect{x} +\valeur{w}$, d'où $w\in\lang(A,y)$.
 
@@ -297,8 +336,8 @@ Ainsi, le lemme \ref{lien avec Nérode} devient faux dès lors que $u,v\notin\la
 
 
 \begin{Theorem}\label{lien relation-rationnel}
-    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\conf(S)/\rel_S$ est fini.
-%	restreint aux configurations accessibles $\conf(S)$ admet un nombre fini de classes d'équivalence.
+    Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\reach(S)/\rel_S$ est fini.
+%	restreint aux configurations accessibles $\reach(S)$ admet un nombre fini de classes d'équivalence.
 \end{Theorem}
 
 \begin{proof}
@@ -306,7 +345,7 @@ On a les équivalences suivantes: \\
 $\lang(S)$ est rationnel 
 ssi $A^\ast/\sim_{\lang(S)}$ est fini (propriété de la relation de Nérode) \\
 ssi $\lang(S)/\sim_{\lang(S)}$ est fini (car $\sim_{\lang(S)}$ admet un seule classe d'équivalence sur $A^\ast \setminus \lang(S)$) \\
-ssi $\conf(S)/\rel_S$ est fini (par le lemme \ref{lien avec Nérode}).
+ssi $\reach(S)/\rel_S$ est fini (par le lemme \ref{lien avec Nérode}).
 \end{proof}
 
 Enfin, on donne une propriété de monotonie pour cette relation, qui appuie son intérêt pour l'étude du système de transition $S$.
@@ -333,11 +372,11 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
 
 \begin{Statement}[\cite{giyo80} Lemme 1]
     Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
-    Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\conf(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
-    $(\vect{x} +\valeur{w})\in\conf(S)$ implique
+    Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\reach(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
+    $(\vect{x} +\valeur{w})\in\reach(S)$ implique
     %si $w\in\lang(A,\vect{x})$ 
     $\vect{x}(i) - (\vect{x} +\valeur{w})(i) \leq k_i$.
-    Alors $\conf(S)/\relGY$ est fini.
+    Alors $\reach(S)/\relGY$ est fini.
 \end{Statement}
 
 Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
@@ -345,13 +384,13 @@ Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les 
 
 \begin{Statement}[\cite{giyo80} Lemme 2]
     Soit $S=(A,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
-    pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\conf(S)$ et un mot $w\in A^\ast$ tels que 
-    $(\vect{x} +\valeur{w}) \in\conf(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
-    Alors l'ensemble $\conf(S)/\relGY$ est infini.
+    pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\reach(S)$ et un mot $w\in A^\ast$ tels que 
+    $(\vect{x} +\valeur{w}) \in\reach(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
+    Alors l'ensemble $\reach(S)/\relGY$ est infini.
 \end{Statement}
 
 Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
-Il est affirmé que si $\vect{x} +\valeur{w} \in\conf(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
+Il est affirmé que si $\vect{x} +\valeur{w} \in\reach(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
 Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
 
 \vspace{5mm}
@@ -376,7 +415,7 @@ La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les m
 Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
-Si pour $\vect{x},\vect{y}\in\conf(S)$, on a 
+Si pour $\vect{x},\vect{y}\in\reach(S)$, on a 
 $\vect{x}(i)=\vect{y}(i)$ ou $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$
 pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
@@ -388,7 +427,7 @@ Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$
 Prouvons maintenant $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$, c'est-à-dire si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
-On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\conf(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
+On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
 Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $j$ possible par une action.
@@ -406,7 +445,7 @@ ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(j)<0$ à partir d'un certa
 et donc $(\vect{x}_{\phi(p)} +\valeur{u^r}) \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
 On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), 
-ainsi $\conf(S)/\rel_S$ est infini.
+ainsi $\reach(S)/\rel_S$ est infini.
 \end{proof}
 
 %\textbf{Méthode de Valk et Vidal-Naquet :}
@@ -419,13 +458,13 @@ ainsi $\conf(S)/\rel_S$ est infini.
 
 La procédure de décision nécessite de connaître deux choses :
 \begin{enumerate}
-    \item D'abord, la liste des éléments maximaux de l'arbre de  associé au VAS,
-    \item Ensuite, une procédure pour décider si les configurations accessibles d'un VAS sont bornées.
+    \item D'abord, on veut pouvoir accéder à la liste des idéaux maximaux $\clover(S)$ du VAS étudié,
+    \item Ensuite, il nous faut une procédure pour décider si un VAS donné est bornées.
 \end{enumerate}
 
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
     Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
-    Supposons qu'il existe une configuration $\vect{x}\in \conf(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i$.
+    Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i$.
     Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 \end{Lemma}
 
@@ -436,11 +475,9 @@ et vérifie $\valeur{w}(i) = \valeur{v}(i) - \valeur{z}(i) \leq \valeur{v}(i) \l
 De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \valeur{z}(i) \leq \valeur{zu}(i) < 0$ puisque $zu$ est un préfixe de $v$ plus long que $z$.
 \end{proof}
 
-\lucas{Introduire avant l'ensemble de couverture et les idéaux maximaux.}
-
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
-Pour tout élément maximal $\mathfrak{m}\in\Nomega$ de l'arbre de couverture, notons $J_\mathfrak{m}:=\set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations accessibles en partant en dessous de $\mathfrak{m}$.
+Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m}:=\set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
 Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big(A(\mathfrak{m},i), \vect{x}_\mathfrak{m}\big)$ en posant
@@ -461,7 +498,7 @@ Le théorème suivant est alors obtenu :
 \begin{Theorem}[\cite{giyo80} théorème 2]
     Soit $S=(A,\xinit)$ un $d-$VAS.
     Alors $S$ est rationnel si et seulement si 
-    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout élément maximal $\mathfrak{m}$ et tout $i\notin J_\mathfrak{m}$.
+    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i\notin J_\mathfrak{m}$.
 \end{Theorem}
 
 \begin{proof}
@@ -469,9 +506,9 @@ Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r:=\ca
 La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
 Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
 
-Alors on peut trouver une configuration $\vect{x}\in\conf(S)$ de $\mathfrak{m}$ telle que $w\in\lang(A,\vect{x})$.
+Alors on peut trouver une configuration $\vect{x}\in\reach(S)$ de $\mathfrak{m}$ telle que $w\in\lang(A,\vect{x})$.
 En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$,
-puisque pour tout $x\in\conf(S)$ et tout préfixe $u$ de $w$, on a
+puisque pour tout $x\in\reach(S)$ et tout préfixe $u$ de $w$, on a
 $(\vect{x} +\valeur{u})(j_p) = 
 \mathfrak{m}(j_p) +\valeur{u}(j_p) = 
 %(\vect{x}(\mathfrak{m},i) +\valeur{u(\mathfrak{m},i)})(p) = 
@@ -488,7 +525,7 @@ On suppose maintenant qu'il existe $k\in\N$ majorant les coordonnées de toutes 
 Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
 Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 
-Soit $\mathfrak{m}$ un élément maximal \lucas{précisions} au dessus de $\vect{y}$.
+Soit $\mathfrak{m} \in\clover(S)$ un élément maximal contenant $\vect{y}$.
 Alors il existe une configuration $\vect{z}\in\mathfrak{m}$ vérifiant $\vect{y} \leq \vect{z}$.
 Dans le VAS $S(\mathfrak{m},i)$, le mot $w(\mathfrak{m},i)$ appartient au langage $\lang(S(\mathfrak{m},i))$ 
 puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a 
@@ -496,37 +533,28 @@ puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a
     \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable sur $\vect{y}$,
     \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r:=\card{J_\mathfrak{m}}$.
 \end{itemize}
-Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \conf(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
+Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \reach(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
 
 \end{proof}
 
-%----------------------------------------------------------------
-
-\section{Bornes}
-
-Détaillons maintenant plusieurs propriétés de bornes sur les coordonnées des vecteurs configurations.
-On regarde $\os{1,\dots,d}$ l'ensemble des indices des vecteurs codant les configurations d'un VAS $S=(A,\xinit)$.
-On peut voir ces coordonnées comme des emplacements accueillant un certain nombre de jetons, qui sont ajoutés ou retirés lors du déclenchement d'une action (lien avec les réseaux de Petri).
-
-Soit $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices.
-On dira que
-\begin{itemize}
-    \item $I$ est \emph{borné} pour $\vect{x}\in \Nomega^d$ lorsqu'il existe toujours une coordonnée d'indice dans $I$ qui soit bornée pour toute configuration accessible depuis $\vect{x}$ :
-    $$\exists k\in\N, \forall \vect{y}\in\conf(S,\vect{x}), \exists i\in I, \vect{y}(i)\leq k$$
-    
-    \item $I$ est \emph{uniformément borné} pour $\vect{x}\in \Nomega^d$ lorsque toutes les coordonnées d'indice dans $I$ sont bornées pour toute configuration accessible depuis $\vect{x}$ :
-    $$\exists k\in\N, \forall \vect{y}\in\conf(S,\vect{x}), \forall i\in I, \vect{y}(i)\leq k$$
-    
-    \item $I$ est \emph{borné inférieurement} pour $\vect{x}\in \Nomega^d$ lorsqu'au moins une coordonnée dans $I$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf(S,\vect{x} + n\cdot\indicatrice{I}), \exists i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
-    
-    \item $I$ est \emph{uniformément borné inférieurement} pour $\vect{u}\in \Nomega^d$ lorsque toutes les coordonnées de $I$ ne décroissent pas plus d'une certaine valeur :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\conf(S,\vect{x} + n\cdot\indicatrice{I}), \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
-\end{itemize}
+%==================================================
 
 \section{Commentaires}
 Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
 Vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
+
+Reformuler la preuve du théorème 9
+
+Réécrire le thm 6 de Valk et Vidal-Naquet.
+Rationnalité structurelle serait décidable (arithmétique de Presburger donne 3-exptime), peut-être NP ?
+
+Simplifier le thm 12 pour avoir un calcul facile dans les cas faciles (borné).
+
+Voir Garey, Johnson : référence pour les problèmes de complexité sur les vecteurs
+
+Regarder taille de l'automate (minimal ?) construit par GY et VVN. Est-ce Ackermann ?
+
+Sortir la config initiale $\xinit$ du VAS (plus facile pour gérer les VAS structurellement)
 
 %================================================================
 
