@@ -415,16 +415,19 @@ La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les m
 Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
-Si pour $\vect{x},\vect{y}\in\reach(S)$, on a 
-$\vect{x}(i)=\vect{y}(i)$ ou $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$
-pour toute coordonnée $i\in\os{1,\dots,d}$, alors $\vect{x}\rel_S \vect{y}$. 
+Soit $\vect{x},\vect{y}\in\reach(S)$.
+Supposons que $\vect{x}$ et $\vect{y}$ sont indiscernables pour les petites valeurs, c'est-à-dire que pour toute coordonnée $i\in\os{1,\dots,d}$, on a 
+soit $\vect{x}(i)=\vect{y}(i)$, 
+soit $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$.
+Alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
 puisque les coordonnées qui diffèrent entre $\vect{x}$ et $\vect{y}$ ne peuvent devenir négatives.
 
 Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel (théorème \ref{lien relation-rationnel}).
 
 \vspace{4mm}\noindent
-Prouvons maintenant $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$, c'est-à-dire si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
+Prouvons maintenant la réciproque $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$ par contraposée.
+Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
 
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
@@ -440,7 +443,7 @@ En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}
 %cela donne $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
 alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
 
-Or $\valeur{u^r}(j) = r\times\valeur{u}(j) = r\times (\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) <r$, 
+Or $\valeur{u^r}(j) = r\times\valeur{u}(j) = r\times (\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) < -r$, 
 ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(j)<0$ à partir d'un certain $r\in\N$, 
 et donc $(\vect{x}_{\phi(p)} +\valeur{u^r}) \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
@@ -542,8 +545,6 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 \section{Commentaires}
 Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
 Vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
-
-Reformuler la preuve du théorème 9
 
 Réécrire le thm 6 de Valk et Vidal-Naquet.
 Rationnalité structurelle serait décidable (arithmétique de Presburger donne 3-exptime), peut-être NP ?
