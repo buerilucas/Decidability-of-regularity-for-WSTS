@@ -540,6 +540,49 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 \end{proof}
 
+%--------------------------------------------------
+
+\section{Rationalité structurelle}
+
+\begin{Definition}
+On dit qu'un $d-$VAS $S=(A,\xinit)$ est \emph{structurellement rationnel} lorsque le VAS $(A,\vect{x})$ est rationnel pour toute configuration initiale $\vect{x}\in\N^d$.
+\end{Definition}
+
+Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \trans{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
+On ne s'intéresse alors pas à la notion de franchissement.
+On écrira $\vect{x} \trans{*}{A} \vect{y}$ lorsqu'il existe un tel $u$.
+
+Valk et Vidal-Naquet proposent une caractérisation pour cette nouvelle propriété :
+
+\begin{Theorem}[\cite{vavi81} théorème 6]
+Un $d-$VAS $S=(A,\xinit)$ est structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
+\begin{enumerate}
+    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$,
+    \item $\vect{x}_1(i) = \vect{x}_2(i)$ implique $\vect{x}_3(i) \leq \vect{x}_4(i)$ pour tout $i \leq d$,
+    \item $\vect{x}_3(i) > \vect{x}_4(i)$ pour un certain $i \leq d$.
+    
+    \item $\vect{0} \trans{*}{A} \vect{x}_1 \trans{*}{A} \vect{x}_2 \trans{*}{A} \vect{x}_3 \trans{*}{A} \vect{x}_4$,
+\end{enumerate}
+\end{Theorem}
+
+\begin{proof}
+Si $(A,\vect{x})$ n'est pas rationnel pour une configuration initiale $\vect{x}\in\N^d$, 
+\end{proof}
+
+Donnons maintenant une définition équivalente avec les mots.
+
+\begin{Theorem}
+$S=(A,\xinit)$ est structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
+\begin{enumerate}
+    \item $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
+    \item $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ pour tout $i \leq d$,
+    \item $\valeur{v}(i) < 0$ pour un certain $i \leq d$.
+\end{enumerate}
+\end{Theorem}
+
+On a alors $\vect{0} = \vect{x}_1 \trans{u}{A} \vect{x}_2 = \vect{x}_3 \trans{v}{A} \vect{x}_4$
+
+
 %==================================================
 
 \section{Commentaires}
