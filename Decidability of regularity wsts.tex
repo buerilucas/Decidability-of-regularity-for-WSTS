@@ -49,6 +49,7 @@
 \newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
 \let\union\cup
 \let\inter\cap
+\newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
@@ -438,7 +439,7 @@ pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
-Notons $\xi = \text{max}\set{-\valeur{a}(i)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $i$ possible par une action.
+Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
 Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $i$ décroître,
 et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
 
@@ -598,6 +599,10 @@ On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
 
 Notons $J := \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}$ l'ensemble des coordonnées bornées dans les $u_k$.
 Pour chaque $k\in\N$, on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus), où $h_j := \max \set{\valeur{u_k}(j)}{k\in\N}$.
+En posant $\xi = \text{max}\set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
+Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, il existe un $k_0\in\N$ tel que $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+
+Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18.
 \end{proof}
 
 
