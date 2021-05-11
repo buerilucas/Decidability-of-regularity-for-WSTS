@@ -49,6 +49,7 @@
 \newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
 \let\union\cup
 \let\inter\cap
+\newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
@@ -63,6 +64,8 @@
 \newcommand{\cover}{\ensuremath{\mathcal{C}}}
 \newcommand{\clover}{\textit{Clover}}
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
+\newcommand{\transZ}[2]{\ensuremath{\stackrel{#1}{\rightsquigarrow}_{#2}}}
+
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\rel}{\ensuremath{\equiv}}
@@ -126,11 +129,14 @@ De manière équivalente, on dira que l'action $a\in A$ est \emph{franchissable}
 à partir de la configuration $\vect{x}\in \N^d$ lorsque $\vect{x} + \valeur{a} \geq \vect{0}$,
 et son déclenchement aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$ à travers la transition $(\vect{x},a,\vect{y})\in \N^d\times A\times \N^d$.
 On notera $\vect{x}\trans{a}{S} \vect{y}$ lorsqu'un tel déclenchement est possible (ou simplement $\vect{x}\trans{a}{} \vect{y}$ s'il n'y a pas ambiguité sur $S$).
-\vspace{3mm}
+
+\begin{center}
+Par la suite, on notera $I \defeq \os{1,\dots,d}$ l'ensemble des coordonnées pour les configurations.
+\end{center}
 
 Lorsqu'une séquence d'actions $w= a_1\cdots a_k\in A^\ast$ permet d'aller de $\vect{x}$ à $\vect{y}$ par la séquence de transition $\vect{x}= \vect{x_0}\trans{a_1}{} \vect{x_1}\trans{a_2}{} \dots\trans{a_k}{} \vect{x_k}=\vect{y}$
 (où $\vect{x_0},\dots,\vect{x_k} \in\N^d$ et $\vect{x_{i-1}} +\valeur{a_i} =\vect{x_i}$ pour tout $1\leq i\leq k$),
-on dit que $w$ est franchissable à partir de $\vect{x}$, et qu'on a une \emph{exécution} $\rho :\vect{x}\trans{w}{S} \vect{y}$.
+on dit que $w$ est franchissable à partir de $\vect{x}$, et qu'on a une \emph{exécution} $\rho :\vect{x}\trans{w}{S} \vect{y}$.\\
 $\vect{y}$ est alors dit accessible à partir de $\vect{x}$.
 
 De plus, en notant $\valeur{w}\defeq \sum^k_{i=1} \valeur{a_i}$ le vecteur associé à $w$, on obtient $\vect{x} +\valeur{w} = \vect{y}$.
@@ -153,13 +159,13 @@ Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 \end{Definition}
 
 \begin{Definition}
-Soit $S = (A,\xinit)$ un $d-$VAS et $I\subseteq \os{1,\dots,d}$ un sous-ensemble d'indices.
+Soit $S = (A,\xinit)$ un $d-$VAS et $J\subseteq I$ un sous-ensemble d'indices.
 \begin{itemize}
-    \item $S$ est \emph{borné} sur $I$ lorsque toute configuration accessible a ses coordonnées de $I$ bornées :
-    $$\exists k\in\N, \forall \vect{y}\in\reach(S), \forall i\in I, \vect{y}(i)\leq k$$
+    \item $S$ est \emph{borné} sur $J$ lorsque toute configuration accessible a ses coordonnées de $J$ bornées :
+    $$\exists k\in\N, \forall \vect{y}\in\reach(S), \forall j\in J, \vect{y}(j)\leq k$$
     
-    \item $S$ est \emph{borné inférieurement} sur $I$ lorsque toutes les coordonnées de $I$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{I}), \forall i\in I, \vect{y}(i)\geq \vect{x}(i)+n-k$$
+    \item $S$ est \emph{borné inférieurement} sur $J$ lorsque toutes les coordonnées de $J$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{I}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
 \end{itemize}
 \end{Definition}
 %----------------------------------------------------------------
@@ -416,7 +422,7 @@ Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow 
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
 
 Soit $\vect{x},\vect{y}\in\reach(S)$.
-Supposons que $\vect{x}$ et $\vect{y}$ sont indiscernables pour les petites valeurs, c'est-à-dire que pour toute coordonnée $i\in\os{1,\dots,d}$, on a 
+Supposons que $\vect{x}$ et $\vect{y}$ sont indiscernables pour les petites valeurs, c'est-à-dire que pour toute coordonnée $i\in I$, on a 
 soit $\vect{x}(i)=\vect{y}(i)$, 
 soit $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$.
 Alors $\vect{x}\rel_S \vect{y}$. 
@@ -428,14 +434,14 @@ Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$
 \vspace{4mm}\noindent
 Prouvons maintenant la réciproque $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$ par contraposée.
 Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
-pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $j\in\os{1,\dots,d}$ tels que $(\vect{x} +\valeur{w})(j)\leq \vect{x}(j)-k$.
+pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
 
 On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
-Notons $\xi = \text{max}\set{-\valeur{a}(j)} {a\in A} >0$ la valeur de la plus grande diminution en coordonnée $j$ possible par une action.
-Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $j$ décroître,
-et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(j)>\vect{x}_{\phi(1)}(j)>\dots>\vect{x}_{\phi(h)}(j)$ où $h\geq k/\xi$.
+Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
+Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $i$ décroître,
+et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
 
 
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
@@ -443,8 +449,8 @@ En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}
 %cela donne $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
 alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
 
-Or $\valeur{u^r}(j) = r\times\valeur{u}(j) = r\times (\vect{x}_{\phi(q)}(j) -\vect{x}_{\phi(p)}(j)) < -r$, 
-ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(j)<0$ à partir d'un certain $r\in\N$, 
+Or $\valeur{u^r}(i) = r\times\valeur{u}(i) = r\times (\vect{x}_{\phi(q)}(i) -\vect{x}_{\phi(p)}(i)) < -r$, 
+ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(i)<0$ à partir d'un certain $r\in\N$, 
 et donc $(\vect{x}_{\phi(p)} +\valeur{u^r}) \not\rel_S \vect{x}_{\phi(p)}$, d'où une contradiction.
 
 On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (et ce pour tout $k\in\N$), 
@@ -467,7 +473,7 @@ La procédure de décision nécessite de connaître deux choses :
 
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
     Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
-    Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i$.
+    Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i \in I$.
     Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 \end{Lemma}
 
@@ -501,7 +507,7 @@ Le théorème suivant est alors obtenu :
 \begin{Theorem}[\cite{giyo80} théorème 2]
     Soit $S=(A,\xinit)$ un $d-$VAS.
     Alors $S$ est rationnel si et seulement si 
-    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i\notin J_\mathfrak{m}$.
+    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i \in I \setminus J_\mathfrak{m}$.
 \end{Theorem}
 
 \begin{proof}
@@ -548,10 +554,10 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 On dit qu'un $d-$VAS $A$ (sans configuration initiale)  \alain{il faut enlever $\xinit$ $S=(A,\xinit)$ n'a pas de sens} est \emph{structurellement rationnel} lorsque \xout{le VAS}  $\lang(A,\vect{x})$ (ou $(A,\vect{x})$ ?) est rationnel pour \xout{toutes configurations initiales} tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
-Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \trans{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.\alain{La lettre A désigne deux choses différentes, il y a d'autres lettres comme $\Sigma$ classique pour un alphabet}
+Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
+\alain{La lettre A désigne deux choses différentes, il y a d'autres lettres comme $\Sigma$ classique pour un alphabet}
 On ne s'intéresse alors pas à la notion de franchissement.
-On écrira $\vect{x} \trans{*}{A} \vect{y}$ quand il existe $u\in \Sigma^*$ tel que $\vect{x} \trans{u}{A} \vect{y}$ .
-%		lorsqu'il existe un tel $u$.
+On écrira $\vect{x} \transZ{*}{A} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u}{A} \vect{y}$ .
 
 Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationnalité structurelle.
 %		cette nouvelle propriété :
@@ -559,35 +565,55 @@ Valk et Vidal-Naquet proposent une caractérisation pour la propriété de ratio
 \begin{Theorem}[\cite{vavi81} théorème 6]
 Un $d-$VAS $S=(A,\xinit)$ \alain{n'est pas !} est structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
-    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$,  \alain{$\vect{x}_1 < \vect{x}_2$}
-    \item $\vect{x}_1(i) = \vect{x}_2(i)$ implique $\vect{x}_3(i) \leq \vect{x}_4(i)$ pour tout $i \leq d$,
-    \item $\vect{x}_3(i) > \vect{x}_4(i)$ pour un certain $i \leq d$.\alain{on dit: il existe i...}
+    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$, 
+		\alain{$\vect{x}_1 < \vect{x}_2$}
+    \item Pour tout $j \in I$, $\vect{x}_1(j) = \vect{x}_2(j)$ implique $\vect{x}_3(j) \leq \vect{x}_4(j)$,
+    \item Il existe un $i\in I$ tel que $\vect{x}_3(i) > \vect{x}_4(i)$.
     
-    \item $\vect{0} \trans{*}{A} \vect{x}_1 \trans{*}{A} \vect{x}_2 \trans{*}{A} \vect{x}_3 \trans{*}{A} \vect{x}_4$,
+    \item $\vect{0} \transZ{*}{A} \vect{x}_1 \transZ{*}{A} \vect{x}_2 \transZ{*}{A} \vect{x}_3 \transZ{*}{A} \vect{x}_4$,
 \end{enumerate}
 \end{Theorem}
-
-\begin{proof}
-Si $(A,\vect{x})$ n'est pas rationnel pour une configuration initiale $\vect{x}\in\N^d$, 
-\end{proof}
 
 Donnons maintenant une définition équivalente \alain{à prouver} avec les mots.
 
 \begin{Theorem}
 \xout{$S=(A,\xinit)$} $A$ \alain{n'est pas !} structurellement rationnel si et seulement s'il existe $u,v\in \Sigma^*$ tels que 
 \begin{enumerate}
+<<<<<<< HEAD
     \item  \alain{$\valeur{u} > \vect{0}$} 
 $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
     \item pour tout $i \in [1..d]$, on a: $\valeur{u}(i)=0 \implies \valeur{v}(i) \geq 0$,
 %	quandtificateur mal placé
     \item il existe $i \in [1..d]$ tel que $\valeur{v}(i) < 0$.
 %	pour un certain $i \leq d$.
+=======
+    \item $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
+    \item Pour tout $j \in I$, $\valeur{u}(j)=0$ implique $\valeur{v}(j) \geq 0$ ,
+    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$.
+>>>>>>> 88bcda20f81d0ac3f9026788b24b054329aeb3be
 \end{enumerate}
 \end{Theorem}
 
+On a alors $\vect{0} = \vect{x}_1 \transZ{u}{A} \vect{x}_2 = \vect{x}_3 \transZ{v}{A} \vect{x}_4$
 
-On a alors $\vect{0} = \vect{x}_1 \trans{u}{A} \vect{x}_2 = \vect{x}_3 \trans{v}{A} \vect{x}_4$
+\begin{proof}
+Si $(A,\vect{x}_0)$ n'est pas rationnel pour une configuration initiale $\vect{x}_0 \in\N^d$, il existe pour tout $k\in\N$ une séquence d'actions franchissable 
+$\vect{x}_0 \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
+et une coordonnée $i_k \in I$ tels que $\vect{v}_k(i_k) < k$.
 
+Comme $i_k$ ne prend qu'un nombre fini de valeurs possible, il existe un $i\in I$ apparaissant une infinité de fois.
+On peut ainsi supposer que $i_k = i$ pour tout $k$.
+
+De plus, comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
+On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
+
+Notons $J := \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}$ l'ensemble des coordonnées bornées dans les $u_k$.
+Pour chaque $k\in\N$, on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus), où $h_j := \max \set{\valeur{u_k}(j)}{k\in\N}$.
+En posant $\xi = \text{max}\set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
+Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, il existe un $k_0\in\N$ tel que $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+
+Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18.
+\end{proof}
 
 %==================================================
 
