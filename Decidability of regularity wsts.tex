@@ -548,39 +548,40 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 %--------------------------------------------------
 
-\section{Rationalité structurelle}
+\section{Rationalité structurelle}\alain{un ou 2 n?}
 
 \begin{Definition}
-On dit qu'un $d-$VAS $S=(A,\xinit)$ est \emph{structurellement rationnel} lorsque le VAS $(A,\vect{x})$ est rationnel pour toute configuration initiale $\vect{x}\in\N^d$.
+On dit qu'un $d-$VAS $A$ (sans configuration initiale)  \alain{il faut enlever $\xinit$ $S=(A,\xinit)$ n'a pas de sens} est \emph{structurellement rationnel} lorsque \xout{le VAS}  $\lang(A,\vect{x})$ (ou $(A,\vect{x})$ ?) est rationnel pour \xout{toutes configurations initiales} tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
-\lucas{Faut-il retirer la configuration initiale des données du VAS ?}
-
 Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
+\alain{La lettre A désigne deux choses différentes, il y a d'autres lettres comme $\Sigma$ classique pour un alphabet}
 On ne s'intéresse alors pas à la notion de franchissement.
-On écrira $\vect{x} \transZ{*}{A} \vect{y}$ lorsqu'il existe un tel $u$.
+On écrira $\vect{x} \transZ{*}{A} \vect{y}$ quand il existe $u\in \A^*$ tel que $\vect{x} \transZ{u}{A} \vect{y}$ .
 
-Valk et Vidal-Naquet proposent une caractérisation pour cette nouvelle propriété :
+Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationnalité structurelle.
+%		cette nouvelle propriété :
 
 \begin{Theorem}[\cite{vavi81} théorème 6]
-Un $d-$VAS $S=(A,\xinit)$ est structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
+Un $d-$VAS $S=(A,\xinit)$ \alain{n'est pas !} est structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
-    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$,
-    \item $\vect{x}_1(j) = \vect{x}_2(j)$ implique $\vect{x}_3(j) \leq \vect{x}_4(j)$ pour tout $j \in I$,
-    \item $\vect{x}_3(i) > \vect{x}_4(i)$ pour un certain $i \in I$.
+    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$, 
+		\alain{$\vect{x}_1 < \vect{x}_2$}
+    \item Pour tout $j \in I$, $\vect{x}_1(j) = \vect{x}_2(j)$ implique $\vect{x}_3(j) \leq \vect{x}_4(j)$,
+    \item Il existe un $i\in I$ tel que $\vect{x}_3(i) > \vect{x}_4(i)$.
     
     \item $\vect{0} \transZ{*}{A} \vect{x}_1 \transZ{*}{A} \vect{x}_2 \transZ{*}{A} \vect{x}_3 \transZ{*}{A} \vect{x}_4$,
 \end{enumerate}
 \end{Theorem}
 
-Donnons maintenant une définition équivalente avec les mots.
+Donnons maintenant une définition équivalente \alain{à prouver} avec les mots.
 
 \begin{Theorem}
-$S=(A,\xinit)$ est structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
+\xout{$S=(A,\xinit)$} $A$ \alain{n'est pas !} structurellement rationnel si et seulement s'il existe $u,v\in \Sigma^*$ tels que 
 \begin{enumerate}
     \item $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
-    \item $\valeur{u}(j)=0$ implique $\valeur{v}(j) \geq 0$ pour tout $j \in I$,
-    \item $\valeur{v}(i) < 0$ pour un certain $i \in I$.
+    \item Pour tout $j \in I$, $\valeur{u}(j)=0$ implique $\valeur{v}(j) \geq 0$ ,
+    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$.
 \end{enumerate}
 \end{Theorem}
 
@@ -604,7 +605,6 @@ Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus
 
 Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18.
 \end{proof}
-
 
 %==================================================
 
