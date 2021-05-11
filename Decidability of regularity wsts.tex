@@ -548,7 +548,7 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 On dit qu'un $d-$VAS $S=(A,\xinit)$ est \emph{structurellement rationnel} lorsque le VAS $(A,\vect{x})$ est rationnel pour toute configuration initiale $\vect{x}\in\N^d$.
 \end{Definition}
 
-Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \trans{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
+Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \trans{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.\alain{A désigne deux choses différentes, il y a d'autres lettres comme $\Sigma$ classique pour un alphabet}
 On ne s'intéresse alors pas à la notion de franchissement.
 On écrira $\vect{x} \trans{*}{A} \vect{y}$ lorsqu'il existe un tel $u$.
 
@@ -574,9 +574,12 @@ Donnons maintenant une définition équivalente avec les mots.
 \begin{Theorem}
 $S=(A,\xinit)$ est structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
-    \item $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
-    \item $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ pour tout $i \leq d$,
-    \item $\valeur{v}(i) < 0$ pour un certain $i \leq d$.
+    \item  \alain{$\valeur{u} > \vect{0}$} 
+$\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
+    \item pour tout $i \in [1..d]$, on a $\valeur{u}(i)=0 \implies \valeur{v}(i) \geq 0$
+%	quandtificateur mal placé
+    \item il existe $i \in [1..d]$ tel que $\valeur{v}(i) < 0$ 
+%	pour un certain $i \leq d$.
 \end{enumerate}
 \end{Theorem}
 
