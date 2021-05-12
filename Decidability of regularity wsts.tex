@@ -64,7 +64,7 @@
 \newcommand{\cover}{\ensuremath{\mathcal{C}}}
 \newcommand{\clover}{\textit{Clover}}
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
-\newcommand{\transZ}[2]{\ensuremath{\stackrel{#1}{\rightsquigarrow}_{#2}}}
+\newcommand{\transZ}[1]{\ensuremath{\stackrel{#1}{\rightsquigarrow}}}
 
 \newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
@@ -102,7 +102,7 @@ Les configurations sont les marquages $M: P\to\N$, aussi considérés comme les 
 On peut déclencher la transition $t$ à partir du marquage $M$ si et
 seulement si $M(p)\geq B(p,t)$ pour tout $p\in P$ (noté $M\geq B(\cdot,t)$).
 
-On obtient alors un nouveau marquage $M'$ défini par $M':=M+D(\cdot,t)$ où $D\defeq F-B$. 
+On obtient alors un nouveau marquage $M'$ défini par $M' \defeq M+D(\cdot,t)$ où $D\defeq F-B$. 
 $B$ représente donc le coût de la transition (le nombre de jetons requis et consommés dans chaque emplacement), et $F$ représente sa production (les jetons créés lors du déclenchement).
 
 On notera $\fire{M}{t}$ lorsque $t$ peut se déclencher sur $M$, et $\fire{M}{t}M'$ si déclencher $t$ sur $M$ donne $M'$.
@@ -127,12 +127,14 @@ On a alors une transition entre $\vect{x}$ et $\vect{y}$ étiquetée par l'actio
 
 De manière équivalente, on dira que l'action $a\in A$ est \emph{franchissable} 
 à partir de la configuration $\vect{x}\in \N^d$ lorsque $\vect{x} + \valeur{a} \geq \vect{0}$,
-et son déclenchement aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$ à travers la transition $(\vect{x},a,\vect{y})\in \N^d\times A\times \N^d$.
-On notera $\vect{x}\trans{a}{S} \vect{y}$ lorsqu'un tel déclenchement est possible (ou simplement $\vect{x}\trans{a}{} \vect{y}$ s'il n'y a pas ambiguité sur $S$).
+et son déclenchement aboutit à la configuration $\vect{y} = \vect{x} + \valeur{a}$ à travers la transition $(\vect{x},a,\vect{y})\in \N^d\times A\times \N^d$.
+On notera $\vect{x}\trans{a}{S} \vect{y}$ lorsqu'un tel déclenchement est possible (ou simplement $\vect{x}\trans{a}{} \vect{y}$ s'il n'y a pas ambiguïté sur $S$).
 
 \begin{center}
 Par la suite, on notera $I \defeq \os{1,\dots,d}$ l'ensemble des coordonnées pour les configurations.
 \end{center}
+
+%On munit $\N^d$ (et $\Z^d$) de l'addition terme à terme, et de l'ordre usuel $\vect{x}\leq\vect{y}$ ssi $\forall i\in I, \vect{x}(i) \leq \vect{y}(i)$.
 
 Lorsqu'une séquence d'actions $w= a_1\cdots a_k\in A^\ast$ permet d'aller de $\vect{x}$ à $\vect{y}$ par la séquence de transition $\vect{x}= \vect{x_0}\trans{a_1}{} \vect{x_1}\trans{a_2}{} \dots\trans{a_k}{} \vect{x_k}=\vect{y}$
 (où $\vect{x_0},\dots,\vect{x_k} \in\N^d$ et $\vect{x_{i-1}} +\valeur{a_i} =\vect{x_i}$ pour tout $1\leq i\leq k$),
@@ -151,7 +153,7 @@ Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\xin
     \item $\reach(A,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
 
-En particulier, on regardera $\lang(S):=\lang(A,\xinit)$ le langage du VAS $S$, et $\reach(S):=\reach(A,\xinit)$ l'ensemble d'accessibilité de $S$.
+En particulier, on regardera $\lang(S) \defeq \lang(A,\xinit)$ le langage du VAS $S$, et $\reach(S) \defeq \reach(A,\xinit)$ l'ensemble d'accessibilité de $S$.
 
 % A déplacer ?
 \begin{Definition}
@@ -165,7 +167,7 @@ Soit $S = (A,\xinit)$ un $d-$VAS et $J\subseteq I$ un sous-ensemble d'indices.
     $$\exists k\in\N, \forall \vect{y}\in\reach(S), \forall j\in J, \vect{y}(j)\leq k$$
     
     \item $S$ est \emph{borné inférieurement} sur $J$ lorsque toutes les coordonnées de $J$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{I}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
 \end{itemize}
 \end{Definition}
 %----------------------------------------------------------------
@@ -206,11 +208,11 @@ Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la conf
 Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
 Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ainsi :
 \begin{itemize}
-    \item Si $\vect{x}\trans{a}{} \vect{y}$ (déclencher $a$ aboutit à la configuration $\vect{y} := \vect{x} + \valeur{a}$) 
+    \item Si $\vect{x}\trans{a}{} \vect{y}$ (déclencher $a$ aboutit à la configuration $\vect{y} = \vect{x} + \valeur{a}$) 
     et qu'il existe un sommet déjà existant $r:\vect{y}$ associé à cette configuration, alors on crée une arête étiquetée par $a$ de $s:\vect{x}$ vers $r:\vect{y}$ ;
     \item Si $\vect{x}\trans{a}{} \vect{y}$ et qu'il existe un ancêtre $r:\vect{z}$ de $s$ (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $r$ à $s$) avec $\vect{y}>\vect{z}$, 
     alors on crée un nouveau sommet $s':\vect{y'}$ et une arête de $s:\vect{y}$ vers $s':\vect{y'}$ étiquetée par $a$, 
-    où $\vect{y'}\in \Nomega^d$ est la configuration de coordonnées $\vect{y'}(i):=\vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i):=\omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
+    où $\vect{y'}\in \Nomega^d$ est la configuration de coordonnées $\vect{y'}(i) = \vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i) = \omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
     \item Si la configuration $\vect{y}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{y}$ et une arête de $s$ à $s'$ étiquetée par $a$.
 \end{itemize}
 
@@ -260,8 +262,8 @@ Il est nécessaire de se placer au moins en dimension 3, car le résultat de Gin
 \lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
 
 \begin{Example}
-Soit le $3-$VAS $S = (A:=\os{a,b,c},\xinit:=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
-Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n:=(n,0,0)$ pour $n\in\N$.
+Soit le $3-$VAS $S = (A=\os{a,b,c}, \xinit=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n=(n,0,0)$ pour $n\in\N$.
 
 Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
 Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \reach(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \reach(S)$.
@@ -436,7 +438,7 @@ Prouvons maintenant la réciproque $\big(\lang(S)$ rationnel $\Rightarrow$ \eqre
 Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
 
-On note $\vect{x_p}:=\vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
+On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
 Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
@@ -479,28 +481,28 @@ La procédure de décision nécessite de connaître deux choses :
 
 \begin{proof}
 Notons $z$ le plus long préfixe de $v$ tel que $\valeur{z}(i) \geq 0$.
-On a alors $v = zw$, et le mot $w$ ainsi obtenu est franchissable à partir de $\vect{y} := \vect{x} + \valeur{z}$, 
+On a alors $v = zw$, et le mot $w$ ainsi obtenu est franchissable à partir de $\vect{y} = \vect{x} + \valeur{z}$, 
 et vérifie $\valeur{w}(i) = \valeur{v}(i) - \valeur{z}(i) \leq \valeur{v}(i) \leq k$.
 De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \valeur{z}(i) \leq \valeur{zu}(i) < 0$ puisque $zu$ est un préfixe de $v$ plus long que $z$.
 \end{proof}
 
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
-Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m}:=\set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
+Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
 Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big(A(\mathfrak{m},i), \vect{x}_\mathfrak{m}\big)$ en posant
 \begin{itemize}
-    \item $A(\mathfrak{m},i) := \set{a(\mathfrak{m},i)} {a\in A}$ 
-    les actions étiquetées par $\valeur{a(\mathfrak{m},i)} := \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
-    \item $\vect{x}_\mathfrak{m} := \big(\mathfrak{m}(j_1), \dots, \mathfrak{m}(j_r), 0\big) \in \N^{r+1}$ la configuration initiale.
+    \item $A(\mathfrak{m},i) \defeq \set{a(\mathfrak{m},i)} {a\in A}$ 
+    les actions étiquetées par $\valeur{a(\mathfrak{m},i)} \defeq \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
+    \item $\vect{x}_\mathfrak{m} \defeq \big(\mathfrak{m}(j_1), \dots, \mathfrak{m}(j_r), 0\big) \in \N^{r+1}$ la configuration initiale.
 \end{itemize}
 \end{Definition}
 
 \noindent On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
 
 On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
-pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) := a_1(\mathfrak{m},i) \cdots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
+pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \cdots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
 
@@ -511,7 +513,7 @@ Le théorème suivant est alors obtenu :
 \end{Theorem}
 
 \begin{proof}
-Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r:=\card{J_\mathfrak{m}}$.
+Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r = \card{J_\mathfrak{m}}$.
 La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
 Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
 
@@ -540,7 +542,7 @@ Dans le VAS $S(\mathfrak{m},i)$, le mot $w(\mathfrak{m},i)$ appartient au langag
 puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a 
 \begin{itemize}
     \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable sur $\vect{y}$,
-    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r:=\card{J_\mathfrak{m}}$.
+    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r = \card{J_\mathfrak{m}}$.
 \end{itemize}
 Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \reach(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
 
@@ -548,62 +550,76 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 %--------------------------------------------------
 
-\section{Rationalité structurelle}\alain{un ou 2 n?}
+\section{Rationalité structurelle}
+
+Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
 
 \begin{Definition}
-On dit qu'un $d-$VAS $A$ (sans configuration initiale)  \alain{il faut enlever $\xinit$ $S=(A,\xinit)$ n'a pas de sens} est \emph{structurellement rationnel} lorsque \xout{le VAS}  $\lang(A,\vect{x})$ (ou $(A,\vect{x})$ ?) est rationnel pour \xout{toutes configurations initiales} tout  $\vect{x}\in\N^d$.
+On dit qu'un $d-$VAS $S = (A)$ (sans configuration initiale) est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
+est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
-Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u}{A} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
-\alain{La lettre A désigne deux choses différentes, il y a d'autres lettres comme $\Sigma$ classique pour un alphabet}
-On ne s'intéresse alors pas à la notion de franchissement.
-On écrira $\vect{x} \transZ{*}{A} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u}{A} \vect{y}$ .
+Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
+Il s'agit ici d'une simple égalité vectorielle dans $\Z^d$, sans notion de franchissement.
+On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u} \vect{y}$ .
 
-Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationnalité structurelle.
+Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationalité structurelle.
 %		cette nouvelle propriété :
 
 \begin{Theorem}[\cite{vavi81} théorème 6]
-Un $d-$VAS $S=(A,\xinit)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
+Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
-    \item $\vect{x}_1 \leq \vect{x}_2$ mais $\vect{x}_1 \neq \vect{x}_2$, 
-		\alain{$\vect{x}_1 < \vect{x}_2$}
-    \item Pour tout $j \in I$, $\vect{x}_1(j) = \vect{x}_2(j)$ implique $\vect{x}_3(j) \leq \vect{x}_4(j)$,
+    \item $\vect{x}_1 < \vect{x}_2$
+    \item Pour tout $i \in I$, $\vect{x}_1(i) = \vect{x}_2(i)$ implique $\vect{x}_3(i) \leq \vect{x}_4(i)$,
     \item Il existe un $i\in I$ tel que $\vect{x}_3(i) > \vect{x}_4(i)$.
     
-    \item $\vect{0} \transZ{*}{A} \vect{x}_1 \transZ{*}{A} \vect{x}_2 \transZ{*}{A} \vect{x}_3 \transZ{*}{A} \vect{x}_4$,
+    \item $\vect{0} \transZ{*} \vect{x}_1 \transZ{*} \vect{x}_2 \transZ{*} \vect{x}_3 \transZ{*} \vect{x}_4$,
 \end{enumerate}
 \end{Theorem}
 
 Donnons maintenant une définition équivalente \alain{à prouver} avec les mots.
 
 \begin{Theorem}
-\xout{$S=(A,\xinit)$} $A$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in \Sigma^*$ tels que 
+Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
-    \item $\valeur{u} \geq \vect{0}$ mais $\valeur{u} \neq \vect{0}$,
-    \item Pour tout $j \in I$, $\valeur{u}(j)=0$ implique $\valeur{v}(j) \geq 0$ ,
+    \item $\valeur{u} > \vect{0}$,
+    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
     \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$.
 \end{enumerate}
 \end{Theorem}
 
-On a alors $\vect{0} = \vect{x}_1 \transZ{u}{A} \vect{x}_2 = \vect{x}_3 \transZ{v}{A} \vect{x}_4$
+On a alors $\vect{0} = \vect{x}_1 \transZ{u} \vect{x}_2 = \vect{x}_3 \transZ{v} \vect{x}_4$
 
 \begin{proof}
-Si $(A,\vect{x}_0)$ n'est pas rationnel pour une configuration initiale $\vect{x}_0 \in\N^d$, il existe pour tout $k\in\N$ une séquence d'actions franchissable 
+Supposons que $S$ ne soit pas structurellement rationnel.
+Si $\lang(A,\vect{x}_0)$ n'est pas rationnel pour une configuration initiale $\vect{x}_0 \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
 $\vect{x}_0 \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
-et une coordonnée $i_k \in I$ tels que $\vect{v}_k(i_k) < k$.
+et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) < k$.
 
 Comme $i_k$ ne prend qu'un nombre fini de valeurs possible, il existe un $i\in I$ apparaissant une infinité de fois.
 On peut ainsi supposer que $i_k = i$ pour tout $k$.
-
 De plus, comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
 On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
 
-Notons $J := \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}$ l'ensemble des coordonnées bornées dans les $u_k$.
-Pour chaque $k\in\N$, on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus), où $h_j := \max \set{\valeur{u_k}(j)}{k\in\N}$.
-En posant $\xi = \text{max}\set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, il existe un $k_0\in\N$ tel que $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
+Formellement, on définit 
+$$J = \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}
+\text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
 
-Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18.
+Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
+Commençons par fabriquer $u$ satisfaisant le point 1 :
+\begin{itemize}
+    \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
+    on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
+    On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
+    
+    \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
+    Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
+    Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
+    il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+\end{itemize}
+
+Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18 : $\valeur{u_{k_0}'} > \vect{0}$.
 \end{proof}
 
 %==================================================
