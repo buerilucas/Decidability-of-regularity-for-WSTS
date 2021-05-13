@@ -596,8 +596,8 @@ Si $\lang(A,\vect{x}_0)$ n'est pas rationnel pour une configuration initiale $\v
 $\vect{x}_0 \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
 et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) < k$.
 
-Comme $i_k$ ne prend qu'un nombre fini de valeurs possible, il existe un $i\in I$ apparaissant une infinité de fois.
-On peut ainsi supposer que $i_k = i$ pour tout $k$.
+Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (principe des tirroirs) il existe un $i\in I$ apparaissant une infinité de fois.
+On peut ainsi supposer \alain{expliquer même si ça semble évident} que $i_k = i$ pour tout $k$.
 De plus, comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
 On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
 
@@ -605,7 +605,7 @@ Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k
 Formellement, on définit 
 $$J = \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}
 \text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
-
+\alain{on peut définir J = j tel que sup{(uk(j)/k} est fini }
 Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
 Commençons par fabriquer $u$ satisfaisant le point 1 :
 \begin{itemize}
