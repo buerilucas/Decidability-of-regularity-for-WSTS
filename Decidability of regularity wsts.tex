@@ -560,11 +560,10 @@ est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
 Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
-Il s'agit ici d'une simple égalité vectorielle dans $\Z^d$, sans notion de franchissement.
+Il s'agit ici d'une simple égalité vectorielle dans $\Z^d$, sans notion de franchissement (on pourra parler de $\Z$-VAS).
 On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u} \vect{y}$ .
 
 Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationalité structurelle.
-%		cette nouvelle propriété :
 
 \begin{Theorem}[\cite{vavi81} théorème 6]
 Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
@@ -577,7 +576,10 @@ Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il exi
 \end{enumerate}
 \end{Theorem}
 
-Donnons maintenant une définition équivalente \alain{à prouver} avec les mots.
+Lister les configurations rencontrés comme dans le point 4 ci-dessus est inutile pour la rationnalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
+On propose ainsi une définition équivalente simplifiée avec des mots, dont on donnera une démonstration.
+
+%---THM-STRUCT-RAT---
 
 \begin{Theorem}\label{conf_struct_rat}
 Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
@@ -588,7 +590,13 @@ Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il exi
 \end{enumerate}
 \end{Theorem}
 
-On a alors $\vect{0} = \vect{x}_1 \transZ{u} \vect{x}_2 = \vect{x}_3 \transZ{v} \vect{x}_4$
+\begin{Remark}
+Les propriétés des théorèmes 17 et 18 sont bien équivalentes :
+
+\noindent À partir des configurations $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4$, on choisit simplement pour $u$ le mot permettant d'aller de $\vect{x}_1$ à $\vect{x}_2$, et pour $v$ le mot allant de $\vect{x}_3$ à $\vect{x}_4$.
+
+\noindent Dans l'autre sens, avec les mots $u,v$, on regarde simplement l'exécution $\vect{0} = \vect{x}_1 \transZ{u} \vect{x}_2 = \vect{x}_3 \transZ{v} \vect{x}_4$.
+\end{Remark}
 
 \begin{proof}
 Supposons que $S$ ne soit pas structurellement rationnel.
