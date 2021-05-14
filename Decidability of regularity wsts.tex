@@ -579,7 +579,7 @@ Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il exi
 
 Donnons maintenant une définition équivalente \alain{à prouver} avec les mots.
 
-\begin{Theorem}
+\begin{Theorem}\label{conf_struct_rat}
 Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
     \item $\valeur{u} > \vect{0}$,
@@ -592,12 +592,12 @@ On a alors $\vect{0} = \vect{x}_1 \transZ{u} \vect{x}_2 = \vect{x}_3 \transZ{v} 
 
 \begin{proof}
 Supposons que $S$ ne soit pas structurellement rationnel.
-Si $\lang(A,\vect{x}_0)$ n'est pas rationnel pour une configuration initiale $\vect{x}_0 \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
-$\vect{x}_0 \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
+Si $\lang(A,\xinit)$ n'est pas rationnel pour une configuration initiale $\xinit \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
+$\xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
 et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) < k$.
 
-Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (principe des tirroirs) il existe un $i\in I$ apparaissant une infinité de fois.
-On peut ainsi supposer \alain{expliquer même si ça semble évident} que $i_k = i$ pour tout $k$.
+Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (principe des tiroirs) il existe un $\iota\in I$ apparaissant une infinité de fois.
+On peut ainsi supposer \alain{expliquer même si ça semble évident} que $i_k = \iota$ pour tout $k$.
 De plus, comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
 On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
 
@@ -615,11 +615,21 @@ Commençons par fabriquer $u$ satisfaisant le point 1 :
     
     \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
     Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-    Comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
+    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
     il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+    On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
 \end{itemize}
+Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème \ref{conf_struct_rat} : $\valeur{u_{k_0}'} > \vect{0}$.
+\vspace{2mm}
 
-Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 du théorème 18 : $\valeur{u_{k_0}'} > \vect{0}$.
+Maintenant, procédons de façon similaire sur les $v_k$.
+Pour tout $j\in J$, $(\valeur{u_k}(j))_{k\in\N}$ est borné, donc $(\vect{x}_k(j))_{k\in\N}$ est borné également par $l_j = h_j + \xinit(j)$.
+On construit alors $v_k'$ en retirant de $v_k$ pour tout $j\in J$ les $l_j$ premières actions qui font décroître la coordonnée $j$.
+Tous les $v_k'$ vérifient le point 2 (avec $u = u_{k_0}'$), puisque si pour un $i\in I$, $\valeur{u_{k_0}'}(i) = 0$, alors $i\in J$, d'où $\valeur{v_k'}(i) \geq 0$.
+
+Enfin, en prenant $k_1 = \xi \times \sum_{j\in J} l_j$, on a $\valeur{v_{k_1}}(\iota) < k_1$, d'où $\valeur{v_{k_1}'}(\iota) < 0$, et $v_{k_1}'$ vérifie aussi le point 3.
+
+Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les 3 points du théorème \ref{conf_struct_rat}, ce qui montre l'implication directe.
 \end{proof}
 
 %==================================================
