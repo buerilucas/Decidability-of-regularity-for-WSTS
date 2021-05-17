@@ -610,7 +610,7 @@ Par conséquent, on peut sélectionner uniquement les séquences qui nous intér
 \begin{itemize}
     \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\iota\in I$ apparaissant une infinité de fois.
     On peut ainsi supposer que $i_k = \iota$ pour tout $k$.
-    \alain{expliquer même si ça semble évident}
+    %\alain{expliquer même si ça semble évident}
     
     \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
     On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
@@ -648,16 +648,18 @@ Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème 
 , ce qui montre l'implication directe.
 \vspace{5mm}
 
-Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3, 
-et montrons que $\lang(A,\vect{0})$ n'est pas rationnel pour la configuration initiale $\vect{0} = (0,\dots,0)$.
+Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
+Soit $\xinit$ une configuration sur laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
+Montrons que $\lang(A,\xinit)$ n'est pas rationnel.
 
 Soit $k\in\N$.
 Notons $\rho = \text{max}\set{-\valeur{v}(i)}{i\in I}$, 
-et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\vect{0})$.
+et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\xinit)$.
 
 \begin{itemize}
-    \item D'après le point 1, on a $\valeur{u^{\rho\times k}} > \vect{0}$, donc $u^{\rho\times k}$ est franchissable sur $\vect{0}$.
-    Posons $\vect{x}_k = \valeur{u^{\rho\times k}}$ la configuration atteinte.
+    \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
+    Comme $u$ est franchissable sur $\xinit$, le mot $u^{\rho\times k}$ l'est également.
+    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte.
     
     \item D'après le point 2, si pour un $i\in I$, on a $\valeur{v^k}(i) < 0$, alors $\valeur{u}(i) > 0$, d'où $\vect{x}_k(i) \geq \rho\times k$.
     Par définition de $\rho$, on en déduit que $\valeur{v^k}$ a bien les ressources nécessaires pour se déclencher sur $\vect{x}_k$, donc est bien franchissable.
@@ -665,9 +667,13 @@ et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\vect{0})$.
     
     \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
 \end{itemize}
-Par conséquent, l'exécution $\vect{0} \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
-Le langage $\lang(A,\vect{0})$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
+Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
+On notera que $\xinit$ est bien indépendant de $k$.
+Le langage $\lang(A,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
+
 \alain{c'est étrange, tu as l'air de dire que structurellement rationnel équivaut à  $\lang(A,\vect{0})$ rationnel or je ne vois pas pourquoi ce serait vrai...car la propriété de rationnalité n'est pas monotone...$\lang(A,\vect{0})=\emptyset$ mais $\lang(A,\vect{1})=a^nb^n$}
+
+\lucas{En effet, je suis tombé dans le même piège que Ginzburg et Yoeli, c'est rectifié.}
 \end{proof}
 
 %==================================================
