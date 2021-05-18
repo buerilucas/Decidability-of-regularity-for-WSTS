@@ -77,7 +77,7 @@
 
 %================================================================
 
-\title{Décidabilité de la rationnalité pour les WSTS}
+\title{Décidabilité de la rationalité pour les WSTS}
 \author{Lucas \textsc{Bueri}}
 \date{Stage M2 - 2021}
 
@@ -218,10 +218,10 @@ Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ain
 
 %----------------------------------------------------------------
 
-\section{Une caractérisation pour la rationnalité}
+\section{Une caractérisation pour la rationalité}
 
 La preuve de décidabilité se divise en deux étapes.
-Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationnalité.
+Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationalité.
 On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne $k\in\N$ telle que si on peut accéder à la configuration $\vect{x}$, puis à $\vect{y}$, alors $\vect{y}$ reste au dessus de $\vect{x}-\vect{k}$
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 ($\vect{k}$ désignera le vecteur $(k,k,...,k)\in\N^d$).
@@ -232,7 +232,7 @@ Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\
 
 S'il est vrai que $\reach(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\reach(S)/\relGY$ est infini. 
 Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
-mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationnalité du langage et le quotient fini selon cette relation.
+mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
 Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
@@ -554,8 +554,27 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
 
+Commençons par énoncer une propriété de monotonie pour la rationalité selon les configurations initiales choisies.
+
+\begin{Proposition}\label{monotonie_rationnel}
+Soit $S=(A)$ un $d-$VAS (sans configuration initiale).
+L'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ est clos par le haut.
+\end{Proposition}
+
+\begin{proof}
+Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
+Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
+
+D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
+Comme $\vect{x}\leq\vect{x'}$, la séquence $uv$ est aussi franchissable sur $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
+où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{z}_k + (\vect{x'} - \vect{x})$.
+
+On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{x'})$ ne satisfait pas la propriété $\eqref{eq:caracterisation}$.
+On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
+\end{proof}
+
 \begin{Definition}
-On dit qu'un $d-$VAS $S = (A)$ (sans configuration initiale) est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
+On dit qu'un $d-$VAS $S = (A)$ est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
 est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
@@ -576,7 +595,7 @@ Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il exi
 \end{enumerate}
 \end{Theorem}
 
-Lister les configurations rencontrés comme dans le point 4 ci-dessus est inutile pour la rationnalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
+Lister les configurations rencontrés comme dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
 On propose ainsi une définition équivalente simplifiée avec des mots, dont on donnera une démonstration.
 
 %---THM-STRUCT-RAT---
@@ -670,10 +689,6 @@ et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\xinit)$.
 Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
 On notera que $\xinit$ est bien indépendant de $k$.
 Le langage $\lang(A,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
-
-\alain{c'est étrange, tu as l'air de dire que structurellement rationnel équivaut à  $\lang(A,\vect{0})$ rationnel or je ne vois pas pourquoi ce serait vrai...car la propriété de rationnalité n'est pas monotone...$\lang(A,\vect{0})=\emptyset$ mais $\lang(A,\vect{1})=a^nb^n$}
-
-\lucas{En effet, je suis tombé dans le même piège que Ginzburg et Yoeli, c'est rectifié.}
 \end{proof}
 
 \begin{Proposition}
@@ -696,8 +711,7 @@ Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme comb
 Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
 Vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
 
-Réécrire le thm 6 de Valk et Vidal-Naquet.
-Rationnalité structurelle serait décidable (arithmétique de Presburger donne 3-exptime), peut-être NP ?
+Tenter de se débarrasser du graphe, de Clover, voire plus dans la preuve de Valk et Vidal-Naquet.
 
 Simplifier le thm 12 pour avoir un calcul facile dans les cas faciles (borné).
 
@@ -705,7 +719,11 @@ Voir Garey, Johnson : référence pour les problèmes de complexité sur les vec
 
 Regarder taille de l'automate (minimal ?) construit par GY et VVN. Est-ce Ackermann ?
 
-Sortir la config initiale $\xinit$ du VAS (plus facile pour gérer les VAS structurellement)
+Regarder les propriétés de monotonie des VAS pour la rationalité : 
+Augmenter la configuration initiale peut-il permettre de retrouver la rationalité ?
+Voir ainsi si l'ensemble des configurations qui lorsque choisit initialement aboutissent à un VAS non-rationnel est clos par le haut.
+
+Réduire la rationalité à la bornitude, la terminaison ou la couverture.
 
 %================================================================
 
