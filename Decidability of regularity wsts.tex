@@ -554,10 +554,11 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
 
-Commençons par énoncer une propriété de monotonie pour la rationalité selon les configurations initiales choisies.
+Commençons par énoncer une propriété de monotonie de la non-rationalité \xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Soit $S=(A)$ un $d-$VAS (sans configuration initiale).
+Soit $A$ un $d-$VAS 
+%(sans configuration initiale).
 \alain{on va simplement noter $A$ un VAS sans configuration initiale}
 L'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ est clos par le haut.
 \end{Proposition}
@@ -567,18 +568,17 @@ Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \
 Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
 
 D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
-Comme $\vect{x}\leq\vect{x'}$, la séquence $uv$ est aussi franchissable sur $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
+Comme $\vect{x}\leq\vect{x'}$, du fait de la monotonie des VAS, la séquence $uv$ est aussi franchissable à partir de $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
 où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{z}_k + (\vect{x'} - \vect{x})$.
 
-On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{x'})$ ne satisfait pas la propriété $\eqref{eq:caracterisation}$.
+On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
 On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 \end{proof}
 
 \alain{du coup on sait que $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype}
 
 \begin{Proposition}\label{minimaux}
-Soit $A$ un $d-$VAS.
-L'ensemble des éléments minimaux $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini et calculable.
+L'ensemble $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini et calculable pour tout $d-$VAS $A$.\alain{rapprocher le "d" du "VAS"}
 \end{Proposition}
 
 \begin{proof}
@@ -661,7 +661,7 @@ Commençons par fabriquer $u$ satisfaisant le point 1 :
     
     \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
     Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
+    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, la suite d'entiers $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
     il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
     On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
 \end{itemize}
