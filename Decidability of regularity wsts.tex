@@ -561,7 +561,7 @@ Soit $S=(A)$ un $d-$VAS (sans configuration initiale).
 \alain{on va simplement noter $A$ un VAS sans configuration initiale}
 L'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ est clos par le haut.
 \end{Proposition}
-
+\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
 \begin{proof}
 Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
 Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
@@ -574,16 +574,19 @@ On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{
 On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 \end{proof}
 
-\alain{du coup on sait que $Min\{x; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $\downarrow x \cap \N^d \cap K \neq \emptyset$ est décidable, je t'envoie le papier}
+\alain{du coup on sait que $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype}
 
 \begin{Proposition}\label{minimaux}
 Soit $A$ un $d-$VAS.
 L'ensemble des éléments minimaux $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini et calculable.
 \end{Proposition}
 
+\begin{proof}
+à faire
+\end{proof}
 
 \begin{Definition}
-On dit qu'un $d-$VAS $S = (A)$ est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
+On dit qu'un $d-$VAS $A$ est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
 est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
