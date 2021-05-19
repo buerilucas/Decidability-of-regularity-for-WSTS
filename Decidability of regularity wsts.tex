@@ -558,6 +558,7 @@ Commençons par énoncer une propriété de monotonie pour la rationalité selon
 
 \begin{Proposition}\label{monotonie_rationnel}
 Soit $S=(A)$ un $d-$VAS (sans configuration initiale).
+\alain{on va simplement noter $A$ un VAS sans configuration initiale}
 L'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ est clos par le haut.
 \end{Proposition}
 
@@ -573,6 +574,7 @@ On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{
 On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 \end{proof}
 
+\alain{du coup on sait que $Min\{x; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d, \downarrow x \cap \N^d \cap K \neq \emptyset$ est décidable, je t'envoie le papier}
 \begin{Definition}
 On dit qu'un $d-$VAS $S = (A)$ est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
 est rationnel pour tout  $\vect{x}\in\N^d$.
