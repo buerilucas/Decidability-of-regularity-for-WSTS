@@ -489,7 +489,7 @@ De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \
 \end{proof}
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un $d-$VAS.
+Soit $S=(A,\xinit)$ un $d-$VAS.\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
 Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
@@ -565,17 +565,17 @@ Commençons par énoncer une propriété de monotonie de la non-rationalité.
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Pour tout $d-$VAS $A$, 
+Pour tout VAS $A$, 
 %(sans configuration initiale).
 %\alain{on va simplement noter $A$ un VAS sans configuration initiale}
-l'ensemble $\overline{R(A)}=\uparrow M_A$ et $M_A$ est fini.
+on a $\overline{R(A)}=\uparrow M_A$ et $M_A$ est fini.
 \end{Proposition}
 
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
 %\lucas{Oui, c'est le complémentaire.}
 
 \begin{proof}
-Montrons que $\overline{R(A)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
+Montrons d'abord que $\overline{R(A)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
 Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
 
 D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
