@@ -183,7 +183,7 @@ Rappelons d'abord la notion d'idéal :
 Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
 \begin{itemize}
     \item $E$ est dit \emph{dirigé} lorsque pour tous $x,y\in E$ il existe un $z\in E$ vérifiant $x\leq z$ et $u\leq z$.
-    \item $E$ est dit \emph{clos par le bas} lorsqu'il est égal à sa clôture par le bas $\downarrow E \defeq \set{x\in X}{\exists y\in E, x\leq y}$.
+    \item $E$ est dit \emph{clos par le bas} lorsqu'il est égal à sa clôture par le bas $\downarrow E \defeq \set{x\in X}{\exists y\in E, x\leq y}$.\alain{et par le haut}
     \item Enfin, $E$ est un \emph{idéal} s'il est dirigé et clos par le bas.
 \end{itemize}
 \end{Definition}
@@ -192,6 +192,8 @@ On peut maintenant introduire l'ensemble de couverture $\cover(A,x) \defeq \down
 Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
 
 Les idéaux de $\N^d$ peuvent se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
+
+\alain{dire que $\uparrow \emptyset = \emptyset$)}
 
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
@@ -600,7 +602,7 @@ Montrons que le prédicat $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \
 \end{proof}
 
 \begin{Definition}
-On dit qu'un $d-$VAS $A$ est \emph{structurellement rationnel} lorsque $R_A=\emptyset$  
+On dit qu'un VAS $A$ est \emph{structurellement rationnel} si $M_A=\emptyset$ et qu'il n'est \emph{jamais rationnel} si $M_A=\N^d$.  
 %		$\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
