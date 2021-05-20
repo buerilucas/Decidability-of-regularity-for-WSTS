@@ -581,7 +581,7 @@ On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 \alain{du coup on sait que $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype \cite{ValkJ85}}
 
 \begin{Proposition}\label{minimaux}
-L'ensemble $Min \set{vect{x}} {\lang(A,\vect{x}) \notin Rat}$ est fini et calculable pour tout $d-$VAS $A$.\alain{rapprocher le "d" du "VAS"}
+L'ensemble $R_A=Min \set{vect{x}} {\lang(A,\vect{x}) \notin Rat}$ est fini et calculable pour tout $d-$VAS $A$.\alain{rapprocher le "d" du "VAS"}
 \end{Proposition}
 
 \begin{proof}
@@ -589,8 +589,8 @@ L'ensemble $Min \set{vect{x}} {\lang(A,\vect{x}) \notin Rat}$ est fini et calcul
 \end{proof}
 
 \begin{Definition}
-On dit qu'un $d-$VAS $A$ est \emph{structurellement rationnel} lorsque $\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?) 
-est rationnel pour tout  $\vect{x}\in\N^d$.
+On dit qu'un $d-$VAS $A$ est \emph{structurellement rationnel} lorsque $R_A=\emptyset$  
+%		$\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
 Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
