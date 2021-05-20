@@ -554,17 +554,26 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
 
+
+\begin{Definition}
+Pour un VAS $A$, on note  
+%l'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ 
+$R_A=Min \set{\vect{x}} {\lang(A,\vect{x}) \notin Rat}$ .
+\end{Definition}
+
 Commençons par énoncer une propriété de monotonie de la non-rationalité.
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Soit $A$ un $d-$VAS 
+Pour tout $d-$VAS $A$, 
 %(sans configuration initiale).
-\alain{on va simplement noter $A$ un VAS sans configuration initiale}
-L'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ est clos par le haut.
+%\alain{on va simplement noter $A$ un VAS sans configuration initiale}
+l'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$  est clos par le haut et donc $R_A$ est fini.
+
+
 \end{Proposition}
-\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
-\lucas{Oui, c'est le complémentaire.}
+%\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
+%\lucas{Oui, c'est le complémentaire.}
 
 \begin{proof}
 Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
@@ -580,8 +589,9 @@ On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 
 \alain{du coup on sait que $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype \cite{ValkJ85}}
 
+
 \begin{Proposition}\label{minimaux}
-L'ensemble $R_A=Min \set{vect{x}} {\lang(A,\vect{x}) \notin Rat}$ est fini et calculable pour tout $d-$VAS $A$.\alain{rapprocher le "d" du "VAS"}
+L'ensemble $R_A$ est calculable pour tout $d-$VAS $A$.\alain{rapprocher le "d" du "VAS"}
 \end{Proposition}
 
 \begin{proof}

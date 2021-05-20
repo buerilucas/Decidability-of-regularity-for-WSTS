@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  20 MAY 2021 14:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  20 MAY 2021 15:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -303,7 +303,7 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count286
 \l__pdf_internal_box=\box63
 )
-No file "Decidability of regularity wsts".aux.
+(./Decidability of regularity wsts.aux)
 \openout1 = `"Decidability of regularity wsts.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
@@ -329,6 +329,7 @@ Package french.ldf Info: Setting StandardEnumerateEnv=true for
 (french.ldf)             compatibility with enumitem package,
 (french.ldf)             reported on input line 84.
 LaTeX Info: Redefining \up on input line 84.
+
 (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count287
@@ -406,130 +407,33 @@ T1/cmr/m/n/10 lors-qu'il est �gal � sa cl�-ture par le bas $\OMS/cmsy/m/n/10 #
 \OML/cmm/m/it/10 E [] []$\T1/cmr/m/n/10 . 
  []
 
-
-LaTeX Warning: Citation `giyo80' on page 2 undefined on input line 231.
-
-
-LaTeX Warning: Citation `giyo80' on page 2 undefined on input line 231.
-
-[2]
-
-LaTeX Warning: Citation `giyo80' on page 3 undefined on input line 237.
-
-
-LaTeX Warning: Citation `giyo80' on page 3 undefined on input line 255.
-
-[3]
-
-LaTeX Warning: Citation `rasc59' on page 4 undefined on input line 316.
-
-
-LaTeX Warning: Reference `lien avec Nérode' on page 4 undefined on input line 
-342.
-
-
-LaTeX Warning: Reference `lien avec Nérode' on page 4 undefined on input line 
-356.
-
-
-LaTeX Warning: Citation `giyo80' on page 4 undefined on input line 381.
-
-
-LaTeX Warning: Citation `giyo80' on page 4 undefined on input line 393.
-
-[4]
-
-LaTeX Warning: Citation `giyo80' on page 5 undefined on input line 407.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 5 undefined on input line
- 423.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 5 undefined on input line
- 424.
-
-
-LaTeX Warning: Reference `lien relation-rationnel' on page 5 undefined on input
- line 434.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 5 undefined on input line
- 437.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 5 undefined on input line
- 438.
-
-
-LaTeX Warning: Reference `Monotonie relation' on page 5 undefined on input line
- 452.
-
-
-LaTeX Warning: Citation `giyo80' on page 5 undefined on input line 476.
-
+[2] [3] [4]
 LaTeX Font Info:    Trying to load font information for U+euf on input line 491
 .
-(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/ueuf.fd
+ (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
-) [5]
-
-LaTeX Warning: Citation `giyo80' on page 6 undefined on input line 509.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 6 undefined on input line
- 530.
-
-
-LaTeX Warning: Reference `caractérisation' on page 6 undefined on input line 5
-31.
+)
+[5]
+Overfull \hbox (8.59955pt too wide) in paragraph at lines 568--572
+[]\T1/cmr/bx/n/10 Proposition 17. []\T1/cmr/m/n/10 Pour tout $\OML/cmm/m/it/10 
+d\OMS/cmsy/m/n/10 ^^@$\T1/cmr/m/n/10 VAS $\OML/cmm/m/it/10 A$\T1/cmr/m/n/10 , l
+'en-semble de confi-gu-ra-tions $[]$
+ []
 
 
-LaTeX Warning: Reference `eq:caracterisation' on page 6 undefined on input line
- 536.
+LaTeX Warning: Citation `ValkJ85' on page 6 undefined on input line 590.
 
-
-LaTeX Warning: Reference `mot décroissant' on page 6 undefined on input line 5
-37.
-
-
-LaTeX Warning: Reference `caractérisation' on page 6 undefined on input line 5
-73.
-
-
-LaTeX Warning: Reference `eq:caracterisation' on page 6 undefined on input line
- 577.
-
-
-LaTeX Warning: Citation `ValkJ85' on page 6 undefined on input line 581.
-
-[6]
-
-LaTeX Warning: Citation `vavi81' on page 7 undefined on input line 602.
-
-
-LaTeX Warning: Reference `caractérisation' on page 7 undefined on input line 6
-37.
-
-[7]
-
-LaTeX Warning: Reference `eq:caracterisation' on page 8 undefined on input line
- 704.
-
-[8] (./Decidability of regularity wsts.aux)
+[6] [7] [8] (./Decidability of regularity wsts.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 6918 strings out of 478994
- 96472 string characters out of 5858184
- 450078 words of memory out of 5000000
- 24304 multiletter control sequences out of 15000+600000
- 424246 words of font info for 84 fonts, out of 8000000 for 9000
+ 6916 strings out of 478994
+ 96502 string characters out of 5858184
+ 450160 words of memory out of 5000000
+ 24302 multiletter control sequences out of 15000+600000
+ 422686 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  68i,15n,74p,501b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
@@ -561,7 +465,7 @@ ve/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive
 021/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/202
 1/texmf-dist/fonts/type1/public/cm-super/sfti0700.pfb></usr/local/texlive/2021/
 texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "Decidability of regularity wsts.pdf" (8 pages, 344474 bytes)
+Output written on "Decidability of regularity wsts.pdf" (8 pages, 343920 bytes)
 .
 PDF statistics:
  145 PDF objects out of 1000 (max. 8388607)
