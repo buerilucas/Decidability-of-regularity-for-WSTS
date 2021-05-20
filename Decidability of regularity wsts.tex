@@ -170,6 +170,8 @@ Soit $S = (A,\xinit)$ un $d-$VAS et $J\subseteq I$ un sous-ensemble d'indices.
     $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
 \end{itemize}
 \end{Definition}
+
+Soit $Rat$ l'ensemble des langages rationnels (sur un alphabet fini).
 %----------------------------------------------------------------
 
 \subsection{Clover et le graphe de couverture}
@@ -379,7 +381,7 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
 % Définir borné ?
 
 \begin{Statement}[\cite{giyo80} Lemme 1]
-    Supposons que dans un VAS $S=(A,\xinit)$, $n\leq d$ coordonnées (disons les $n$ premières) soient non-bornées.
+    Supposons que dans un VAS $S=(A,\xinit)$, les $n$ premières coordonnées soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\reach(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
     $(\vect{x} +\valeur{w})\in\reach(S)$ implique
     %si $w\in\lang(A,\vect{x})$ 
@@ -532,7 +534,7 @@ ce qui assure que $\lang(S)$ n'est pas rationnel (par le théorème \ref{caract�
 
 %----Réciproque
 \vspace{3mm}
-On suppose maintenant qu'il existe $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
+On suppose maintenant qu'il existe un entier $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
 Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
 Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 
@@ -553,13 +555,11 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 \section{Rationalité structurelle}
 
 Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
+Nous allons considérer l'ensemble des configurations  $\vect{x}$ pour lesquelles ${\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ ainsi que l'ensemble de ses éléments minimaux.
+Posons donc	 $R(A)=\set{\vect{x}}{\lang(A,\vect{x}) \text{est rationnel}}$, $\overline{R(A)}  = \set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}  
+%	$S(A)=\set{\vect{x}}{\lang(A,\vect{x})  \text{n' est pas rationnel}}$  
+=\N^d-R(A)$ et $M_A=Min(\overline{R(A)}$  l'ensemble des configurations minimales de $\overline{R(A)}$.
 
-
-\begin{Definition}
-Pour un VAS $A$, on note  
-%l'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ 
-$R_A=Min \set{\vect{x}} {\lang(A,\vect{x}) \notin Rat}$ .
-\end{Definition}
 
 Commençons par énoncer une propriété de monotonie de la non-rationalité.
 %\xout{selon les configurations initiales choisies.}
@@ -568,15 +568,14 @@ Commençons par énoncer une propriété de monotonie de la non-rationalité.
 Pour tout $d-$VAS $A$, 
 %(sans configuration initiale).
 %\alain{on va simplement noter $A$ un VAS sans configuration initiale}
-l'ensemble de configurations $\set{\vect{x}}{\lang(A,\vect{x}) \text{ n'est pas rationnel}}$  est clos par le haut et donc $R_A$ est fini.
-
-
+l'ensemble $\overline{R(A)}=\uparrow M_A$ et $M_A$ est fini.
 \end{Proposition}
+
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
 %\lucas{Oui, c'est le complémentaire.}
 
 \begin{proof}
-Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
+Montrons que $\overline{R(A)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
 Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
 
 D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
@@ -585,6 +584,8 @@ où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{
 
 On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
 On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
+
+L'ensemble $M_A$ est fini car $\leq$ est un belordre sur $\N^d$. On déduit que $\overline{R(A)}=\uparrow M_A$.
 \end{proof}
 
 \alain{du coup on sait que $Min\{\vect{x}; \lang(A,\vect{x}) \notin Rat\}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype \cite{ValkJ85}}
