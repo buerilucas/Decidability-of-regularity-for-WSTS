@@ -183,7 +183,8 @@ Rappelons d'abord la notion d'idéal :
 Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
 \begin{itemize}
     \item $E$ est dit \emph{dirigé} lorsque pour tous $x,y\in E$ il existe un $z\in E$ vérifiant $x\leq z$ et $u\leq z$.
-    \item $E$ est dit \emph{clos par le bas} lorsqu'il est égal à sa clôture par le bas $\downarrow E \defeq \set{x\in X}{\exists y\in E, x\leq y}$.\alain{et par le haut}
+    \item $E$ est dit \emph{clos par le bas} lorsqu'il est égal à sa clôture par le bas $\downarrow E \defeq \set{x\in X}{\exists y\in E, x\leq y}$.
+    \item De la même façon, $E$ est dit \emph{clos par le haut} lorsqu'il est égal à sa clôture par le haut $\uparrow E \defeq \set{x\in X}{\exists y\in E, x \geq y}$.
     \item Enfin, $E$ est un \emph{idéal} s'il est dirigé et clos par le bas.
 \end{itemize}
 \end{Definition}
@@ -192,6 +193,7 @@ On peut maintenant introduire l'ensemble de couverture $\cover(A,x) \defeq \down
 Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
 
 Les idéaux de $\N^d$ peuvent se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
+Ainsi, un élément $\vect{x}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \vect{x}}$.
 
 \alain{dire que $\uparrow \emptyset = \emptyset$)}
 
@@ -491,7 +493,8 @@ De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \
 \end{proof}
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un $d-$VAS.\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
+Soit $S=(A,\xinit)$ un VAS.
+%\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
 Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
