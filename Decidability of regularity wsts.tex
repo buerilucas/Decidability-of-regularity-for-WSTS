@@ -4,6 +4,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 
+\usepackage[backend=biber,isbn=false,doi=false,eprint=false]{biblatex}
+\usepackage[hyperindex=true]{hyperref}
+%\usepackage[babel=true]{microtype}
+
+\addbibresource{biblio.bib}
+
 \usepackage{xcolor}
 \usepackage{enumitem}
 \usepackage{xspace}
@@ -50,6 +56,7 @@
 \let\union\cup
 \let\inter\cap
 \newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
+\let\vide\varnothing
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
@@ -597,7 +604,13 @@ On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 L'ensemble $M_A$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\rat(A)}=\uparrow M_A$.
 \end{proof}
 
-\alain{du coup on sait que $\textit{Min} \set{\vect{x}} {\lang(A,\vect{x}) \notin \rat}$ est fini. Montrons qu'il est calculable. Pour cela on applique un autre résultat de Valk (Théorème 2.14) qui caractérise les ensembles $K \subseteq \N^d$ clos par haut "calculables" ssi pour tout $x \in \N_{\omega}^d$ le prédicat suivant $P_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable, je t'envoie le papier sur skype \cite{ValkJ85}}
+Montrons maintenant que $M_A$ est calculable.
+On s'appuie pour cela sur un résultat de Valk
+
+\begin{Theorem}[\cite{ValkJ85} théorème 2.14]
+Soit $K \subseteq \N^d$ un ensemble clos par le haut.
+Alors $K$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
+\end{Theorem}
 
 
 \begin{Proposition}\label{minimaux}
@@ -619,7 +632,7 @@ On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\v
 
 Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationalité structurelle.
 
-\begin{Theorem}[\cite{vavi81} théorème 6]
+\begin{Theorem}[\cite{vavn81} théorème 6]
 Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
     \item $\vect{x}_1 < \vect{x}_2$
@@ -773,25 +786,26 @@ Foundations of Software Technology and Theoretical Computer Science
 
 Submissions must be in electronic form via EasyChair using the LIPIcs LaTeX style file. Submissions must not exceed 12 pages (excluding bibliography), but may include a clearly marked appendix containing technical details. The appendix will be read only at the discretion of the program committee. Simultaneous submissions to journals or other conferences with published proceedings are disallowed. 
 
+\printbibliography
 
 %================================================================
 
-\begin{thebibliography}{10}
+%\begin{thebibliography}{10}
 
-\bibitem{rasc59}
-M. O. Rabin and D. Scott.
-\newblock Finite Automata and Their Decision Problems.
-\newblock {\em IBM Journal of Research and Development}, vol. 3, pages 114-125, 1959.
+%\bibitem{rasc59}
+%M. O. Rabin and D. Scott.
+%\newblock Finite Automata and Their Decision Problems.
+%\newblock {\em IBM Journal of Research and Development}, vol. 3, pages 114-125, 1959.
 
-\bibitem{giyo80}
-A. Ginzburg and M. Yoeli.
-\newblock Vector Addition Systems and Regular Languages.
-\newblock {\em Journal of Computer and System Science} 20, pages 277-284, 1980.
+%\bibitem{giyo80}
+%A. Ginzburg and M. Yoeli.
+%\newblock Vector Addition Systems and Regular Languages.
+%\newblock {\em Journal of Computer and System Science} 20, pages 277-284, 1980.
 
-\bibitem{vavi81}
-R. Valk and G. Vidal-Naquet.
-\newblock Petri Nets and Regular Languages.
-\newblock {\em Journal of Computer and System Science} 23, pages 299-325, 1981.
+%\bibitem{vavi81}
+%R. Valk and G. Vidal-Naquet.
+%\newblock Petri Nets and Regular Languages.
+%\newblock {\em Journal of Computer and System Science} 23, pages 299-325, 1981.
 
 %@article{ValkJ85,
 %  author    = {R{\"{u}}diger Valk and
@@ -810,6 +824,6 @@ R. Valk and G. Vidal-Naquet.
 %
 
 
-\end{thebibliography}
+%\end{thebibliography}
 
 \end{document}
