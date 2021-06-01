@@ -57,6 +57,8 @@
 \let\inter\cap
 \newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
 \let\vide\varnothing
+\newcommand{\Min}{\textit{Min}}
+\newcommand{\Max}{\textit{Max}}
 
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
 \newcommand{\Z}{\ensuremath{\mathbb{Z}}}
@@ -197,13 +199,31 @@ Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
 \end{itemize}
 \end{Definition}
 
+$(\N^d,\leq)$ a la particularité d'être un bel ordre, ce qui permet d'obtenir des représentations finies de ces sous-ensembles.
+Les idéaux de $\N^d$ peuvent donc se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
+Ainsi, un élément $\vect{x}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \vect{x}}$.
+On a alors le résultat suivant :
+
+\begin{Proposition}%référence ?
+Soit $E \subseteq \N^d$ clos par le bas.
+Alors $E$ est une union finie d'idéaux de $\N^d$.
+\end{Proposition}
+
+Par conséquent, tout sous-ensemble de $\N^d$ clos par le bas peut être représenté par un ensemble fini d'éléments de $\Nomega^d$.
+
+\vspace{5mm}
+Pour les sous-ensembles $E$ de $\N^d$ clos par le haut, on va regarder ses éléments minimaux.
+Notons $\Min(E) \defeq \set{x\in E}{\forall y < x, y \notin E}$.
+
+\begin{Proposition}%référence ?
+Soit $E\subseteq \N^d$ clos par le haut.
+Alors $\Min(E)$ est fini et $\uparrow \Min(E) = E$.
+\end{Proposition}
+
 On peut maintenant introduire l'ensemble de couverture $\cover(A,x) \defeq \downarrow \reach(A,x)$ d'un VAS.
 Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
 
-Les idéaux de $\N^d$ peuvent se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
-Ainsi, un élément $\vect{x}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \vect{x}}$.
-
-\alain{dire que $\uparrow \emptyset = \emptyset$)}
+%\alain{dire que $\uparrow \emptyset = \emptyset$)}
 
 \begin{Definition}
 Soit $S=(A,\xinit)$ un $d-$VAS.
@@ -571,20 +591,19 @@ Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
 Nous allons considérer l'ensemble des configurations  $\vect{x}$ pour lesquelles ${\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ ainsi que l'ensemble de ses éléments minimaux.
 Posons pour cela
 \begin{itemize}
-    \item $\inirat(A)=\set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ est rationnel}}$,
-    \item $\overline{\inirat(A)}  = \set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ n'est pas rationnel}}  
+    \item $\inirat(A) \defeq \set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ est rationnel}}$,
+    \item $\overline{\inirat(A)} \defeq \set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ n'est pas rationnel}}  
     = \N^d - \inirat(A)$,
-    \item $M_A = \textit{Min}(\overline{\inirat(A)})$  l'ensemble des configurations minimales de $\overline{\inirat(A)}$.
+    \item $M_A \defeq \Min(\overline{\inirat(A)})$
+    %= \set{\vect{x} \notin \inirat(A)} {\forall \vect{x'} < \vect{x}, \vect{x'} \in \inirat(A)}$ 
+    l'ensemble des configurations minimales de $\overline{\inirat(A)}$.
 \end{itemize}
 
 Commençons par énoncer une propriété de monotonie de la non-rationalité.
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Pour tout VAS $A$, 
-%(sans configuration initiale).
-%\alain{on va simplement noter $A$ un VAS sans configuration initiale}
-on a $\overline{\inirat(A)} = \uparrow M_A$ et $M_A$ est fini.
+Pour tout VAS $A$, on a $\overline{\inirat(A)} = \uparrow M_A$ et $M_A$ est fini.
 \end{Proposition}
 
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
@@ -602,6 +621,7 @@ On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{
 On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
 
 L'ensemble $M_A$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(A)}=\uparrow M_A$.
+\lucas{Faire référence à la proposition 5 ?}
 \end{proof}
 
 Montrons maintenant que $M_A$ est calculable.
@@ -609,9 +629,8 @@ On s'appuie pour cela sur un résultat de Valk
 
 \begin{Theorem}[\cite{ValkJ85} théorème 2.14]
 Soit $K \subseteq \N^d$ un ensemble clos par le haut.
-Alors $K$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
+Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
 \end{Theorem}
-
 
 \begin{Proposition}\label{minimaux}
 L'ensemble $M_A$ est calculable pour tout VAS $A$.
@@ -621,11 +640,14 @@ L'ensemble $M_A$ est calculable pour tout VAS $A$.
 \end{Proposition}
 
 \begin{proof}
+Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(A)}}(\vect{x})$ est équivalent au prédicat "$\lang(A,\vect{x})$ est rationnel".
+Reste à considérer les cas où certaines coordonnées de $\vect{x}$ valent $\omega$.
+
 Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(A)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
 \end{proof}
 
 \begin{Definition}
-On dit qu'un VAS $A$ est \emph{structurellement rationnel} si $M_A=\emptyset$ et qu'il n'est \emph{jamais rationnel} si $M_A=\N^d$.  
+On dit qu'un VAS $A$ est \emph{structurellement rationnel} si $M_A=\vide$ et qu'il n'est \emph{jamais rationnel} si $M_A=\os{\vect{0}}$.  
 %		$\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
