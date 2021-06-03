@@ -84,6 +84,7 @@
 \newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
 \newcommand{\valeur}[1]{\ensuremath{\overline{#1}}}
 \newcommand{\inirat}{\mathcal{R}}
+\newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
 
 %================================================================
 
@@ -171,13 +172,16 @@ Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
 \end{Definition}
 
 \begin{Definition}
-Soit $S = (A,\xinit)$ un $d-$VAS et $J\subseteq I$ un sous-ensemble d'indices.
+Soit $S = (A,\xinit)$ un $d-$VAS \lucas{Retirer la config initiale ?}, 
+$J\subseteq I$ un sous-ensemble d'indices et $\vect{x}\in\N^d$ une configuration.
+On dit que
 \begin{itemize}
-    \item $S$ est \emph{borné} sur $J$ lorsque toute configuration accessible a ses coordonnées de $J$ bornées :
-    $$\exists k\in\N, \forall \vect{y}\in\reach(S), \forall j\in J, \vect{y}(j)\leq k$$
+    \item $J$ est \emph{borné} pour $\vect{x}$ sur $S$ lorsque toute configuration accessible depuis $\vect{x}$ a ses coordonnées dans $J$ bornées :
+    $$\exists k\in\N, \forall \vect{y}\in\reach(A,\vect{x}), \forall j\in J, \vect{y}(j)\leq k$$
     
-    \item $S$ est \emph{borné inférieurement} sur $J$ lorsque toutes les coordonnées de $J$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\xinit + n\cdot\indicatrice{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
+    \item $J$ est \emph{borné inférieurement} pour $\vect{x}$ sur $S$ lorsque toutes les coordonnées de $J$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\vect{x} + n\cdot\unite{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
+    où $\unite{J}$ désigne le vecteur valant $1$ aux coordonnées dans $J$, et $0$ ailleurs.
 \end{itemize}
 \end{Definition}
 
@@ -201,7 +205,7 @@ Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
 
 $(\N^d,\leq)$ a la particularité d'être un bel ordre, ce qui permet d'obtenir des représentations finies de ces sous-ensembles.
 Les idéaux de $\N^d$ peuvent donc se voir comme des éléments de $\Nomega^d$, obtenu en étendant $\N$ en $\Nomega\defeq \N\union\os{\omega}$ de façon naturelle. % À préciser ?
-Ainsi, un élément $\vect{x}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \vect{x}}$.
+Ainsi, un élément $\mathfrak{m}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \mathfrak{m}}$.
 On a alors le résultat suivant :
 
 \begin{Proposition}%référence ?
@@ -498,6 +502,30 @@ ainsi $\reach(S)/\rel_S$ est infini.
 %On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+
+\begin{Definition}
+Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ un marquage infini. % Nom à revoir
+Notons $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+
+On dit que $J$ est \emph{non-borné avec contexte} $\mathfrak{m}$ 
+lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
+$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J, \vect{x}(i) \geq k \;\land\; \forall i \notin J, \vect{x}(i) = \mathfrak{m}(i) \big)$$
+
+Si de plus $J$ n'est pas non-borné avec un contexte plus grand, on dit que $J$ est \emph{non-borné avec contexte maximal} $\mathfrak{m}$.
+\end{Definition}
+
+\begin{Theorem}[\cite{vavn81} théorème 4]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe un marquage infini $\mathfrak{m} \in \Nomega^d$ non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
+\begin{enumerate}
+    \item $J$ est non-borné avec contexte maximal $\mathfrak{m}$,
+    \item $J$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
+    obtenue en posant $\vect{x}(i) = 0$ si $i\in J$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in I-J$.
+\end{enumerate}
+\end{Theorem}
+
+%------------------------------------
 
 \section{Décider la caractérisation}
 
