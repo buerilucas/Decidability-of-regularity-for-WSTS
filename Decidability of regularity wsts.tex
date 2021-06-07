@@ -127,8 +127,10 @@ Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in 
 
 \subsection{La structure}
 
-Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d-$VAS) $S=(A,\xinit)$ est la donnée d'un vecteur initial $\xinit\in\N^d$ et d'un ensemble fini $A$ d'\emph{actions}.
-À chaque action $a\in A$ est associé un unique vecteur $\valeur{a}\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur de $\Z^d$.
+Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d-$VAS) $S=(A,\lambda)$ est la donnée 
+d'un alphabet fini $A$ muni d'un étiquetage $\lambda:A\to\Z^d$.
+À chaque \emph{action} $a\in A$ est ainsi associé un unique vecteur $\lambda(a)\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur.
+Pour des raisons de lisibilité, on notera $\valeur{a}=\lambda(a)$.
 \vspace{3mm}
 % On pourra préciser ce qu'il se passe si deux actions sont étiquetés par le même vecteur.
 
@@ -156,36 +158,37 @@ De plus, en notant $\valeur{w}\defeq \sum^k_{i=1} \valeur{a_i}$ le vecteur assoc
 Attention, cette égalité peut-être vérifiée même si $w$ n'est pas franchissable.
 \vspace{3mm}
 
-Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\xinit)$ :
+Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\lambda)$ :
 \begin{enumerate}
     \item 
-    $\lang(A,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de la configuration $\vect{x}$,
+    $\lang(S,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de la configuration $\vect{x}$,
     
-    \item $\reach(A,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
+    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
 
-En particulier, on regardera $\lang(S) \defeq \lang(A,\xinit)$ le langage du VAS $S$, et $\reach(S) \defeq \reach(A,\xinit)$ l'ensemble d'accessibilité de $S$.
+On choisira souvent une configuration initiale $\xinit\in\N^d$, qu'on pourra ajouter à la définition du VAS.
+On pourra alors regarder $\lang(S) \defeq \lang(S,\xinit)$ le langage du VAS $S = (A,\lambda,\xinit)$, et $\reach(S) \defeq \reach(S,\xinit)$ son ensemble d'accessibilité.
 
 % A déplacer ?
 \begin{Definition}
-Un VAS $S$ est \emph{rationnel} si $\lang(S)$ est rationnel sur $A^\ast$.
+Un VAS $S = (A,\lambda,\xinit)$ est \emph{rationnel} lorsque $\lang(S)$ est rationnel sur $A^\ast$.
 \end{Definition}
 
 \begin{Definition}
-Soit $S = (A,\xinit)$ un $d-$VAS \lucas{Retirer la config initiale ?}, 
+Soit $S = (A,\lambda)$ un $d-$VAS,
 $J\subseteq I$ un sous-ensemble d'indices et $\vect{x}\in\N^d$ une configuration.
 On dit que
 \begin{itemize}
     \item $J$ est \emph{borné} pour $\vect{x}$ sur $S$ lorsque toute configuration accessible depuis $\vect{x}$ a ses coordonnées dans $J$ bornées :
-    $$\exists k\in\N, \forall \vect{y}\in\reach(A,\vect{x}), \forall j\in J, \vect{y}(j)\leq k$$
+    $$\exists k\in\N, \forall \vect{y}\in\reach(S,\vect{x}), \forall j\in J, \vect{y}(j)\leq k$$
     
     \item $J$ est \emph{borné inférieurement} pour $\vect{x}$ sur $S$ lorsque toutes les coordonnées de $J$ ne diminue pas plus qu'une certaine borne (même en augmentant les ressources initiales) :
-    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(A,\vect{x} + n\cdot\unite{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
+    $$\exists k\in\N, \forall n\in\N, \forall \vect{y}\in\reach(S,\vect{x} + n\cdot\unite{J}), \forall j\in J, \vect{y}(j)\geq \vect{x}(j)+n-k$$
     où $\unite{J}$ désigne le vecteur valant $1$ aux coordonnées dans $J$, et $0$ ailleurs.
 \end{itemize}
 \end{Definition}
 
-Soit $Rat$ l'ensemble des langages rationnels (sur un alphabet fini).
+Enfin, on dénotera par $Rat$ l'ensemble des langages rationnels (sur un alphabet fini).
 %----------------------------------------------------------------
 
 \subsection{Clover et le graphe de couverture}
@@ -208,7 +211,8 @@ Les idéaux de $\N^d$ peuvent donc se voir comme des éléments de $\Nomega^d$, 
 Ainsi, un élément $\mathfrak{m}\in \Nomega^d$ représente l'idéal $\set{\vect{y}\in\N^d}{\vect{y} \leq \mathfrak{m}}$.
 On a alors le résultat suivant :
 
-\begin{Proposition}%référence ?
+\begin{Proposition}
+\lucas{référence ?}
 Soit $E \subseteq \N^d$ clos par le bas.
 Alors $E$ est une union finie d'idéaux de $\N^d$.
 \end{Proposition}
@@ -224,13 +228,13 @@ Soit $E\subseteq \N^d$ clos par le haut.
 Alors $\Min(E)$ est fini et $\uparrow \Min(E) = E$.
 \end{Proposition}
 
-On peut maintenant introduire l'ensemble de couverture $\cover(A,x) \defeq \downarrow \reach(A,x)$ d'un VAS.
+On peut maintenant introduire l'ensemble de couverture $\cover(S) \defeq \downarrow \reach(S,\xinit)$ d'un VAS $S = (A,\lambda,\xinit)$.
 Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
 
 %\alain{dire que $\uparrow \emptyset = \emptyset$)}
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un $d-$VAS.
+Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
 On définit $\clover(S) \subseteq \Nomega^d$ comme l'ensemble des idéaux maximaux inclus dans $\cover(S)$.
 C'est aussi l'unique ensemble de taille minimale d'idéaux dont l'union correspond à $\cover(S)$.
 \end{Definition}
@@ -273,7 +277,7 @@ Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
 mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationalité du langage et le quotient fini selon cette relation.
 
 \begin{Definition}[\cite{giyo80} section 3]
-Soit $S=(A,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
+Soit $S=(A,\lambda,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
 $$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$$
 \end{Definition}
 \alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
@@ -300,10 +304,10 @@ Il est nécessaire de se placer au moins en dimension 3, car le résultat de Gin
 \lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
 
 \begin{Example}
-Soit le $3-$VAS $S = (A=\os{a,b,c}, \xinit=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+Soit le $3-$VAS $S = (A=\os{a,b,c}, \lambda, \xinit=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
 Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n=(n,0,0)$ pour $n\in\N$.
 
-Cependant, pour deux entiers $m>n>0$, bien que $\lang(A,\vect{x}_m) =\lang(A,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
+Cependant, pour deux entiers $m>n>0$, bien que $\lang(S,\vect{x}_m) =\lang(S,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
 Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \reach(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \reach(S)$.
 
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
@@ -314,8 +318,8 @@ La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un VAS. On introduit la relation $\rel_S$ sur les configurations en posant pour tout $\vect{x},\vect{y} \in\N^d$ :
-$$\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y})$$
+Soit $S=(A,\lambda)$ un VAS. On introduit la relation $\rel_S$ sur les configurations en posant pour tout $\vect{x},\vect{y} \in\N^d$ :
+$$\vect{x} \rel_S \vect{y} \ssi \lang(S,\vect{x}) = \lang(S,\vect{y})$$
 \end{Definition}
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
@@ -323,26 +327,26 @@ $$\vect{x} \rel_S \vect{y} \ssi \lang(A,\vect{x}) = \lang(A,\vect{y})$$
 Constatons déjà que cette nouvelle relation est plus grande que celle de Ginzburg et Yoeli (au sens de l'inclusion) :
 
 \begin{Proposition}
-Soit $S=(A,\xinit)$ un VAS et $\vect{x},y \in\lang(S)$.
-Si $\vect{x} \relGY y$ alors $\vect{x} \rel_S y$.
+Soit $S=(A,\lambda,\xinit)$ un VAS et $\vect{x},\vect{y} \in\lang(S)$.
+Si $\vect{x} \relGY \vect{y}$ alors $\vect{x} \rel_S \vect{y}$.
 \end{Proposition}
 
 \begin{proof}
-Supposons $\vect{x} \relGY \vect{y}$ et montrons $\lang(A,\vect{x}) \subseteq \lang(A,\vect{y})$ par récurrence sur la longueur des mots.
-Soit $w\in\lang(A,\vect{x})$.
+Supposons $\vect{x} \relGY \vect{y}$ et montrons $\lang(S,\vect{x}) \subseteq \lang(S,\vect{y})$ par récurrence sur la longueur des mots.
+Soit $w\in\lang(S,\vect{x})$.
 
 Si $w=\epsilon$ est le mot vide, $\vect{y} \in\lang(S)$ assure que $\epsilon\in\lang(S,\vect{y})$.
 
 Sinon, on écrit $w=ua$ avec $u\in A^\ast$ et $a\in A$.
-$u\in\lang(A,\vect{x})$ est plus court que $w$, donc par hypothèse de récurrence on a également $u\in\lang(A,\vect{y})$.
+$u\in\lang(S,\vect{x})$ est plus court que $w$, donc par hypothèse de récurrence on a également $u\in\lang(S,\vect{y})$.
 $u$ est donc franchissable depuis $\vect{y}$.
-Mais $ua\in\lang(A,\vect{x})$, ce qui assure que $\vect{x} +\valeur{ua}\in\reach(S)$.
+Mais $ua\in\lang(S,\vect{x})$, ce qui assure que $\vect{x} +\valeur{ua}\in\reach(S)$.
 
 Comme $\vect{x} \relGY \vect{y}$, on obtient que $\vect{y} +\valeur{ua} \in\reach(S)$, aboutissant à $\vect{y} +\valeur{ua} \geq\vect{0}$.
 L'action $a$ est donc franchissable depuis $\vect{y} +\valeur{u}$.
-En résumé, on a les transitions valides $\vect{x} \trans{u}{S} \vect{x} +\valeur{u} \trans{a}{S} \vect{x} +\valeur{w}$, d'où $w\in\lang(A,y)$.
+En résumé, on a les transitions valides $\vect{x} \trans{u}{S} \vect{x} +\valeur{u} \trans{a}{S} \vect{x} +\valeur{w}$, d'où $w\in\lang(S,y)$.
 
-On conclut enfin que $\lang(A,\vect{x}) = \lang(A,\vect{y})$ par symétrie.
+On conclut enfin que $\lang(S,\vect{x}) = \lang(S,\vect{y})$ par symétrie.
 \end{proof}
 
 On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. 
@@ -358,14 +362,14 @@ On sait que $\sim_L$ est une relation d'équivalence invariante par composition 
 La congruence de Nérode concerne donc les mots plutôt que les configurations, mais est liée à l'équivalence $ \rel_S$ sur les VAS de la manière suivante :
 
 \begin{Lemma}\label{lien avec Nérode}
-    Soient $S=(A,\xinit)$ un VAS et $u,v\in\lang(S)$.
+    Soient $S=(A,\lambda,\xinit)$ un VAS et $u,v\in\lang(S)$.
     On a $u\sim_{\lang(S)}v$ si et seulement si $\xinit +\valeur{u} \rel_S \xinit +\valeur{v}$.
 \end{Lemma}
 
 \begin{proof}
 %L'implication $u\sim_{\lang(S)}v \implies \xinit +\valeur{u} \rel_S \xinit +\valeur{v}$ est vrai pour tout $u,v \in A^*$.
 Si $u\in\lang(S)$, alors pour tout mot $w\in A^\ast$, on a l'équivalence :
-$$uw\in\lang(S) \equivaut w\in\lang(A,\xinit +\valeur{u})$$
+$$uw\in\lang(S) \equivaut w\in\lang(S,\xinit +\valeur{u})$$
 
 On en déduit immédiatement le résultat en reprenant les définitions de chaque relation.
 \end{proof}
@@ -417,10 +421,10 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
 % Définir borné ?
 
 \begin{Statement}[\cite{giyo80} Lemme 1]
-    Supposons que dans un VAS $S=(A,\xinit)$, les $n$ premières coordonnées soient non-bornées.
+    Supposons que dans un VAS $S=(A,\lambda,\xinit)$, les $n$ premières coordonnées soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\reach(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
     $(\vect{x} +\valeur{w})\in\reach(S)$ implique
-    %si $w\in\lang(A,\vect{x})$ 
+    %si $w\in\lang(S,\vect{x})$ 
     $\vect{x}(i) - (\vect{x} +\valeur{w})(i) \leq k_i$.
     Alors $\reach(S)/\relGY$ est fini.
 \end{Statement}
@@ -429,7 +433,7 @@ Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S
 Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.
 
 \begin{Statement}[\cite{giyo80} Lemme 2]
-    Soit $S=(A,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
+    Soit $S=(A,\lambda,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
     pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\reach(S)$ et un mot $w\in A^\ast$ tels que 
     $(\vect{x} +\valeur{w}) \in\reach(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
     Alors l'ensemble $\reach(S)/\relGY$ est infini.
@@ -445,7 +449,7 @@ Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
 La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.
 
 \begin{Theorem}\label{caractérisation}
-    Soit $S=(A,\xinit)$ un VAS.
+    Soit $S=(A,\lambda,\xinit)$ un VAS.
     Alors $\lang(S)$ est rationnel si et seulement si
     \begin{equation}
         \exists k\in\N, \forall \vect{x},\vect{y}\in\N^d, 
@@ -474,7 +478,7 @@ Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$
 \vspace{4mm}\noindent
 Prouvons maintenant la réciproque $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$ par contraposée.
 Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
-pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(A,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
+pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(S,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
 
 On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
@@ -525,6 +529,12 @@ il existe un marquage infini $\mathfrak{m} \in \Nomega^d$ non-borné sur les coo
 \end{enumerate}
 \end{Theorem}
 
+\begin{Theorem}
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe un circuit 
+\end{Theorem}
+
 %------------------------------------
 
 \section{Décider la caractérisation}
@@ -536,9 +546,9 @@ La procédure de décision nécessite de connaître deux choses :
 \end{enumerate}
 
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
-    Soit $S=(A,\xinit)$ un VAS et $k\in\N$.
-    Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(A,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i \in I$.
-    Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(A,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
+    Soit $S=(A,\lambda,\xinit)$ un VAS et $k\in\N$.
+    Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(S,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i \in I$.
+    Alors on peut trouver une autre configuration $\vect{y}$ et un autre mot $w\in\lang(S,\vect{y})$ tel que $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 \end{Lemma}
 
 \begin{proof}
@@ -549,28 +559,31 @@ De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \
 \end{proof}
 
 \begin{Definition}
-Soit $S=(A,\xinit)$ un VAS.
+Soit $S=(A,\lambda,\xinit)$ un VAS.
 %\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
 Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
-Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big(A(\mathfrak{m},i), \vect{x}_\mathfrak{m}\big)$ en posant
+Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big( A(\mathfrak{m},i), \lambda(\mathfrak{m},i), \vect{x}_\mathfrak{m} \big)$ en posant
 \begin{itemize}
     \item $A(\mathfrak{m},i) \defeq \set{a(\mathfrak{m},i)} {a\in A}$ 
-    les actions étiquetées par $\valeur{a(\mathfrak{m},i)} \defeq \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
+    l'alphabet des actions
+    \item $\lambda$ l'étiquetage qui à toute lettre $a(\mathfrak{m},i)$ associe le vecteur $\valeur{a(\mathfrak{m},i)} \defeq \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
     \item $\vect{x}_\mathfrak{m} \defeq \big(\mathfrak{m}(j_1), \dots, \mathfrak{m}(j_r), 0\big) \in \N^{r+1}$ la configuration initiale.
 \end{itemize}
 \end{Definition}
 
+\lucas{Revoir def, thm et preuve en gardant le même alphabet $A$, mais en changeant l'étiquetage.}
+
 \noindent On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment des autres.
 
 On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
-pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \cdots a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
+pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \;\cdots\; a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
 
 \begin{Theorem}[\cite{giyo80} théorème 2]
-    Soit $S=(A,\xinit)$ un $d-$VAS.
+    Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
     Alors $S$ est rationnel si et seulement si 
     tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i \in I \setminus J_\mathfrak{m}$.
 \end{Theorem}
@@ -580,7 +593,7 @@ Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r = \c
 La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
 Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
 
-Alors on peut trouver une configuration $\vect{x}\in\reach(S)$ de $\mathfrak{m}$ telle que $w\in\lang(A,\vect{x})$.
+Alors on peut trouver une configuration $\vect{x}\in\reach(S)$ de $\mathfrak{m}$ telle que $w\in\lang(S,\vect{x})$.
 En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$,
 puisque pour tout $x\in\reach(S)$ et tout préfixe $u$ de $w$, on a
 $(\vect{x} +\valeur{u})(j_p) = 
@@ -597,7 +610,7 @@ ce qui assure que $\lang(S)$ n'est pas rationnel (par le théorème \ref{caract�
 \vspace{3mm}
 On suppose maintenant qu'il existe un entier $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
 Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
-Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(A,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
+Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(S,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 
 Soit $\mathfrak{m} \in\clover(S)$ un élément maximal contenant $\vect{y}$.
 Alors il existe une configuration $\vect{z}\in\mathfrak{m}$ vérifiant $\vect{y} \leq \vect{z}$.
@@ -616,43 +629,43 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 \section{Rationalité structurelle}
 
 Dans cette partie, les VAS n'auront pas de configuration initiale fixée.
-Nous allons considérer l'ensemble des configurations  $\vect{x}$ pour lesquelles ${\lang(A,\vect{x}) \text{ n'est pas rationnel}}$ ainsi que l'ensemble de ses éléments minimaux.
+Nous allons considérer l'ensemble des configurations  $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{ n'est pas rationnel}}$ ainsi que l'ensemble de ses éléments minimaux.
 Posons pour cela
 \begin{itemize}
-    \item $\inirat(A) \defeq \set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ est rationnel}}$,
-    \item $\overline{\inirat(A)} \defeq \set{\vect{x} \in \N^d} {\lang(A,\vect{x}) \text{ n'est pas rationnel}}  
-    = \N^d - \inirat(A)$,
-    \item $M_A \defeq \Min(\overline{\inirat(A)})$
-    %= \set{\vect{x} \notin \inirat(A)} {\forall \vect{x'} < \vect{x}, \vect{x'} \in \inirat(A)}$ 
-    l'ensemble des configurations minimales de $\overline{\inirat(A)}$.
+    \item $\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$,
+    \item $\overline{\inirat(S)} \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ n'est pas rationnel}}  
+    = \N^d - \inirat(S)$,
+    \item $M_S \defeq \Min(\overline{\inirat(S)})$
+    %= \set{\vect{x} \notin \inirat(S)} {\forall \vect{x'} < \vect{x}, \vect{x'} \in \inirat(S)}$ 
+    l'ensemble des configurations minimales de $\overline{\inirat(S)}$.
 \end{itemize}
 
 Commençons par énoncer une propriété de monotonie de la non-rationalité.
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Pour tout VAS $A$, on a $\overline{\inirat(A)} = \uparrow M_A$ et $M_A$ est fini.
+Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)} = \uparrow M_S$ et $M_S$ est fini.
 \end{Proposition}
 
-%\alain{peut-on déduire que $\set{\vect{x}}{\lang(A,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
+%\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
 %\lucas{Oui, c'est le complémentaire.}
 
 \begin{proof}
-Montrons d'abord que $\overline{\inirat(A)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
-Supposons que $\lang(A,\vect{x})$ ne soit pas rationnel.
+Montrons d'abord que $\overline{\inirat(S)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
+Supposons que $\lang(S,\vect{x})$ ne soit pas rationnel.
 
 D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
 Comme $\vect{x}\leq\vect{x'}$, du fait de la monotonie des VAS, la séquence $uv$ est aussi franchissable à partir de $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
 où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{z}_k + (\vect{x'} - \vect{x})$.
 
-On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(A,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
-On en déduit que $\lang(A,\vect{x'})$ n'est pas rationnel.
+On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(S,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
+On en déduit que $\lang(S,\vect{x'})$ n'est pas rationnel.
 
-L'ensemble $M_A$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(A)}=\uparrow M_A$.
+L'ensemble $M_S$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow M_S$.
 \lucas{Faire référence à la proposition 5 ?}
 \end{proof}
 
-Montrons maintenant que $M_A$ est calculable.
+Montrons maintenant que $M_S$ est calculable.
 On s'appuie pour cela sur un résultat de Valk
 
 \begin{Theorem}[\cite{ValkJ85} théorème 2.14]
@@ -661,22 +674,22 @@ Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomeg
 \end{Theorem}
 
 \begin{Proposition}\label{minimaux}
-L'ensemble $M_A$ est calculable pour tout VAS $A$.
+L'ensemble $M_S$ est calculable pour tout VAS $S$.
 
 \alain{Rapprocher le "d" du "VAS".}
 \lucas{Euh, c'est-à-dire ?}
 \end{Proposition}
 
 \begin{proof}
-Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(A)}}(\vect{x})$ est équivalent au prédicat "$\lang(A,\vect{x})$ est rationnel".
+Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(S)}}(\vect{x})$ est équivalent au prédicat "$\lang(S,\vect{x})$ est rationnel".
 Reste à considérer les cas où certaines coordonnées de $\vect{x}$ valent $\omega$.
 
-Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(A)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
+Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(S)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
 \end{proof}
 
 \begin{Definition}
-On dit qu'un VAS $A$ est \emph{structurellement rationnel} si $M_A=\vide$ et qu'il n'est \emph{jamais rationnel} si $M_A=\os{\vect{0}}$.  
-%		$\lang(A,\vect{x})$ %(ou $(A,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
+On dit qu'un VAS $S$ est \emph{structurellement rationnel} si $M_S=\vide$ et qu'il n'est \emph{jamais rationnel} si $M_S=\os{\vect{0}}$.  
+%		$\lang(S,\vect{x})$ %(ou $(S,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Definition}
 
 Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
@@ -686,7 +699,7 @@ On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\v
 Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationalité structurelle.
 
 \begin{Theorem}[\cite{vavn81} théorème 6]
-Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
+Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
     \item $\vect{x}_1 < \vect{x}_2$
     \item Pour tout $i \in I$, $\vect{x}_1(i) = \vect{x}_2(i)$ implique $\vect{x}_3(i) \leq \vect{x}_4(i)$,
@@ -702,7 +715,7 @@ On propose ainsi une définition équivalente simplifiée avec des mots, dont on
 %---THM-STRUCT-RAT---
 
 \begin{Theorem}\label{conf_struct_rat}
-Un $d-$VAS $S=(A)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
+Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
     \item $\valeur{u} > \vect{0}$,
     \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
@@ -720,7 +733,7 @@ Les propriétés des théorèmes 17 et 18 sont bien équivalentes :
 
 \begin{proof}
 Supposons que $S$ ne soit pas structurellement rationnel.
-Si $\lang(A,\xinit)$ n'est pas rationnel pour une configuration initiale $\xinit \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
+Si $\lang(S,\xinit)$ n'est pas rationnel pour une configuration initiale $\xinit \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
 $\xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
 et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
 
@@ -770,11 +783,11 @@ Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème 
 
 Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
 Soit $\xinit$ une configuration sur laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
-Montrons que $\lang(A,\xinit)$ n'est pas rationnel.
+Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
 
 Soit $k\in\N$.
 Notons $\rho = \text{max}\set{-\valeur{v}(i)}{i\in I}$, 
-et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\xinit)$.
+et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
 
 \begin{itemize}
     \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
@@ -789,15 +802,15 @@ et montrons alors que $u^{\rho\times k} v^k \in \lang(A,\xinit)$.
 \end{itemize}
 Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
 On notera que $\xinit$ est bien indépendant de $k$.
-Le langage $\lang(A,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
+Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
 \end{proof}
 
 \begin{Proposition}
 Problème de décision
 
-Donnée : un ensemble de vecteurs $\mathfrak{A} \subseteq \Z^d$ (les étiquettes des actions de $A$).
+Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $A$).
 
-Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire de $\mathfrak{A}$ vérifiant les 3 conditions suivantes:
+Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire de $\lambda(A)$ vérifiant les 3 conditions suivantes:
 \begin{enumerate}
     \item $\vect{u} > \vect{0}$,
     \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique $\vect{v}(i) \geq 0$,
