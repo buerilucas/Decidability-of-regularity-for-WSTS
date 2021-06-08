@@ -544,6 +544,29 @@ il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture part
 tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \end{Theorem}
 
+%---------------------
+
+\lucas{Étendre avant les configurations à $\Nomega^d$, et les définitions qui vont avec (accessibilité).}
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une configuration et $v\in A^*$ un mot.
+On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+\end{Definition}
+
+\begin{Theorem}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une configuration.
+Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
+il existe une configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+\begin{enumerate}
+    \item $\vect{y}$ est accessible depuis $\vect{x}$ dans $S$,
+    \item $v$ est cyclable sur $\vect{y}$,
+    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
+\end{enumerate}
+\end{Theorem}
+
+Si un mot est cyclable, il l'est sur une configuration plus grande.
+On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
+
 %------------------------------------
 
 \section{Décider la caractérisation}
