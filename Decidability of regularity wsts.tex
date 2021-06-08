@@ -166,6 +166,7 @@ Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\lam
     \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
 
+\vspace{2mm}
 On choisira souvent une configuration initiale $\xinit\in\N^d$, qu'on pourra ajouter à la définition du VAS.
 On pourra alors regarder $\lang(S) \defeq \lang(S,\xinit)$ le langage du VAS $S = (A,\lambda,\xinit)$, et $\reach(S) \defeq \reach(S,\xinit)$ son ensemble d'accessibilité.
 
@@ -501,39 +502,70 @@ On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (
 ainsi $\reach(S)/\rel_S$ est infini.
 \end{proof}
 
+\subsection{Rationalité par les circuits}
+
 %\textbf{Méthode de Valk et Vidal-Naquet :}
 
 %On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
 
+On étend les configurations de $\N^d$ à des pseudo-configurations dans $\Nomega^d$.
+On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
+
+Pour une configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+
 \begin{Definition}
-Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ un marquage infini. % Nom à revoir
-Notons $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une pseudo-configuration.
+On dit que $\mathfrak{m}$ est \emph{accessible} dans $S$ lorsque
+% à modifier
+%lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
+$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J_\mathfrak{m}, \vect{x}(i) \geq k \;\land\; \forall i \notin J_\mathfrak{m}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
 
-On dit que $J$ est \emph{non-borné avec contexte} $\mathfrak{m}$ 
-lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
-$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J, \vect{x}(i) \geq k \;\land\; \forall i \notin J, \vect{x}(i) = \mathfrak{m}(i) \big)$$
-
-Si de plus $J$ n'est pas non-borné avec un contexte plus grand, on dit que $J$ est \emph{non-borné avec contexte maximal} $\mathfrak{m}$.
+Si de plus on ne peut pas accéder à une configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
 \end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un marquage infini $\mathfrak{m} \in \Nomega^d$ non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
+il existe une configuration $\mathfrak{m} \in \Nomega^d$ tel que
+%non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $J$ est non-borné avec contexte maximal $\mathfrak{m}$,
-    \item $J$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
+    \item $\mathfrak{m}$ est accessible maximal dans $S$,
+    \item $J_\mathfrak{m}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
     obtenue en posant $\vect{x}(i) = 0$ si $i\in J$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in I-J$.
 \end{enumerate}
 \end{Theorem}
 
-\begin{Theorem}
+\begin{Theorem}[\cite{vavn81} lemme 3]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit 
+il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une configuration accessible maximale $\mathfrak{m}$, 
+tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \end{Theorem}
+
+%---------------------
+
+\lucas{Étendre avant les configurations à $\Nomega^d$, et les définitions qui vont avec (accessibilité).}
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une configuration et $v\in A^*$ un mot.
+On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+\end{Definition}
+
+\begin{Theorem}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une configuration.
+Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
+il existe une configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+\begin{enumerate}
+    \item $\vect{y}$ est accessible depuis $\vect{x}$ dans $S$,
+    \item $v$ est cyclable sur $\vect{y}$,
+    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
+\end{enumerate}
+\end{Theorem}
+
+Si un mot est cyclable, il l'est sur une configuration plus grande.
+On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
 %------------------------------------
 
