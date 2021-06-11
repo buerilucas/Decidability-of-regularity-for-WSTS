@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  11 JUN 2021 17:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  11 JUN 2021 17:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -664,33 +664,33 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 (./Decidability of regularity wsts.aux)
 \openout1 = `"Decidability of regularity wsts.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Info: Redefining \degres on input line 99.
-LaTeX Info: Redefining \dots on input line 99.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Info: Redefining \degres on input line 95.
+LaTeX Info: Redefining \dots on input line 95.
 Package french.ldf Info: Setting StandardItemizeEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 99.
+(french.ldf)             reported on input line 95.
 Package french.ldf Info: Setting StandardEnumerateEnv=true for
 (french.ldf)             compatibility with enumitem package,
-(french.ldf)             reported on input line 99.
-LaTeX Info: Redefining \up on input line 99.
+(french.ldf)             reported on input line 95.
+LaTeX Info: Redefining \up on input line 95.
 Package biblatex Info: Trying to load language 'french'...
 Package biblatex Info: ... file 'french.lbx' found.
 
@@ -723,9 +723,9 @@ Package: blx-case-expl3 2020/12/31 v3.16 expl3 case changing code for biblatex
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file '"Decidability of regularity wsts".bbl' found.
  (./Decidability of regularity wsts.bbl)
-Package biblatex Info: Reference section=0 on input line 99.
-Package biblatex Info: Reference segment=0 on input line 99.
-Package hyperref Info: Link coloring OFF on input line 99.
+Package biblatex Info: Reference section=0 on input line 95.
+Package biblatex Info: Reference segment=0 on input line 95.
+Package hyperref Info: Link coloring OFF on input line 95.
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -739,9 +739,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count425
 )
-LaTeX Info: Redefining \ref on input line 99.
-LaTeX Info: Redefining \pageref on input line 99.
-LaTeX Info: Redefining \nameref on input line 99.
+LaTeX Info: Redefining \ref on input line 95.
+LaTeX Info: Redefining \pageref on input line 95.
+LaTeX Info: Redefining \nameref on input line 95.
  (./Decidability of regularity wsts.out)
 (./Decidability of regularity wsts.out)
 \@outlinefile=\write4
@@ -796,88 +796,89 @@ LaTeX Info: Redefining \nameref on input line 99.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 102
-.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 98.
+
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 102
-.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 98.
+
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+stmry on input line 1
-02.
+LaTeX Font Info:    Trying to load font information for U+stmry on input line 9
+8.
 
 (/usr/local/texlive/2021/texmf-dist/tex/latex/stmaryrd/Ustmry.fd) [1
 
 {/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (4.14972pt too wide) in paragraph at lines 208--209
+Overfull \hbox (4.14972pt too wide) in paragraph at lines 204--205
 []$\OML/cmm/m/it/10 E$ \T1/cmr/m/n/10 est dit \T1/cmr/m/it/10 clos par le bas \
 T1/cmr/m/n/10 lors-qu'il est égal à sa clô-ture par le bas $\OMS/cmsy/m/n/10 # 
 \OML/cmm/m/it/10 E [] []$\T1/cmr/m/n/10 . 
  []
 
-LaTeX Font Info:    Trying to load font information for U+euf on input line 216
+LaTeX Font Info:    Trying to load font information for U+euf on input line 212
 .
 (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/ueuf.fd
 File: ueuf.fd 2013/01/14 v3.01 Euler Fraktur
 ) [2]
 
-LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 278.
+LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 274.
 
 
-LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 278.
+LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 274.
 
 
-LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 284.
+LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 280.
 
 
-LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 302.
+LaTeX Warning: Citation 'giyo80' on page 3 undefined on input line 298.
 
 [3]
 
-LaTeX Warning: Citation 'rasc59' on page 4 undefined on input line 363.
+LaTeX Warning: Citation 'rasc59' on page 4 undefined on input line 359.
 
 [4]
 
-LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 428.
+LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 424.
 
 
-LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 440.
+LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 436.
 
 
-LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 454.
+LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 450.
 
 [5]
 
-LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 532.
+LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 528.
 
 
-LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 544.
+LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 540.
 
 
-LaTeX Warning: Citation 'giyo80' on page 6 undefined on input line 614.
+LaTeX Warning: Citation 'giyo80' on page 6 undefined on input line 580.
+
+
+LaTeX Warning: Citation 'giyo80' on page 6 undefined on input line 617.
 
 [6]
 
-LaTeX Warning: Citation 'giyo80' on page 7 undefined on input line 651.
+LaTeX Warning: Citation 'ValkJ85' on page 7 undefined on input line 703.
 
 [7]
 
-LaTeX Warning: Citation 'ValkJ85' on page 8 undefined on input line 737.
+LaTeX Warning: Citation 'vavn81' on page 8 undefined on input line 733.
 
-
-LaTeX Warning: Citation 'vavn81' on page 8 undefined on input line 767.
-
-[8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 908--911
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 874--877
 
  []
 
+[9]
 
-LaTeX Warning: Empty bibliography on input line 923.
+LaTeX Warning: Empty bibliography on input line 889.
 
 [10] (./Decidability of regularity wsts.aux)
 
@@ -897,10 +898,10 @@ Package logreq Info: Writing requests to '"Decidability of regularity wsts".run
 
  ) 
 Here is how much of TeX's memory you used:
- 20451 strings out of 478994
- 332840 string characters out of 5858184
- 1099204 words of memory out of 5000000
- 37599 multiletter control sequences out of 15000+600000
+ 20438 strings out of 478994
+ 332751 string characters out of 5858184
+ 1099170 words of memory out of 5000000
+ 37596 multiletter control sequences out of 15000+600000
  422398 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,15n,74p,766b,1761s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -932,11 +933,11 @@ e/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/
 21/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021
 /texmf-dist/fonts/type1/public/cm-super/sfti0700.pfb></usr/local/texlive/2021/t
 exmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "Decidability of regularity wsts.pdf" (10 pages, 358059 bytes
+Output written on "Decidability of regularity wsts.pdf" (10 pages, 356105 bytes
 ).
 PDF statistics:
- 306 PDF objects out of 1000 (max. 8388607)
- 261 compressed objects within 3 object streams
- 82 named destinations out of 1000 (max. 500000)
+ 293 PDF objects out of 1000 (max. 8388607)
+ 248 compressed objects within 3 object streams
+ 72 named destinations out of 1000 (max. 500000)
  97 words of extra memory for PDF output out of 10000 (max. 10000000)
 

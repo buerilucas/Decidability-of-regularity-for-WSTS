@@ -53,7 +53,6 @@
 \newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
 \newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
 \newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
-\newcommand{\eqfin}{\ensuremath{=_\text{fin}}}
 \let\union\cup
 \let\inter\cap
 \newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
@@ -86,9 +85,6 @@
 \newcommand{\valeur}[1]{\ensuremath{\overline{#1}}}
 \newcommand{\inirat}{\mathcal{R}}
 \newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
-
-\newcommand{\Jfin}[1]{J^\text{fin}_#1}
-\newcommand{\Jinf}[1]{J^\infty_#1}
 
 %================================================================
 
@@ -434,7 +430,7 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
     Alors $\reach(S)/\relGY$ est fini.
 \end{Statement}
 
-Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
+Ce résultat est correct \alain{pour la relation $/\relGY$}, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
 Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.
 
 \begin{Statement}[\cite{giyo80} Lemme 2]
@@ -446,7 +442,7 @@ Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les 
 
 Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
 Il est affirmé que si $\vect{x} +\valeur{w} \in\reach(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
-Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
+L'énoncé semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas, de toute manière, la caractérisation souhaitée.
 
 \vspace{5mm}
 
@@ -514,28 +510,28 @@ ainsi $\reach(S)/\rel_S$ est infini.
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
 
-On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
+On étend les configurations de $\N^d$ à des pseudo-configurations dans $\Nomega^d$.
 On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 
-Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+Pour une configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
 
 \begin{Definition}
-Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une $\omega$-configuration.
+Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une pseudo-configuration.
 On dit que $\mathfrak{m}$ est \emph{accessible} dans $S$ lorsque
 % à modifier
 %lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
 $$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J_\mathfrak{m}, \vect{x}(i) \geq k \;\land\; \forall i \notin J_\mathfrak{m}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
 
-Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
+Si de plus on ne peut pas accéder à une configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
 \end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
+il existe une configuration $\mathfrak{m} \in \Nomega^d$ tel que
 %non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $\mathfrak{m}$ est accessible maximal dans $S$,
+    \item $\mathfrak{m}$ est accessible maximal dans $S$,\alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
     \item $J_\mathfrak{m}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
     obtenue en posant $\vect{x}(i) = 0$ si $i\in J$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in I-J$.
 \end{enumerate}
@@ -544,7 +540,7 @@ il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
 \begin{Theorem}[\cite{vavn81} lemme 3]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\mathfrak{m}$, 
+il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une configuration accessible maximale $\mathfrak{m}$, 
 tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \end{Theorem}
 
@@ -553,14 +549,14 @@ tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \lucas{Étendre avant les configurations à $\Nomega^d$, et les définitions qui vont avec (accessibilité).}
 
 \begin{Definition}
-Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une $\omega$-configuration et $v\in A^*$ un mot.
-On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une configuration et $v\in A^*$ un mot.
+On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
 \end{Definition}
 
 \begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une configuration.
 Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+il existe une configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
 \begin{enumerate}
     \item $\vect{y}$ est accessible depuis $\vect{x}$ dans $S$,
     \item $v$ est cyclable sur $\vect{y}$,
@@ -568,38 +564,8 @@ il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$
 \end{enumerate}
 \end{Theorem}
 
-
-Si un mot est cyclable, il l'est sur une $\omega$-configuration plus grande.
+Si un mot est cyclable, il l'est sur une configuration plus grande.
 On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
-
-$\vect{x}$ $\omega$-configuration générable s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
-
-\begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
-$\vect{y}$ est générable en dessous de $\vect{x}$ 
-ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
-\begin{enumerate}
-    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
-    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
-    \item $\vect{x'} \trans{}{S} \vect{y'}$
-    \item $u$ est cyclable sur $\vect{y}$
-    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
-\end{enumerate}
-\end{Theorem}
-
-\begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
-On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
-il existe deux mots $u,v \in A^*$ vérifiant
-\begin{enumerate}
-    \item $\valeur{u} \geq \vect{0}$,
-    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
-    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$.
-\end{enumerate}
-De plus, on doit pouvoir accéder depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ sur laquelle $u$ est franchissable.
-
-\lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
-\end{Theorem}
 
 %------------------------------------
 
