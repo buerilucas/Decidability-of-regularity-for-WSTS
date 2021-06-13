@@ -105,9 +105,9 @@ On sait depuis 1980 que le problème de la rationalité du langage des traces d'
 
 Contribution
 \begin{itemize}
-    \item La preuve de VV nécessite la construction du graphe de couverture mais celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller . Mais en étudiant la preuve de yoili, nous avons vu que la relation d'équivalence qu'ils utilisent ne permet pas de prouver la décidabilité de la rationalité. On donne une nouvelle preuve, correcte, du fait que clover est suffisant pour décider la rationalité dun VAS.
-    \item Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel. On montre que l'ensemble des conf rationnelles est clos par le bas et qu'on peut calculer les idéaux maximaux de cet ensemble tel que ...,
-    \item on donne un algo pour calculer les élements minimaux du complémentaire 
+    \item La preuve de VV nécessite la construction du graphe de couverture dont la taille est au pire Ackermann tandis que celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller. Dans les deux cas, d'un point de vue algorithmique, il est plus intéressant de calculer directement l'ensemble des éléments maximaux de l'ensemble des configurations du graphe de Karp-Miller, cet ensemble est appelé Clover. En étudiant la preuve de yoili, nous avons vu que la relation d'équivalence qu'ils utilisent ne permet pas de prouver la décidabilité de la rationalité et donc la preuve de yoeli n'est pas satisfaisante. On donne un nouvel énoncé et une nouvelle preuve correcte, similaire à celle de yoeli mais avec la bonne relation d'équivalence, du fait que $S$ est rationnel ssi un certain nombre de VAS associés à $S$ sont bornés, ce qui montre que la construction de clover est suffisante pour décider la rationalité dun VAS.
+    \item Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel. On montre que l'ensemble des configurations rationnelles est clos par le bas et qu'on peut calculer ses idéaux maximaux (sous-ensembles clos par le bas et dirigés dans $\N^d$) mais qui sont représentés par des ensembles finis d'éléments dans $\Nomega^d$.
+    \item on donne un algo pour calculer les élements minimaux du complémentaire. Cet algorithme est au pire Ackermannian.
     \item on montre que le pb de rationalité structurelle est dans NP
 
 \end{itemize}
@@ -1049,6 +1049,10 @@ Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme comb
 C'est du Presburger existentiel et c'est donc dans NP.
 \end{proof}
 
+
+\section{Conclusion et perspectives}
+
+appiquer aux very-WSTS, aux affine VAS,...
 %==================================================
 
 \section{Commentaires}
