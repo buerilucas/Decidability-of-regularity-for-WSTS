@@ -98,6 +98,21 @@
 
 %================================================================
 
+\section{Introduction}
+
+On sait depuis 1980 que le problème de la rationalité du langage des traces d'un VAS (ou d'un réseau de Petri) étiqueté de façon injective est décidable (ref yoli+val) et sa complexité est aussi connue (demri, schmitz 2013...). On sait aussi décider la rationlité structurelle (VV 81), mais la complexité de ce problème n'était pas connue. on étudie les deux preuves, différentes, de yoeli et vv. Celle de yoeli a l'avantage et inconvénients de xxx, celle de VV a l'avantage et inconvénients...
+
+
+Contribution
+\begin{itemize}
+    \item La preuve de VV nécessite la construction du graphe de couverture mais celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller . Mais en étudiant la preuve de yoili, nous avons vu que la relation d'équivalence qu'ils utilisent ne permet pas de prouver la décidabilité de la rationalité. On donne une nouvelle preuve, correcte, du fait que clover est suffisant pour décider la rationalité dun VAS.
+    \item Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel. On montre que l'ensemble des conf rationnelles est clos par le bas et qu'on peut calculer les idéaux maximaux de cet ensemble tel que ...,
+    \item on donne un algo pour calculer les élements minimaux du complémentaire 
+    \item on montre que le pb de rationalité structurelle est dans NP
+
+\end{itemize}
+
+
 \section{Réseaux de Petri}
 
 Un \petri $N = (P,T,B,F,M_0)$ est la donnée de
@@ -1048,9 +1063,9 @@ Voir Garey, Johnson : référence pour les problèmes de complexité sur les vec
 
 Regarder taille de l'automate (minimal ?) construit par GY et VVN. Est-ce Ackermann ?
 
-Regarder les propriétés de monotonie des VAS pour la rationalité : 
+\xout{Regarder les propriétés de monotonie des VAS pour la rationalité : 
 Augmenter la configuration initiale peut-il permettre de retrouver la rationalité ?
-Voir ainsi si l'ensemble des configurations qui lorsque choisit initialement aboutissent à un VAS non-rationnel est clos par le haut.
+Voir ainsi si l'ensemble des configurations qui lorsque choisit initialement aboutissent à un VAS non-rationnel est clos par le haut.}
 
 Réduire la rationalité à la bornitude, la terminaison ou la couverture.
 
