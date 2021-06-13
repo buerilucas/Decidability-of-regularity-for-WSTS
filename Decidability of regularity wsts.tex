@@ -802,7 +802,7 @@ Montrons que si $\lang(S,\vect{x})$ n'est pas rationnel alors $\lang(S,\vect{x'}
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ et $\Min(\overline{\inirat(S)})$ est fini.
+Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)}$ est clos par le haut et $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ où $\Min(\overline{\inirat(S)})$ est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
 \end{Proposition}
 
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
@@ -827,7 +827,7 @@ L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre su
 On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$ est clos par le bas. Nous allons calculer une représentation finie de $\inirat(S)$ en calculant $\Min(\overline{\inirat(S)})$ qui est une représentation finie de son complémentaire $\overline{\inirat(S)}$.
 \end{Remark}
 
-Montrons maintenant que $\Min(\overline{\inirat(S)})$ est calculable.
+Montrons maintenant que l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
 On utilise pour cela sur un résultat de Valk \& Jantzen \cite{ValkJ85}.\alain{noter plutôt VJ pour être équitable envers les auteurs ou bien Valk \& al. mais ValkJ est peu clair}
 
 \begin{Theorem}[\cite{ValkJ85} Théorème 2.14]
@@ -840,7 +840,7 @@ Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(S)}}(\vect{x})$ est éq
 Reste à considérer les cas où certaines coordonnées de $\vect{x}$ valent $\omega$.
 
 Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(S)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
-\alain{preuve à faire, un pb pour la preuve ?}
+\alain{la preuve est à faire !!! }
 \end{proof}
 
 
@@ -871,10 +871,16 @@ On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble c
 %}
 \end{proof}
 
+\begin{Remark}
 Pour tout VAS $S$, nous avons donc découpé l'ensemble $\N^d$ des configurations initiales en deux sous-ensembles disjoints, $\inirat(S)$ et son complémentaire $\overline{\inirat(S)}$, tels que $\inirat(S)$ est clos par le bas (et $\overline{\inirat(S)}$ est clos par le haut).
+Quelle est la complexité du calcul de $\Min(\overline{\inirat(S)})$ ? L'algorithme proposé demande de calculer $\clover(S)$ donc la complexité de l'algorithme est Ackermann. Ceci ne veut pas dire qu'on ne puisse pas faire mieux. 
+\end{Remark}
 
 %%%%%%%%%%%%%%%%%%
 \section{Complexité de la rationalité structurelle}
+
+Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. Bien sûr, une conséquence de la section précédente permet de conclure que ce problème est décidable puisqu'on peut calculer $\Min(\overline{\inirat(S)})$ et décider si $\Min(\overline{\inirat(S)})=\vide$.
+
 \begin{Definition}
 On dit qu'un VAS $S$ est \emph{structurellement rationnel} si $\lang(S,\vect{x})$ est rationnel pour tout $\vect{x} \in \N^d$.
 \end{Definition}
@@ -895,9 +901,9 @@ Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \tr
 Il s'agit ici d'une simple égalité vectorielle dans $\Z^d$, sans notion de franchissement (on pourra parler de $\Z$-VAS).
 On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u} \vect{y}$ .
 
-Valk et Vidal-Naquet proposent une caractérisation pour la propriété de rationalité structurelle.
+Valk et Vidal-Naquet proposent dans \cite{vavn81} \alain{VV} une caractérisation pour la propriété de rationalité structurelle.
 
-\begin{Theorem}[\cite{vavn81} théorème 6]
+\begin{Theorem}[\cite{vavn81} Théorème 6]\label{VVTheo}
 Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
     \item $\vect{x}_1 < \vect{x}_2$
@@ -910,9 +916,8 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 
 
 
-
-Lister les configurations rencontrés comme dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
-On propose ainsi une définition équivalente simplifiée avec des mots, dont on donnera une démonstration.
+Enoncé ainsi, décider la rationalité avec le Théorème \ref{VVTheo} demande d'utiliser un algorithme pour rsoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes). Mais on peut remarquer lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
+On propose ainsi un autre Théorème \xout{définition équivalente simplifiée avec des mots, dont on donnera une démonstration.} qui ne demande pas de décider l'accessibilité et mieux qui sera dans NP \alain{reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait}.
 
 %---THM-STRUCT-RAT---
 
@@ -926,7 +931,7 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{Theorem}
 
 \begin{Remark}
-Les propriétés \alain{pas le bon mot} des théorèmes 17 et 18 \alain{numérotation incorrecte} sont bien équivalentes :
+Les propriétés \alain{pas le bon mot} des théorèmes 17 et 18 \alain{numérotation incorrecte} sont bien équivalentes \alain{mal dit} :
 
 \noindent À partir des configurations $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4$, on choisit simplement pour $u$ le mot permettant d'aller de $\vect{x}_1$ à $\vect{x}_2$, et pour $v$ le mot allant de $\vect{x}_3$ à $\vect{x}_4$.
 
