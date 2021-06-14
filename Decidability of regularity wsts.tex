@@ -53,6 +53,7 @@
 \newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
 \newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
 \newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
+\newcommand{\eqfin}{\ensuremath{=_\text{fin}}}
 \let\union\cup
 \let\inter\cap
 \newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
@@ -86,6 +87,9 @@
 \newcommand{\inirat}{\mathcal{R}}
 \newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
 
+\newcommand{\Jfin}[1]{J^\text{fin}_#1}
+\newcommand{\Jinf}[1]{J^\infty_#1}
+
 %================================================================
 
 \title{Décidabilité de la rationalité pour les WSTS}
@@ -96,11 +100,11 @@
 
 \maketitle
 
-%================================================================
+%=============================================================
 
 \section{Introduction}
 
-On sait depuis 1980 que le problème de la rationalité du langage des traces d'un VAS (ou d'un réseau de Petri) étiqueté de façon injective est décidable (ref yoli+val) et sa complexité est aussi connue (demri, schmitz 2013...). On sait aussi décider la rationlité structurelle (VV 81), mais la complexité de ce problème n'était pas connue. on étudie les deux preuves, différentes, de yoeli et vv. Celle de yoeli a l'avantage et inconvénients de xxx, celle de VV a l'avantage et inconvénients...
+On sait depuis 1980 que le problème de la rationalité du langage des traces d'un VAS (ou d'un réseau de Petri) étiqueté de façon injective est décidable \cite{giyo80,vavn81} et sa complexité est aussi connue (demri, schmitz 2013...). On sait aussi décider la rationlité structurelle \cite{vavn81}, mais la complexité de ce problème n'était pas connue. on étudie les deux preuves, différentes, de yoeli et vv. Celle de yoeli a l'avantage et inconvénients de xxx, celle de VV a l'avantage et inconvénients...
 
 
 Contribution
@@ -111,7 +115,6 @@ Contribution
     \item on montre que le pb de rationalité structurelle est dans NP
 
 \end{itemize}
-
 
 \section{Réseaux de Petri}
 
@@ -229,7 +232,7 @@ On a alors le résultat suivant :
 
 \begin{Proposition}
 \lucas{référence ?}
-Soit $E \subseteq \N^d$ un ensemble clos par le bas.
+Soit $E \subseteq \N^d$ clos par le bas.
 Alors $E$ est une union finie d'idéaux de $\N^d$.
 \end{Proposition}
 
@@ -240,6 +243,7 @@ Pour les sous-ensembles $E$ de $\N^d$ clos par le haut, on va regarder ses élé
 Notons $\Min(E) \defeq \set{x\in E}{\forall y < x, y \notin E}$.
 
 \begin{Proposition}%référence ?
+\label{clos_haut_wqo}
 Soit $E\subseteq \N^d$ clos par le haut.
 Alors $\Min(E)$ est fini et $\uparrow \Min(E) = E$.
 \end{Proposition}
@@ -445,7 +449,7 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
     Alors $\reach(S)/\relGY$ est fini.
 \end{Statement}
 
-Ce résultat est correct \alain{pour la relation $/\relGY$}, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
+Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
 Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.
 
 \begin{Statement}[\cite{giyo80} Lemme 2]
@@ -457,7 +461,7 @@ Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les 
 
 Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
 Il est affirmé que si $\vect{x} +\valeur{w} \in\reach(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
-L'énoncé semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas, de toute manière, la caractérisation souhaitée.
+Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
 
 \vspace{5mm}
 
@@ -525,28 +529,29 @@ ainsi $\reach(S)/\rel_S$ est infini.
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
 
-On étend les configurations de $\N^d$ à des pseudo-configurations dans $\Nomega^d$.
+On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
 On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 
-Pour une configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
 
 \begin{Definition}
-Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une pseudo-configuration.
+Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une $\omega$-configuration.
 On dit que $\mathfrak{m}$ est \emph{accessible} dans $S$ lorsque
 % à modifier
 %lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
 $$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J_\mathfrak{m}, \vect{x}(i) \geq k \;\land\; \forall i \notin J_\mathfrak{m}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
 
-Si de plus on ne peut pas accéder à une configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
+Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
 \end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe une configuration $\mathfrak{m} \in \Nomega^d$ tel que
+il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
 %non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $\mathfrak{m}$ est accessible maximal dans $S$,\alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
+    \item $\mathfrak{m}$ est accessible maximal dans $S$,
+    \alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
     \item $J_\mathfrak{m}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
     obtenue en posant $\vect{x}(i) = 0$ si $i\in J$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in I-J$.
 \end{enumerate}
@@ -555,7 +560,7 @@ il existe une configuration $\mathfrak{m} \in \Nomega^d$ tel que
 \begin{Theorem}[\cite{vavn81} lemme 3]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une configuration accessible maximale $\mathfrak{m}$, 
+il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\mathfrak{m}$, 
 tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \end{Theorem}
 
@@ -564,14 +569,14 @@ tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
 \lucas{Étendre avant les configurations à $\Nomega^d$, et les définitions qui vont avec (accessibilité).}
 
 \begin{Definition}
-Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une configuration et $v\in A^*$ un mot.
-On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une $\omega$-configuration et $v\in A^*$ un mot.
+On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
 \end{Definition}
 
 \begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une configuration.
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
 Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
-il existe une configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
 \begin{enumerate}
     \item $\vect{y}$ est accessible depuis $\vect{x}$ dans $S$,
     \item $v$ est cyclable sur $\vect{y}$,
@@ -579,9 +584,9 @@ il existe une configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
 \end{enumerate}
 \end{Theorem}
 
-Si un mot est cyclable, il l'est sur une configuration plus grande.
-On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
+Si un mot est cyclable, il l'est sur une $\omega$-configuration plus grande.
+On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
 $\vect{x}$ $\omega$-configuration générable s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
 
@@ -691,7 +696,7 @@ On notera que $\xinit$ est bien indépendant de $k$.
 Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
 \end{proof}
 
-
+%------------------------------------
 
 \section{Décider la caractérisation}
 
@@ -714,14 +719,11 @@ et vérifie $\valeur{w}(i) = \valeur{v}(i) - \valeur{z}(i) \leq \valeur{v}(i) \l
 De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \valeur{z}(i) \leq \valeur{zu}(i) < 0$ puisque $zu$ est un préfixe de $v$ plus long que $z$.
 \end{proof}
 
-Pour toute configuration  $\mathfrak{m}\in\Nomega^d$, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées finies de $\mathfrak{m}$. On note $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
-
 \begin{Definition}
-Soit $S=(A,\lambda,\xinit)$ un VAS et $\mathfrak{m}\in\clover(S)$.
+Soit $S=(A,\lambda,\xinit)$ un VAS.
 %\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
-%	un idéal maximal
-%	\xout{de l'ensemble de couverture}, 
-%notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées finies \xout{pour la configuration} de $\mathfrak{m}$.
+Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
+On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
 Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big( A(\mathfrak{m},i), \lambda(\mathfrak{m},i), \vect{x}_\mathfrak{m} \big)$ en posant
 \begin{itemize}
@@ -741,9 +743,13 @@ pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\math
 
 Le théorème suivant est alors obtenu :
 
-\begin{Theorem}[\cite{giyo80} Théorème 2]\alain{ce n'est pas exactement le théorème 2, car ici on parle de Clover, dire donc que c'est similaire car ça ne parle que des Clover}
+\begin{Theorem}[\cite{giyo80} théorème 2]\alain{ce n'est pas exactement le théorème 2, car ici on parle de Clover, dire donc que c'est similaire car ça ne parle que des Clover}
     Un VAS   $S=(A,\lambda,\xinit)$ est rationnel si et seulement si 
     tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout \xout{idéal maximal} $\mathfrak{m} \in \clover(S)$ et pour tout $i \in I \setminus J_\mathfrak{m}$.
+    
+    %Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
+    %Alors $S$ est rationnel si et seulement si 
+    %tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i \in I \setminus J_\mathfrak{m}$.
 \end{Theorem}
 
 \begin{proof}
@@ -796,17 +802,7 @@ Nous allons considérer l'ensemble des configurations $\vect{x}$ pour lesquelles
 %
 	Dans cette partie, le comportement d'un VAS est donc étudié à partir de l'ensemble de ses configurations initiales possibles c'est-à-dire pour tout les $\vect{x} \in \N^d$.
 %
-Posons donc: $$\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$$.
-
-%
-%\begin{itemize}
-%    \item $\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$,
-% 
-%	\item \alain{la notation qui suit est inutile , elle est déjà donnée page 2:
-%$\Min(\overline{\inirat(S)})$
-%    = \set{\vect{x} \notin \inirat(S)} {\forall \vect{x'} < \vect{x}, \vect{x'} \in \inirat(S)}$ 
-%    l'ensemble des configurations minimales de $\overline{\inirat(S)}$}.
-%\end{itemize}
+Posons donc: $$\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$$
 
 \noindent
 Rappelons que nous notons $\overline{\inirat(S)}
@@ -834,8 +830,7 @@ où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{
 On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(S,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
 On en déduit que $\lang(S,\vect{x'})$ n'est pas rationnel.
 
-L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow \Min(\overline{\inirat(S)})$.
-\lucas{Faire référence à la proposition 5 ?}
+L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow M_S$ d'après la proposition \ref{clos_haut_wqo}.
 \end{proof}
 
 \begin{Remark}
@@ -843,12 +838,21 @@ On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text
 \end{Remark}
 
 Montrons maintenant que l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
-On utilise pour cela sur un résultat de Valk \& Jantzen \cite{ValkJ85}.\alain{noter plutôt VJ pour être équitable envers les auteurs ou bien Valk \& al. mais ValkJ est peu clair}
+On utilise pour cela sur un résultat de Valk \& Jantzen \cite{vaja85}.
+\alain{noter plutôt VJ pour être équitable envers les auteurs ou bien Valk \& al. mais ValkJ est peu clair}
+\lucas{Les noms ne sont pas censés apparaître, seulement les numéros.}
 
-\begin{Theorem}[\cite{ValkJ85} Théorème 2.14]
+\begin{Theorem}[\cite{vaja85} théorème 2.14]
 Soit $K \subseteq \N^d$ un ensemble clos par le haut.
 Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
 \end{Theorem}
+
+\begin{Proposition}\label{minimaux}
+L'ensemble $M_S$ est calculable pour tout VAS $S$.
+
+\alain{Rapprocher le "d" du "VAS".}
+\lucas{Euh, c'est-à-dire ?}
+\end{Proposition}
 
 \begin{proof}
 Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(S)}}(\vect{x})$ est équivalent au prédicat "$\lang(S,\vect{x})$ est rationnel".
@@ -858,20 +862,19 @@ Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \
 \alain{la preuve est à faire !!! }
 \end{proof}
 
-
 \begin{Proposition}\label{minimaux}
 L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
 \end{Proposition}
 
-On en déduit le corrolaire suivant :
+On en déduit le corollaire suivant :
 
 \begin{Proposition}\label{maximaux}
 L'ensemble des configurations rationnelles est clos par le bas et son ensemble d'idéaux maximaux est fini et calculable pour tout VAS $S$ 
 \end{Proposition}
 
 \begin{proof}
-On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble clos par le haut dans $\N^d$ à une représentation finie de son complémentaire (qui est clos par le bas) dans $\N^d$.
-\alain{citer papier en commentaire:}
+On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble clos par le haut dans $\N^d$ à une représentation finie de son complémentaire (qui est clos par le bas) dans $\N^d$ \cite{GHKNS-til2020}.
+
 %@incollection{GHKNS-til2020,
 %  volume = 53,
 %  series = {Trends In Logic},
@@ -918,7 +921,8 @@ On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\v
 
 Valk et Vidal-Naquet proposent dans \cite{vavn81} \alain{VV} une caractérisation pour la propriété de rationalité structurelle.
 
-\begin{Theorem}[\cite{vavn81} Théorème 6]\label{VVTheo}
+\begin{Theorem}[\cite{vavn81} théorème 6]
+\label{rat_struct_valk}
 Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4 \in \Z^d$ tels que 
 \begin{enumerate}
     \item $\vect{x}_1 < \vect{x}_2$
@@ -930,13 +934,13 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{Theorem}
 
 
-
-Enoncé ainsi, décider la rationalité avec le Théorème \ref{VVTheo} demande d'utiliser un algorithme pour rsoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes). Mais on peut remarquer lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
+Énoncé ainsi, décider la rationalité avec le Théorème \ref{VVTheo} demande d'utiliser un algorithme pour résoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes). Mais on peut remarquer que lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
 On propose ainsi un autre Théorème \xout{définition équivalente simplifiée avec des mots, dont on donnera une démonstration.} qui ne demande pas de décider l'accessibilité et mieux qui sera dans NP \alain{reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait}.
 
 %---THM-STRUCT-RAT---
 
 \begin{Theorem}\label{conf_struct_rat}
+\label{rat_struct_nouveau}
 Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
     \item $\valeur{u} > \vect{0}$,
@@ -946,7 +950,7 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{Theorem}
 
 \begin{Remark}
-Les propriétés \alain{pas le bon mot} des théorèmes 17 et 18 \alain{numérotation incorrecte} sont bien équivalentes \alain{mal dit} :
+Les \xout{propriétés} \alain{pas le bon mot} caractérisations des théorèmes \ref{rat_struct_valk} et \ref{rat_struct_nouveau} sont bien équivalentes \alain{mal dit} :
 
 \noindent À partir des configurations $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4$, on choisit simplement pour $u$ le mot permettant d'aller de $\vect{x}_1$ à $\vect{x}_2$, et pour $v$ le mot allant de $\vect{x}_3$ à $\vect{x}_4$.
 
@@ -1027,16 +1031,12 @@ On notera que $\xinit$ est bien indépendant de $k$.
 Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
 \end{proof}
 
-\alain{le pbn de décision}
-
 \begin{Theorem}\label{NP conf_struct_rat}
 Le  problème de la rationalité structurelle est dans NP pour les VAS.
 \end{Theorem}
 
 \begin{proof}
-Le Theorem\ref{conf_struct_rat} montre que le problème de la rationalité structurelle revient à décider le problème suivant
-
-Problème de décision
+Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalité structurelle revient à décider le problème de décision suivant.
 
 Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $A$).
 
@@ -1049,10 +1049,9 @@ Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme comb
 C'est du Presburger existentiel et c'est donc dans NP.
 \end{proof}
 
-
 \section{Conclusion et perspectives}
 
-appiquer aux very-WSTS, aux affine VAS,...
+appliquer aux very-WSTS, aux affine VAS,...
 %==================================================
 
 \section{Commentaires}
@@ -1066,10 +1065,6 @@ Simplifier le thm 12 pour avoir un calcul facile dans les cas faciles (borné).
 Voir Garey, Johnson : référence pour les problèmes de complexité sur les vecteurs
 
 Regarder taille de l'automate (minimal ?) construit par GY et VVN. Est-ce Ackermann ?
-
-\xout{Regarder les propriétés de monotonie des VAS pour la rationalité : 
-Augmenter la configuration initiale peut-il permettre de retrouver la rationalité ?
-Voir ainsi si l'ensemble des configurations qui lorsque choisit initialement aboutissent à un VAS non-rationnel est clos par le haut.}
 
 Réduire la rationalité à la bornitude, la terminaison ou la couverture.
 
@@ -1109,7 +1104,7 @@ Submissions must be in electronic form via EasyChair using the LIPIcs LaTeX styl
 %\newblock Petri Nets and Regular Languages.
 %\newblock {\em Journal of Computer and System Science} 23, pages 299-325, 1981.
 
-%@article{ValkJ85,
+%@article{vaja85,
 %  author    = {R{\"{u}}diger Valk and
 %               Matthias Jantzen},
 %  title     = {The Residue of Vector Sets with Applications to Decidability Problems
