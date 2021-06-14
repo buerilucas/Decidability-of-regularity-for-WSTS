@@ -532,14 +532,14 @@ ainsi $\reach(S)/\rel_S$ est infini.
 On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
 On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 
-Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $J_\mathfrak{m} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
 
 \begin{Definition}
 Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une $\omega$-configuration.
 On dit que $\mathfrak{m}$ est \emph{accessible} dans $S$ lorsque
 % à modifier
 %lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
-$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in J_\mathfrak{m}, \vect{x}(i) \geq k \;\land\; \forall i \notin J_\mathfrak{m}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
+$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\mathfrak{m}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\mathfrak{m}}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
 
 Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
 \end{Definition}
@@ -552,8 +552,9 @@ il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
 \begin{enumerate}
     \item $\mathfrak{m}$ est accessible maximal dans $S$,
     \alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
-    \item $J_\mathfrak{m}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
-    obtenue en posant $\vect{x}(i) = 0$ si $i\in J$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in I-J$.
+    \lucas{Oui, c'est la définition précédente.}
+    \item $\Jinf{\mathfrak{m}}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
+    obtenue en posant $\vect{x}(i) = 0$ si $i\in \Jinf{\mathfrak{m}}$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in \Jfin{\mathfrak{m}}$.
 \end{enumerate}
 \end{Theorem}
 
@@ -561,7 +562,7 @@ il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
 il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\mathfrak{m}$, 
-tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in J_\mathfrak{m}$.
+tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in \Jinf{\mathfrak{m}}$.
 \end{Theorem}
 
 %---------------------
@@ -934,8 +935,10 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{Theorem}
 
 
-Énoncé ainsi, décider la rationalité avec le Théorème \ref{VVTheo} demande d'utiliser un algorithme pour résoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes). Mais on peut remarquer que lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
-On propose ainsi un autre Théorème \xout{définition équivalente simplifiée avec des mots, dont on donnera une démonstration.} qui ne demande pas de décider l'accessibilité et mieux qui sera dans NP \alain{reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait}.
+Énoncé ainsi, décider la rationalité avec le théorème \ref{rat_struct_valk} demande d'utiliser un algorithme pour résoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes).
+Mais on peut remarquer que lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
+On propose ainsi un autre théorème qui ne demande pas de décider l'accessibilité et - mieux - qui sera dans NP.
+\alain{Reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait.}
 
 %---THM-STRUCT-RAT---
 
@@ -986,6 +989,7 @@ Commençons par fabriquer $u$ satisfaisant le point 1 :
     \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
     on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
     On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
+    \lucas{Euh, c'est vrai ? j'ai un doûte.}
     
     \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
     Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
