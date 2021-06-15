@@ -534,35 +534,59 @@ On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 
 Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
 
+Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
+ces coordonnées n'entrent donc pasa en compte dans le franchissement.
+
 \begin{Definition}
-Soit $S$ un VAS et $\mathfrak{m} \in \Nomega^d$ une $\omega$-configuration.
-On dit que $\mathfrak{m}$ est \emph{accessible} dans $S$ lorsque
+Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
+On dit que $u$ est \emph{franchissable} sur $\vect{x}$ lorsque pour tout préfixe $v$ de $u$ et pour toute coordonnée $i \in \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{v}(i) \geq 0$.
+
+La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\vect{y} = \vect{x} + \valeur{u}$.
+Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
+\end{Definition}
+
+Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. 
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
+On dit que $\vect{y}$ est \emph{accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ tel que 
+\begin{enumerate}
+    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u}(i) = \vect{y}(i)$
+    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u}(i) \geq k$
+\end{enumerate}
+\end{Definition}
+
+On peut faire le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context".
+
+\begin{Definition}[\cite{vavn81} def p. 309]
+Soit $S = (A,\lambda,\xinit)$ un VAS (avec configuration initiale) et $\vect{y} \in \Nomega^d$ une $\omega$-configuration.
+On dit que $\vect{y}$ est \emph{accessible dans $S$} lorsque
 % à modifier
 %lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
-$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\mathfrak{m}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\mathfrak{m}}, \vect{x}(i) = \mathfrak{m}(i) \big)$$
+$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\vect{y}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\vect{y}}, \vect{x}(i) = \vect{y}(i) \big)$$
 
-Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande, on dit que $\mathfrak{m}$ est \emph{maximal}.
+Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
 \end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$ tel que
+il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
 %non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $\mathfrak{m}$ est accessible maximal dans $S$,
+    \item $\vect{y}$ est accessible maximal dans $S$,
     \alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
     \lucas{Oui, c'est la définition précédente.}
-    \item $\Jinf{\mathfrak{m}}$ n'est pas borné inférieurement pour la configuration $\vect{x}$, 
-    obtenue en posant $\vect{x}(i) = 0$ si $i\in \Jinf{\mathfrak{m}}$ et $\vect{x}(i) = \mathfrak{i}$ si $i\in \Jfin{\mathfrak{m}}$.
+    \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
+    obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
 \end{enumerate}
 \end{Theorem}
 
 \begin{Theorem}[\cite{vavn81} lemme 3]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $u\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\mathfrak{m}$, 
-tel que $\valeur{u}(i) < 0$ pour une coordonnée $i\in \Jinf{\mathfrak{m}}$.
+il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\vect{y}$, 
+tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
 \end{Theorem}
 
 %---------------------
@@ -591,20 +615,21 @@ On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
 $\vect{x}$ $\omega$-configuration générable s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
 
-\begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
-$\vect{y}$ est générable en dessous de $\vect{x}$ 
-ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
-\begin{enumerate}
-    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
-    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
-    \item $\vect{x'} \trans{}{S} \vect{y'}$
-    \item $u$ est cyclable sur $\vect{y}$
-    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
-\end{enumerate}
-\end{Theorem}
+%\begin{Theorem} % FAUX !!!
+%Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
+%$\vect{y}$ est générable en dessous de $\vect{x}$ 
+%ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
+%\begin{enumerate}
+%    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
+%    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
+%    \item $\vect{x'} \trans{}{S} \vect{y'}$
+%    \item $u$ est cyclable sur $\vect{y}$
+%    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
+%\end{enumerate}
+%\end{Theorem}
 
 \begin{Theorem}
+\lucas{À rectifier}
 Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
 On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
 il existe deux mots $u,v \in A^*$ vérifiant
@@ -989,7 +1014,8 @@ Commençons par fabriquer $u$ satisfaisant le point 1 :
     \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
     on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
     On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
-    \lucas{Euh, c'est vrai ? j'ai un doûte.}
+    
+    \lucas{Erreur : les actions supprimés pouvaient aussi faire croître des coordonnées, donc l'affirmation $\valeur{u_k'}(j) \geq 0$ n'est pas forcément vérifiée.}
     
     \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
     Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
