@@ -88,7 +88,7 @@
 \newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
 
 \newcommand{\Jfin}[1]{J^\text{fin}_#1}
-\newcommand{\Jinf}[1]{J^\infty_#1}
+\newcommand{\Jinf}[1]{J^\text{inf}_#1}
 
 %================================================================
 
@@ -549,23 +549,25 @@ Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert d
 
 \begin{Definition}
 Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
-On dit que $\vect{y}$ est \emph{accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ tel que 
+On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable sur $\vect{x}$ tel que 
 \begin{enumerate}
-    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u}(i) = \vect{y}(i)$
-    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u}(i) \geq k$
+    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
+    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
 \end{enumerate}
 \end{Definition}
 
-On peut faire le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context".
+On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations finies de $\N^d$.
+
+Cette définition fait le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context", qui se reformule ainsi :
 
 \begin{Definition}[\cite{vavn81} def p. 309]
 Soit $S = (A,\lambda,\xinit)$ un VAS (avec configuration initiale) et $\vect{y} \in \Nomega^d$ une $\omega$-configuration.
-On dit que $\vect{y}$ est \emph{accessible dans $S$} lorsque
+On dit que $\vect{y}$ est \emph{$\omega$-accessible dans $S$} lorsque
 % à modifier
 %lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
 $$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\vect{y}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\vect{y}}, \vect{x}(i) = \vect{y}(i) \big)$$
 
-Si de plus on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
+Si on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
 \end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
@@ -574,9 +576,7 @@ Alors $\lang(S)$ n'est pas rationnel si et seulement si
 il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
 %non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $\vect{y}$ est accessible maximal dans $S$,
-    \alain{as-tu généralisé la relation d'accessibilité aux omega-conf ?}
-    \lucas{Oui, c'est la définition précédente.}
+    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$,
     \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
     obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
 \end{enumerate}
@@ -585,13 +585,11 @@ il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
 \begin{Theorem}[\cite{vavn81} lemme 3]
 Soit $S$ un VAS.
 Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration accessible maximale $\vect{y}$, 
+il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
 tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
 \end{Theorem}
 
 %---------------------
-
-\lucas{Étendre avant les configurations à $\Nomega^d$, et les définitions qui vont avec (accessibilité).}
 
 \begin{Definition}
 Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une $\omega$-configuration et $v\in A^*$ un mot.
@@ -603,7 +601,7 @@ Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configurati
 Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
 il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
 \begin{enumerate}
-    \item $\vect{y}$ est accessible depuis $\vect{x}$ dans $S$,
+    \item $\vect{y}$ est $\omega$-accessible depuis $\vect{x}$ dans $S$,
     \item $v$ est cyclable sur $\vect{y}$,
     \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
 \end{enumerate}
