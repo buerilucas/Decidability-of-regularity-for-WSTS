@@ -2345,21 +2345,27 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="1">giyo80</bcf:citekey>
-    <bcf:citekey order="2">giyo80</bcf:citekey>
+    <bcf:citekey order="1">vavn81</bcf:citekey>
+    <bcf:citekey order="2">vavn81</bcf:citekey>
     <bcf:citekey order="3">giyo80</bcf:citekey>
     <bcf:citekey order="4">giyo80</bcf:citekey>
-    <bcf:citekey order="5">rasc59</bcf:citekey>
+    <bcf:citekey order="5">giyo80</bcf:citekey>
     <bcf:citekey order="6">giyo80</bcf:citekey>
-    <bcf:citekey order="7">giyo80</bcf:citekey>
+    <bcf:citekey order="7">rasc59</bcf:citekey>
     <bcf:citekey order="8">giyo80</bcf:citekey>
-    <bcf:citekey order="9">vavn81</bcf:citekey>
-    <bcf:citekey order="10">vavn81</bcf:citekey>
-    <bcf:citekey order="11">giyo80</bcf:citekey>
-    <bcf:citekey order="12">giyo80</bcf:citekey>
-    <bcf:citekey order="13">ValkJ85</bcf:citekey>
-    <bcf:citekey order="14">ValkJ85</bcf:citekey>
-    <bcf:citekey order="15">vavn81</bcf:citekey>
-    <bcf:citekey order="16">vavn81</bcf:citekey>
+    <bcf:citekey order="9">giyo80</bcf:citekey>
+    <bcf:citekey order="10">giyo80</bcf:citekey>
+    <bcf:citekey order="11">vavn81</bcf:citekey>
+    <bcf:citekey order="12">vavn81</bcf:citekey>
+    <bcf:citekey order="13">vavn81</bcf:citekey>
+    <bcf:citekey order="14">vavn81</bcf:citekey>
+    <bcf:citekey order="15">giyo80</bcf:citekey>
+    <bcf:citekey order="16">giyo80</bcf:citekey>
+    <bcf:citekey order="17">vaja85</bcf:citekey>
+    <bcf:citekey order="18">vaja85</bcf:citekey>
+    <bcf:citekey order="19">GHKNS-til2020</bcf:citekey>
+    <bcf:citekey order="20">vavn81</bcf:citekey>
+    <bcf:citekey order="21">vavn81</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
