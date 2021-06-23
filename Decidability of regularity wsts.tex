@@ -965,6 +965,19 @@ On propose ainsi un autre théorème qui ne demande pas de décider l'accessibil
 
 %---THM-STRUCT-RAT---
 
+\begin{Lemma}\label{lem_access_generator}
+    Soit $S=(A,\lambda,\xinit)$ un VAS initialisé et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
+    Si $\vect{x}$ est $\omega$-accessible à partir de $\xinit$, alors il existe un mot $u\in A^*$ tel que
+    \begin{enumerate}
+        \item pour tout $j\in\Jfin{\vect{x}}$, on a $\valeur{u}(j) = 0$,
+        \item pour tout $j\in\Jinf{\vect{x}}$, on a $\valeur{u}(j) > 0$.
+    \end{enumerate}
+\end{Lemma}
+
+\begin{proof}
+\lucas{TODO}
+\end{proof}
+
 \begin{Theorem}\label{conf_struct_rat}
 \label{rat_struct_nouveau}
 Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement s'il existe $u,v\in A^*$ tels que 
@@ -985,12 +998,13 @@ Les \xout{propriétés} \alain{pas le bon mot} caractérisations des théorèmes
 
 \begin{proof}
 Supposons que $S$ ne soit pas structurellement rationnel.
-Si $\lang(S,\xinit)$ n'est pas rationnel pour une configuration initiale $\xinit \in\N^d$, il existe (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
+Il existe donc une configuration initiale $\xinit \in\N^d$ telle que $\lang(S,\xinit)$ n'est pas rationnel.
+D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une séquence d'actions franchissable 
 $\xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
 et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
 
 Remarquons qu'une séquence d'action qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs de $k$ inférieures.
-Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il  en reste une infinité :
+Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il en reste une infinité.
 
 \begin{itemize}
     \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\iota\in I$ apparaissant une infinité de fois.
@@ -1003,37 +1017,59 @@ Par conséquent, on peut sélectionner uniquement les séquences qui nous intér
 
 Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
 Formellement, on définit 
-$$J = \set{j\in I}{\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}
+$$J = \set{j\in I}{
+    \text{sup} \set{\valeur{u_k}(j)}{k\in\N} \text{ est fini}}
+    %\exists h_j\in\N, \forall k\in\N, \valeur{u_k}(j) \leq h_j}
 \text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
-\alain{on peut définir J = j tel que sup{(uk(j)/k} est fini }
-Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
-Commençons par fabriquer $u$ satisfaisant le point 1 :
+%\alain{on peut définir J = j tel que sup{(uk(j)/k} est fini }
+
 \begin{itemize}
-    \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
-    on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
-    On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
+    \item Comme $(\valeur{u_k})_{k\in\N}$ est croissante, l'ensemble $\set{k\in\N}{\exists j\in J,\valeur{u_k}(j) < h_j}$ est fini.
+    On peut donc supposer en supprimant ces séquences que les $\valeur{u_k}(j)$ sont égaux pour tout $k\in\N$ à $j\in J$ fixé.
     
-    \lucas{Erreur : les actions supprimés pouvaient aussi faire croître des coordonnées, donc l'affirmation $\valeur{u_k'}(j) \geq 0$ n'est pas forcément vérifiée.}
-    
-    \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
-    Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, la suite d'entiers $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
-    il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
-    On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
+    \item Les autres coordonnées $\valeur{u_k}(j)$ pour $j\in I-J$ sont aussi croissantes et tendent vers l'infini.
+    On peut donc supposer que pour tout $k\in\N$ et tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$.
 \end{itemize}
-Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 %du théorème \ref{conf_struct_rat}
-: $\valeur{u_{k_0}'} > \vect{0}$.
-\vspace{2mm}
 
-Maintenant, procédons de façon similaire sur les $v_k$.
-Pour tout $j\in J$, $(\valeur{u_k}(j))_{k\in\N}$ est borné, donc $(\vect{x}_k(j))_{k\in\N}$ est borné également par $\ell_j = h_j + \xinit(j)$.
-On construit alors $v_k'$ en retirant de $v_k$ pour tout $j\in J$ les $\ell_j$ premières actions qui font décroître la coordonnée $j$.
-Tous les $v_k'$ vérifient le point 2 (avec $u = u_{k_0}'$), puisque si pour un $i\in I$, $\valeur{u_{k_0}'}(i) = 0$, alors $i\in J$, d'où $\valeur{v_k'}(i) \geq 0$.
+%-NOUVEAU-
 
-Enfin, en prenant $k_1 = 1 + \xi \times \sum_{j\in J} \ell_j$, on a $\valeur{v_{k_1}}(\iota) \leq k_1$, d'où $\valeur{v_{k_1}'}(\iota) < 0$, et $v_{k_1}'$ vérifie aussi le point 3.
-Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème \ref{conf_struct_rat}
-, ce qui montre l'implication directe.
+On va raisonner à l'aide du graphe de couverture de $S$ sur la configuration initiale $\xinit$.
+Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières apparaissant dans les coordonnées du graphe de couverture, et regardons le comportement du mot $u_k$ sur ce graphe.
+
+Le sommet atteint est étiqueté par une $\omega$-configuration $\vect{x}$.
+Or, pour tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$, d'où $\vect{x}(j) = \omega$.
+Ainsi, $J\inter \Jinf{\vect{x}} = \vide$, ce qui se réécrit en $\Jfin{\vect{x}} \subseteq J$.
+
+Maintenant, en utilisant le lemme \ref{lem_access_generator}, on obtient l'existence d'un mot $u\in A^*$ tel que $\valeur{u} \geq \vect{0}$ (ce qui montre le point 1), 
+et pour tout $j \notin J$, $\valeur{u}(j) > 0$.
+\vspace{3mm}
+
+Intéressons-nous maintenant aux mots $v_k$.
+Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, et notons $\gamma$ le nombre de sommets du graphe de couverture de $(S,\xinit)$.
+
+En choisissant $k > \gamma \times \xi$, on peut subdiviser en $\gamma + 1$ mots $v_k = w_1 w_2 \dots w_{\gamma + 1}$ pour avoir
+$$\vect{x_k} = \vect{z_0} \trans{w_1}{S} \vect{z_1} \trans{w_2}{S} \cdots \trans{w_{\gamma + 1}}{S} \vect{z_{\gamma + 1}} = \vect{y_k}$$
+de telle manière à ce que $\vect{z_0}(\iota) > \vect{z_1}(\iota) > \cdots > \vect{z_{\gamma + 1}}(\iota)$.
+On rappelle que $\iota \in I$ est la coordonnée telle que $\valeur{v_k}(\iota) \leq k$.
+Lire le mot $v_k$ dans le graphe de couverture à partir du sommet associé à la $\omega$-configuration $\vect{x}$ donne alors 
+$$\vect{x} = \vect{q_0} \trans{w_1}{G} \vect{q_1} \trans{w_2}{G} \cdots \trans{w_{\gamma + 1}}{G} \vect{q_{\gamma + 1}}$$
+où les $\vect{q_\ell}$ sont des $\omega$-configurations.
+Par le lemme des tiroirs, deux de ces $\omega$-configurations $\vect{q_\ell}$ et $\vect{q_{\ell'}}$ sont identiques, et on obtient un circuit partant de la $\omega$-configuration $\vect{q_\ell}$ et étiqueté par un facteur $v\in A^*$ de $v_k$.
+
+En revenant aux configurations finies, on a donc $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec $\vect{z_\ell} \eqfin \vect{z_\ell}$ et $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$.
+
+\begin{itemize}
+    \item $\vect{z_\ell} \eqfin \vect{z_\ell}$ permet de montrer le point 2 :
+    Pour $i\in I$, si $\valeur{u}(i) = 0$, alors $i\in\Jfin{\vect{x}} \subseteq J$, donc $i\in\Jfin{\vect{z_\ell}}$ \lucas{À justifier en ajoutant une restriction}, ce qui assure que $\valeur{v}(i) = 0$.
+    
+    \item $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$ prouve que $\valeur{v}(\iota) < 0$, montrant le point 3.
+\end{itemize}
+
+%-ANCIENNE PREUVE- % ne fonctionne pas
+% supprimé
+
 \vspace{5mm}
+%-RÉCIPROQUE-
 
 Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
 Soit $\xinit$ une configuration sur laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
