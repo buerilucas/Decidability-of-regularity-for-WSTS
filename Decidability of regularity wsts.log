@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  18 JUN 2021 10:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.4.26)  23 JUN 2021 19:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -866,13 +866,13 @@ LaTeX Warning: Citation 'giyo80' on page 5 undefined on input line 469.
 
 [5]
 
-LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 559.
-
-
 LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 561.
 
 
-LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 571.
+LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 563.
+
+
+LaTeX Warning: Citation 'vavn81' on page 6 undefined on input line 573.
 
 [6]
 
@@ -880,43 +880,48 @@ LaTeX Warning: Citation 'vavn81' on page 7 undefined on input line 585.
 
 [7]
 
-LaTeX Warning: Citation 'giyo80' on page 8 undefined on input line 735.
+LaTeX Warning: Citation 'giyo80' on page 8 undefined on input line 733.
 
 
-LaTeX Warning: Citation 'giyo80' on page 8 undefined on input line 772.
+LaTeX Warning: Citation 'giyo80' on page 8 undefined on input line 770.
 
 [8]
 
-LaTeX Warning: Citation 'vaja85' on page 9 undefined on input line 867.
+LaTeX Warning: Citation 'vaja85' on page 9 undefined on input line 865.
 
 
-LaTeX Warning: Citation 'vaja85' on page 9 undefined on input line 871.
+LaTeX Warning: Citation 'vaja85' on page 9 undefined on input line 869.
 
 [9]
 
-LaTeX Warning: Citation 'GHKNS-til2020' on page 10 undefined on input line 902.
+LaTeX Warning: Citation 'GHKNS-til2020' on page 10 undefined on input line 900.
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 942--943
+Underfull \hbox (badness 10000) in paragraph at lines 940--941
 
  []
+
+
+LaTeX Warning: Citation 'vavn81' on page 10 undefined on input line 946.
 
 
 LaTeX Warning: Citation 'vavn81' on page 10 undefined on input line 948.
 
+[10]
 
-LaTeX Warning: Citation 'vavn81' on page 10 undefined on input line 950.
+LaTeX Warning: Reference `lem_access_generator' on page 11 undefined on input l
+ine 1047.
 
-[10] [11]
-Underfull \hbox (badness 10000) in paragraph at lines 1102--1105
+[11] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 1140--1143
 
  []
 
 
-LaTeX Warning: Empty bibliography on input line 1117.
+LaTeX Warning: Empty bibliography on input line 1155.
 
-[12] (./Decidability of regularity wsts.aux)
+[13] (./Decidability of regularity wsts.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -937,13 +942,13 @@ Package logreq Info: Writing requests to '"Decidability of regularity wsts".run
 
  ) 
 Here is how much of TeX's memory you used:
- 20468 strings out of 478994
- 333045 string characters out of 5858184
- 1101420 words of memory out of 5000000
- 37609 multiletter control sequences out of 15000+600000
+ 20473 strings out of 478994
+ 333098 string characters out of 5858184
+ 1102425 words of memory out of 5000000
+ 37610 multiletter control sequences out of 15000+600000
  422398 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,15n,74p,1023b,1763s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,15n,74p,1023b,1764s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
 </usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
 /usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></u
@@ -972,11 +977,11 @@ e/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/local/texlive/
 21/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb></usr/local/texlive/2021
 /texmf-dist/fonts/type1/public/cm-super/sfti0700.pfb></usr/local/texlive/2021/t
 exmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on "Decidability of regularity wsts.pdf" (12 pages, 376105 bytes
+Output written on "Decidability of regularity wsts.pdf" (13 pages, 380764 bytes
 ).
 PDF statistics:
- 336 PDF objects out of 1000 (max. 8388607)
- 289 compressed objects within 3 object streams
- 89 named destinations out of 1000 (max. 500000)
+ 345 PDF objects out of 1000 (max. 8388607)
+ 297 compressed objects within 3 object streams
+ 93 named destinations out of 1000 (max. 500000)
  121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
