@@ -28,6 +28,7 @@
 \newtheorem{Theorem}{Théorème}
 \newtheorem{Definition}[Theorem]{Définition}
 \newtheorem{Proposition}[Theorem]{Proposition}
+\newtheorem{Corollary}[Theorem]{Corollaire}
 \newtheorem{Lemma}[Theorem]{Lemme}
 \newtheorem{Property}[Theorem]{Propriété}
 \newtheorem{Example}[Theorem]{Exemple}
@@ -86,8 +87,8 @@
 \newcommand{\inirat}{\mathcal{R}}
 \newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
 
-\newcommand{\Jfin}[1]{J^\text{fin}_#1}
-\newcommand{\Jinf}[1]{J^\text{inf}_#1}
+\newcommand{\Jfin}[1]{J^\text{fin}_{#1}}
+\newcommand{\Jinf}[1]{J^\text{inf}_{#1}}
 
 %================================================================
 
@@ -885,9 +886,9 @@ Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \
 \alain{la preuve est à faire !!! }
 \end{proof}
 
-\begin{Proposition}\label{minimaux}
+\begin{Corollary}\label{minimaux_cor}
 L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
-\end{Proposition}
+\end{Corollary}
 
 On en déduit le corollaire suivant :
 
@@ -965,17 +966,57 @@ On propose ainsi un autre théorème qui ne demande pas de décider l'accessibil
 %---THM-STRUCT-RAT---
 
 \begin{Lemma}\label{lem_access_generator}
-    Soit $S=(A,\lambda,\xinit)$ un VAS initialisé et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
-    Si $\vect{x}$ est $\omega$-accessible à partir de $\xinit$, alors il existe un mot $u\in A^*$ tel que
+    Soit $S=(A,\lambda,\xinit)$ un VAS initialisé et $\vect{x}\in\Nomega^d$ une $\omega$-configuration apparaissant dans le graphe de couverture $G$ de $S$.
+    %Si $\vect{x}$ est $\omega$-accessible à partir de $\xinit$, 
+    Alors il existe un mot $u\in A^*$ tel que
     \begin{enumerate}
-        \item pour tout $j\in\Jfin{\vect{x}}$, on a $\valeur{u}(j) = 0$,
-        \item pour tout $j\in\Jinf{\vect{x}}$, on a $\valeur{u}(j) > 0$.
+        \item pour tout $j\in\Jfin{\vect{x}}$, on a $\valeur{u}(j) \geq 0$,
+        \item pour tout $j\in\Jinf{\vect{x}}$, on a $\valeur{u}(j) \geq 1$.
     \end{enumerate}
 \end{Lemma}
 
 \begin{proof}
-\lucas{TODO}
+%On raisonne dans le graphe de couverture $G$ de $S$.
+Comme $\vect{x}$ étiquette un sommet de $G$, il existe un mot $w \in A^*$ permettant d'accéder à $\vect{x}$ depuis $\xinit$ dans $G$.
+Considérons la séquence des sommets du graphe parcourue en lisant le mot $w$, 
+que l'on notera $\xinit = \vect{x_0} \trans{a_1}{G} \vect{x_1} \trans{a_2}{G} \cdots \trans{a_n}{G} \vect{x_n} = \vect{x}$ pour $w = a_1 a_2 \dots a_n$.
+
+Les omegas apparaissant dans une de ces $\omega$-configurations ne peuvent disparaître au cours de l'exécution.
+On a donc les inclusions $\vide = \Jinf{\vect{x_0}} \subseteq \Jinf{\vect{x_1}} \subseteq \cdots \subseteq \Jinf{\vect{x_n}}$.
+Maintenant, pour chaque étape $1 \leq k \leq n$, 
+%si $\Jinf{\vect{x_k}} \inter \Jfin{\vect{x_{k-1}}} \neq \vide$, %inutile
+par construction du graphe, il existe un entier $0 \leq \ell \leq k$ vérifiant :
+\begin{itemize}
+    \item pour tout $j \in \Jfin{\vect{x_k}}$, on a $\vect{x_\ell}(j) = \vect{x_k}(j)$, % se résume en $\vect{x_\ell} \eqfin \vect{x_k}$
+    \item pour tout $j \in \Jinf{\vect{x_k}} \inter \Jfin{\vect{x_{k-1}}}$, on a $\vect{x_\ell}(j) < \vect{x_k}(j)$.
+\end{itemize}
+On a donc l'existence d'un mot $w_k = a_{\ell+1} \dots a_k$ vérifiant
+$\valeur{w_k}(j)=0$ pour tout $j \in \Jfin{\vect{x_k}}$, et
+$\valeur{w_k}(j)>0$ pour tout $j \in \Jinf{\vect{x_k}} \inter \Jfin{\vect{x_{k-1}}}$.
+
+\vspace{2mm}
+Par récurrence sur $k \leq n$, on construit un mot $u_k$ vérifiant 
+$\valeur{u_k}(j) = 0$ pour tout $j \in \Jfin{\vect{x_k}}$, et
+$\valeur{u_k}(j) > 0$ pour tout $j \in \Jinf{\vect{x_k}}$.
+Prendre le mot vide pour $u_0$ convient puisque $\Jinf{\xinit} = \vide$.
+
+Soit $1 \leq k \leq n$.
+Si un $u_{k-1}$ convenable existe, notons $\delta = - \min \set{\valeur{w_k}(j)}{j \in \Jinf{\vect{x_{k-1}}}}$ la plus grande valeur négative dans une coordonnée de $\valeur{w_k}$.
+Posons ensuite $u_k = {(u_{k-1})}^{\delta + 1} \, w_k$, obtenu en concaténant $\delta + 1$ fois le mot $u_{k-1}$ au mot $w_k$.
+On a alors
+\begin{itemize}
+    \item pour tout $j \in \Jfin{\vect{x_k}}$, $\valeur{u_k}(j) = \valeur{u_{k-1}}(j) \times (\delta + 1) + \valeur{w_k}(j) = 0$ puisque $\Jfin{\vect{x_{k-1}}} \subseteq \Jfin{\vect{x_k}}$,
+    \item pour tout $j \in \Jinf{\vect{x_k}}$, $\valeur{u_k}(j) = \valeur{u_{k-1}}(j) \times (\delta + 1) + \valeur{w_k}(j) \geq \delta + 1 - \delta > 0$.
+\end{itemize}
+ce qui conclut l'hérédité de la récurrence.
+
+\vspace{2mm}
+Ainsi, le mot $u = u_n$ satisfait le lemme.
 \end{proof}
+
+%%%%%%%%%%%%%%
+On notera que le mot $u$ ainsi construit n'est pas forcément franchissable sur $\xinit$.
+Néanmoins, la rationnalité structurelle permet d'éviter cette contrainte.
 
 \begin{Theorem}\label{conf_struct_rat}
 \label{rat_struct_nouveau}
@@ -988,7 +1029,7 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{Theorem}
 
 \begin{Remark}
-Les \xout{propriétés} \alain{pas le bon mot} caractérisations des théorèmes \ref{rat_struct_valk} et \ref{rat_struct_nouveau} sont bien équivalentes \alain{mal dit} :
+Les caractérisations des théorèmes \ref{rat_struct_valk} et \ref{rat_struct_nouveau} sont bien équivalentes \alain{(mal dit)} :
 
 \noindent À partir des configurations $\vect{x}_1, \vect{x}_2, \vect{x}_3, \vect{x}_4$, on choisit simplement pour $u$ le mot permettant d'aller de $\vect{x}_1$ à $\vect{x}_2$, et pour $v$ le mot allant de $\vect{x}_3$ à $\vect{x}_4$.
 
@@ -1026,10 +1067,6 @@ $$J = \set{j\in I}{
     \item Comme $(\valeur{u_k})_{k\in\N}$ est croissante, l'ensemble $\set{k\in\N}{\exists j\in J,\valeur{u_k}(j) < h_j}$ est fini.
     On peut donc supposer en supprimant ces séquences que les $\valeur{u_k}(j)$ sont égaux pour tout $k\in\N$ à $j\in J$ fixé.
     
-<<<<<<< HEAD
-    \lucas{Erreur : les actions supprimés pouvaient aussi faire croître des coordonnées, donc l'affirmation $\valeur{u_k'}(j) \geq 0$ n'est pas forcément vérifiée.}
-\alain{bien vu}
-=======
     \item Les autres coordonnées $\valeur{u_k}(j)$ pour $j\in I-J$ sont aussi croissantes et tendent vers l'infini.
     On peut donc supposer que pour tout $k\in\N$ et tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$.
 \end{itemize}
@@ -1040,15 +1077,22 @@ On va raisonner à l'aide du graphe de couverture de $S$ sur la configuration in
 Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières apparaissant dans les coordonnées du graphe de couverture, et regardons le comportement du mot $u_k$ sur ce graphe.
 
 Le sommet atteint est étiqueté par une $\omega$-configuration $\vect{x}$.
-Or, pour tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$, d'où $\vect{x}(j) = \omega$.
-Ainsi, $J\inter \Jinf{\vect{x}} = \vide$, ce qui se réécrit en $\Jfin{\vect{x}} \subseteq J$.
+On peut de plus supposer que $\vect{x}$ est maximal (donc appartient à \clover) en remplaçant $\vect{x}$ par une $\omega$-configuration maximale au dessus de $\vect{x}$ (il en existe puisque le graphe $G$ est fini).
+Comme pour tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$, on est certain que $\vect{x}(j) = \omega$ dans ce cas.
+Ainsi, on a l'inclusion %$I-J \subseteq \Jinf{\vect{x}}$ (ce qui se réécrit en 
+$\Jfin{\vect{x}} \subseteq J$.
 
-Maintenant, en utilisant le lemme \ref{lem_access_generator}, on obtient l'existence d'un mot $u\in A^*$ tel que $\valeur{u} \geq \vect{0}$ (ce qui montre le point 1), 
+Maintenant, en utilisant le lemme \ref{lem_access_generator} sur $\vect{x}$, on obtient l'existence d'un mot $u\in A^*$ tel que 
+\begin{itemize}
+    \item pour tout $j\in\Jfin{\vect{x}}$, on a $\valeur{u}(j) \geq 0$,
+    \item pour tout $j\in\Jinf{\vect{x}}$, on a $\valeur{u}(j) > 0$.
+\end{itemize}
+En particulier, $\valeur{u} \geq \vect{0}$ (ce qui montre le point 1 du théorème), 
 et pour tout $j \notin J$, $\valeur{u}(j) > 0$.
 \vspace{3mm}
 
 Intéressons-nous maintenant aux mots $v_k$.
-Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, et notons $\gamma$ le nombre de sommets du graphe de couverture de $(S,\xinit)$.
+Posons $\xi = \max \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, et notons $\gamma$ le nombre de sommets du graphe de couverture $G$ de $(S,\xinit)$.
 
 En choisissant $k > \gamma \times \xi$, on peut subdiviser en $\gamma + 1$ mots $v_k = w_1 w_2 \dots w_{\gamma + 1}$ pour avoir
 $$\vect{x_k} = \vect{z_0} \trans{w_1}{S} \vect{z_1} \trans{w_2}{S} \cdots \trans{w_{\gamma + 1}}{S} \vect{z_{\gamma + 1}} = \vect{y_k}$$
@@ -1057,14 +1101,14 @@ On rappelle que $\iota \in I$ est la coordonnée telle que $\valeur{v_k}(\iota) 
 Lire le mot $v_k$ dans le graphe de couverture à partir du sommet associé à la $\omega$-configuration $\vect{x}$ donne alors 
 $$\vect{x} = \vect{q_0} \trans{w_1}{G} \vect{q_1} \trans{w_2}{G} \cdots \trans{w_{\gamma + 1}}{G} \vect{q_{\gamma + 1}}$$
 où les $\vect{q_\ell}$ sont des $\omega$-configurations.
+Soulignons que comme $\vect{x}$ a été supposé maximal, on a $\Jinf{\vect{q_0}} = \cdots = \Jinf{\vect{q_{\gamma+1}}}$.
 Par le lemme des tiroirs, deux de ces $\omega$-configurations $\vect{q_\ell}$ et $\vect{q_{\ell'}}$ sont identiques, et on obtient un circuit partant de la $\omega$-configuration $\vect{q_\ell}$ et étiqueté par un facteur $v\in A^*$ de $v_k$.
 
 En revenant aux configurations finies, on a donc $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec $\vect{z_\ell} \eqfin \vect{z_\ell}$ et $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$.
 
 \begin{itemize}
     \item $\vect{z_\ell} \eqfin \vect{z_\ell}$ permet de montrer le point 2 :
-    Pour $i\in I$, si $\valeur{u}(i) = 0$, alors $i\in\Jfin{\vect{x}} \subseteq J$, donc $i\in\Jfin{\vect{z_\ell}}$ \lucas{À justifier en ajoutant une restriction}, ce qui assure que $\valeur{v}(i) = 0$.
->>>>>>> 2dff47fe551f1dab78799ba11713c9c8e40e637e
+    Pour $i\in I$, si $\valeur{u}(i) = 0$, alors $i\in\Jfin{\vect{x}} = \Jfin{\vect{z_\ell}}$ (car $\vect{x}$ est maximal), ce qui assure que $\valeur{v}(i) = 0$.
     
     \item $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$ prouve que $\valeur{v}(\iota) < 0$, montrant le point 3.
 \end{itemize}
@@ -1094,6 +1138,7 @@ et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
     
     \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
 \end{itemize}
+
 Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
 On notera que $\xinit$ est bien indépendant de $k$.
 Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.

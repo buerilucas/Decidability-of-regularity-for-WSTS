@@ -1,0 +1,35 @@
+\begin{thebibliography}{1}
+
+\bibitem{giyo80}
+A.~Ginzburg and M.~Yoeli.
+\newblock Vector addition systems and regular languages.
+\newblock {\em Journal of Computer and System Sciences}, 20(3):277--284, jun
+  1980.
+
+\bibitem{GHKNS-til2020}
+Jean Goubault{-}Larrecq, Simon Halfon, P.~Karandikar, K.~{Narayan Kumar}, and
+  {\relax Ph}ilippe Schnoebelen.
+\newblock The ideal approach to computing closed subsets in
+  well-quasi-orderings.
+\newblock In Peter~M. Schuster, Monika Seisenberger, and Andreas Weiermann,
+  editors, {\em Well-Quasi Orders in Computation, Logic, Language and
+  Reasoning}, volume~53 of {\em Trends In Logic}, pages 55--105. Springer,
+  2020.
+
+\bibitem{rasc59}
+Michael Rabin and Dana Scott.
+\newblock Finite automata and their decision problems.
+\newblock {\em IBM Journal of Research and Development}, 3:114--125, 04 1959.
+
+\bibitem{vavn81}
+R.~Valk and G.~Vidal-Naquet.
+\newblock Petri nets and regular languages.
+\newblock {\em J. Comput. Syst. Sci.}, 23:299--325, 1981.
+
+\bibitem{vaja85}
+R{\"{u}}diger Valk and Matthias Jantzen.
+\newblock The residue of vector sets with applications to decidability problems
+  in petri nets.
+\newblock {\em Acta Informatica}, 21:643--674, 1985.
+
+\end{thebibliography}
