@@ -109,7 +109,7 @@ On sait depuis 1980 que le problème de la rationalité du langage des traces d'
 
 Contribution
 \begin{itemize}
-    \item La preuve de VV nécessite la construction du graphe de couverture dont la taille est au pire Ackermann tandis que celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller. Dans les deux cas, d'un point de vue algorithmique, il est plus intéressant de calculer directement l'ensemble des éléments maximaux de l'ensemble des configurations du graphe de Karp-Miller, cet ensemble est appelé Clover. En étudiant la preuve de yoili, nous avons vu que la relation d'équivalence qu'ils utilisent ne permet pas de prouver la décidabilité de la rationalité et donc la preuve de yoeli n'est pas satisfaisante. On donne un nouvel énoncé et une nouvelle preuve correcte, similaire à celle de yoeli mais avec la bonne relation d'équivalence, du fait que $S$ est rationnel ssi un certain nombre de VAS associés à $S$ sont bornés, ce qui montre que la construction de clover est suffisante pour décider la rationalité dun VAS.
+    \item La preuve de VV nécessite la construction du graphe de couverture dont la taille est au pire Ackermann tandis que celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller; cela dit cet ensemble peut aussi être de taille Ackermann. Mais parfois l'ensemble des éléments maximaux de l'ensemble des configurations du graphe de Karp-Miller, appelé Clover, est petit  et facile à calculer d'un point de vue algorithmique.  En étudiant la preuve de yoili, nous avons vu que la relation d'équivalence qu'ils utilisent ne permet pas de prouver la décidabilité de la rationalité et donc la preuve de yoeli n'est pas satisfaisante. On donne un nouvel énoncé et une nouvelle preuve correcte, similaire à celle de yoeli mais avec la bonne relation d'équivalence, du fait que $S$ est rationnel ssi un certain nombre de VAS associés à $S$ sont bornés, ce qui montre que la construction de clover est suffisante pour décider la rationalité dun VAS.
     \item Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel. On montre que l'ensemble des configurations rationnelles est clos par le bas et qu'on peut calculer ses idéaux maximaux (sous-ensembles clos par le bas et dirigés dans $\N^d$) mais qui sont représentés par des ensembles finis d'éléments dans $\Nomega^d$.
     \item on donne un algo pour calculer les élements minimaux du complémentaire. Cet algorithme est au pire Ackermannian.
     \item on montre que le pb de rationalité structurelle est dans NP
@@ -1039,23 +1039,23 @@ Les caractérisations des théorèmes \ref{rat_struct_valk} et \ref{rat_struct_n
 \begin{proof}
 Supposons que $S$ ne soit pas structurellement rationnel.
 Il existe donc une configuration initiale $\xinit \in\N^d$ telle que $\lang(S,\xinit)$ n'est pas rationnel.
-D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une séquence d'actions franchissable 
+D'après le théorème \ref{caractérisation}, on sait que pour tout $k\in\N$,  il existe une séquence d'actions franchissable 
 $\xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$
 et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
 
-Remarquons qu'une séquence d'action qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs de $k$ inférieures.
-Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il en reste une infinité.
+Remarquons qu'une séquence d'actions qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs inférieures à $k$.
+Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il en reste une infinité.\alain{confus}
 
 \begin{itemize}
-    \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\iota\in I$ apparaissant une infinité de fois.
-    On peut ainsi supposer que $i_k = \iota$ pour tout $k$.
+    \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\iota\in I$ \alain{i} apparaissant une infinité de fois.
+    Considérerons la sous-suite infinie $(i_{\phi(k)})$ telle que $i_{\phi(k)} = \iota$, et à un renomage près des indices, on peut ainsi supposer que $i_k = \iota$ pour tout $k$.
     %\alain{expliquer même si ça semble évident}
     
-    \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
-    On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
+    \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$. Là encore, à un renomage des indices près,
+    on peut se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
 \end{itemize}
 
-Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
+Notons $J\subseteq I$ l'ensemble des coordonnées \xout{bornées} dans les $\valeur{u_k}$.\alain{confus: coordonnées entières,  dans tous les $u_k$ donc il faut expliquer que cette phrase a un sens car le coordonnées finies pourraient, à priori bouger selon les k considérés}
 Formellement, on définit 
 $$J = \set{j\in I}{
     \text{sup} \set{\valeur{u_k}(j)}{k\in\N} \text{ est fini}}
@@ -1064,20 +1064,20 @@ $$J = \set{j\in I}{
 %\alain{on peut définir J = j tel que sup{(uk(j)/k} est fini }
 
 \begin{itemize}
-    \item Comme $(\valeur{u_k})_{k\in\N}$ est croissante, l'ensemble $\set{k\in\N}{\exists j\in J,\valeur{u_k}(j) < h_j}$ est fini.
-    On peut donc supposer en supprimant ces séquences que les $\valeur{u_k}(j)$ sont égaux pour tout $k\in\N$ à $j\in J$ fixé.
+    \item Comme $(\valeur{u_k})_{k\in\N}$ est croissante, l'ensemble $\set{k\in\N}{\exists j\in J,\valeur{u_k}(j) < h_j}$ est fini \alain{NON le cas stationnaire ? dire strictement croissante et prouver}.
+    On peut donc supposer en supprimant ces \alain{lesquelles ?}séquences que les $\valeur{u_k}(j)$ sont égaux pour tout $k\in\N$ \xout{à $j\in J$ fixé}.
     
-    \item Les autres coordonnées $\valeur{u_k}(j)$ pour $j\in I-J$ sont aussi croissantes et tendent vers l'infini.
+    \item Les \xout{autres} coordonnées $\valeur{u_k}(j)$ pour $j\in I-J$ sont aussi croissantes \alain{une suite peut être croissante mais pas des coordonnées}et tendent vers l'infini \alain{on pourrait utiliser la notation, après definition, $lim_{k \rightarrow \infty} u_k$  et même $lim  \ u_k$}.
     On peut donc supposer que pour tout $k\in\N$ et tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$.
 \end{itemize}
 
 %-NOUVEAU-
 
-On va raisonner à l'aide du graphe de couverture de $S$ sur la configuration initiale $\xinit$.
-Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières apparaissant dans les coordonnées du graphe de couverture, et regardons le comportement du mot $u_k$ sur ce graphe.
+On va raisonner à l'aide du graphe de couverture de $S$ \xout{sur} à partir de la configuration initiale $\xinit$.
+Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières apparaissant dans les \xout{coordonnées} configurations du graphe de couverture, et regardons le comportement du mot $u_k$ sur ce graphe.
 
-Le sommet atteint est étiqueté par une $\omega$-configuration $\vect{x}$.
-On peut de plus supposer que $\vect{x}$ est maximal (donc appartient à \clover) en remplaçant $\vect{x}$ par une $\omega$-configuration maximale au dessus de $\vect{x}$ (il en existe puisque le graphe $G$ est fini).
+Le sommet atteint \alain{par franchissement de $u_k$ à partir de XXXX pourquoi est-ce franchissable ???}est étiqueté par une $\omega$-configuration $\vect{x}$. \alain{considérons l'unique élément $x'$ (on peut avoir x'=x) de Clover tel que $x \leq x'$}
+\xout{On peut de plus supposer \alain{NON} que $\vect{x}$ est maximal (donc appartient à \clover) en remplaçant $\vect{x}$ par une $\omega$-configuration maximale au dessus de $\vect{x}$ (il en existe puisque le graphe $G$ est fini).}
 Comme pour tout $j\notin J$, on a $\valeur{u_k}(j) \geq k$, on est certain que $\vect{x}(j) = \omega$ dans ce cas.
 Ainsi, on a l'inclusion %$I-J \subseteq \Jinf{\vect{x}}$ (ce qui se réécrit en 
 $\Jfin{\vect{x}} \subseteq J$.
@@ -1094,17 +1094,17 @@ et pour tout $j \notin J$, $\valeur{u}(j) > 0$.
 Intéressons-nous maintenant aux mots $v_k$.
 Posons $\xi = \max \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, et notons $\gamma$ le nombre de sommets du graphe de couverture $G$ de $(S,\xinit)$.
 
-En choisissant $k > \gamma \times \xi$, on peut subdiviser en $\gamma + 1$ mots $v_k = w_1 w_2 \dots w_{\gamma + 1}$ pour avoir
+En choisissant $k > \gamma \times \xi$, on peut \xout{subdiv}factoriser \alain{$v_k$ }en $\gamma + 1$ mots $w_i$ tel que $v_k = w_1 w_2 \dots w_{\gamma + 1}$ satisfaisant
 $$\vect{x_k} = \vect{z_0} \trans{w_1}{S} \vect{z_1} \trans{w_2}{S} \cdots \trans{w_{\gamma + 1}}{S} \vect{z_{\gamma + 1}} = \vect{y_k}$$
 de telle manière à ce que $\vect{z_0}(\iota) > \vect{z_1}(\iota) > \cdots > \vect{z_{\gamma + 1}}(\iota)$.
 On rappelle que $\iota \in I$ est la coordonnée telle que $\valeur{v_k}(\iota) \leq k$.
 Lire le mot $v_k$ dans le graphe de couverture à partir du sommet associé à la $\omega$-configuration $\vect{x}$ donne alors 
 $$\vect{x} = \vect{q_0} \trans{w_1}{G} \vect{q_1} \trans{w_2}{G} \cdots \trans{w_{\gamma + 1}}{G} \vect{q_{\gamma + 1}}$$
 où les $\vect{q_\ell}$ sont des $\omega$-configurations.
-Soulignons que comme $\vect{x}$ a été supposé maximal, on a $\Jinf{\vect{q_0}} = \cdots = \Jinf{\vect{q_{\gamma+1}}}$.
+Soulignons que comme $\vect{x}$ \xout{a été supposé} est maximal, on a $\Jinf{\vect{q_0}} = \cdots = \Jinf{\vect{q_{\gamma+1}}}$.
 Par le lemme des tiroirs, deux de ces $\omega$-configurations $\vect{q_\ell}$ et $\vect{q_{\ell'}}$ sont identiques, et on obtient un circuit partant de la $\omega$-configuration $\vect{q_\ell}$ et étiqueté par un facteur $v\in A^*$ de $v_k$.
 
-En revenant aux configurations finies, on a donc $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec $\vect{z_\ell} \eqfin \vect{z_\ell}$ et $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$.
+En revenant aux configurations \alain{NON, coordonnées} finies \alain{de quoi ?}, on a donc $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec $\vect{z_\ell} \eqfin \vect{z_\ell}$ et $\vect{z_\ell}(\iota) > \vect{z_\ell}(\iota)$.
 
 \begin{itemize}
     \item $\vect{z_\ell} \eqfin \vect{z_\ell}$ permet de montrer le point 2 :
@@ -1120,7 +1120,7 @@ En revenant aux configurations finies, on a donc $\vect{z_\ell} \trans{v}{S} \ve
 %-RÉCIPROQUE-
 
 Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
-Soit $\xinit$ une configuration sur laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
+Soit $\xinit$ une configuration \xout{sur} laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire) \alain{pourquoi on peut ?}.
 Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
 
 Soit $k\in\N$.
@@ -1130,16 +1130,16 @@ et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
 \begin{itemize}
     \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
     Comme $u$ est franchissable sur $\xinit$, le mot $u^{\rho\times k}$ l'est également.
-    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte.
+    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte \alain{VAGUE, écrire $x-->x_k$.}
     
     \item D'après le point 2, si pour un $i\in I$, on a $\valeur{v^k}(i) < 0$, alors $\valeur{u}(i) > 0$, d'où $\vect{x}_k(i) \geq \rho\times k$.
-    Par définition de $\rho$, on en déduit que $\valeur{v^k}$ a bien les ressources nécessaires pour se déclencher sur $\vect{x}_k$, donc est bien franchissable.
-    Posons $\vect{y}_k = \vect{x}_k + \valeur{v^k}$ la nouvelle configuration atteinte.
+    Par définition de $\rho$, on en déduit que $\valeur{v^k}$ \xout{a bien les ressources nécessaires pour se déclencher sur} $\vect{x}_k$, \xout{donc} est franchissable à partir de $\vect{x}_k$.
+    Posons $\vect{y}_k = \vect{x}_k + \valeur{v^k}$ la nouvelle configuration atteinte \alain{à partir de xxx}.
     
     \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
 \end{itemize}
 
-Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
+Par conséquent, \xout{l'exécution} la séquence $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
 On notera que $\xinit$ est bien indépendant de $k$.
 Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
 \end{proof}
