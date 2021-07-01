@@ -16,6 +16,17 @@ Jean Goubault{-}Larrecq, Simon Halfon, P.~Karandikar, K.~{Narayan Kumar}, and
   Reasoning}, volume~53 of {\em Trends In Logic}, pages 55--105. Springer,
   2020.
 
+\bibitem{DBLP:journals/corr/abs-2105-08551}
+Slawomir Lasota.
+\newblock Improved ackermannian lower bound for the {VASS} reachability
+  problem.
+\newblock {\em CoRR}, abs/2105.08551, 2021.
+
+\bibitem{DBLP:journals/corr/abs-2104-12695}
+J{\'{e}}r{\^{o}}me Leroux.
+\newblock The reachability problem for petri nets is not primitive recursive.
+\newblock {\em CoRR}, abs/2104.12695, 2021.
+
 \bibitem{rasc59}
 Michael Rabin and Dana Scott.
 \newblock Finite automata and their decision problems.
