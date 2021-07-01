@@ -1,4 +1,17 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{DBLP:conf/mfcs/BlockeletS11}
+Michel Blockelet and Sylvain Schmitz.
+\newblock Model checking coverability graphs of vector addition systems.
+\newblock In Filip Murlak and Piotr Sankowski, editors, {\em Mathematical
+  Foundations of Computer Science 2011 - 36th International Symposium, {MFCS}
+  2011, Warsaw, Poland, August 22-26, 2011. Proceedings}, volume 6907 of {\em
+  Lecture Notes in Computer Science}, pages 108--119. Springer, 2011.
+
+\bibitem{DBLP:journals/jcss/Demri13}
+St{\'{e}}phane Demri.
+\newblock On selective unboundedness of {VASS}.
+\newblock {\em J. Comput. Syst. Sci.}, 79(5):689--713, 2013.
 
 \bibitem{giyo80}
 A.~Ginzburg and M.~Yoeli.
@@ -42,5 +55,13 @@ R{\"{u}}diger Valk and Matthias Jantzen.
 \newblock The residue of vector sets with applications to decidability problems
   in petri nets.
 \newblock {\em Acta Informatica}, 21:643--674, 1985.
+
+\bibitem{DBLP:conf/tcs/ValkV77}
+R{\"{u}}diger Valk and G.~Vidal.
+\newblock On the rationality of petri net languages.
+\newblock In Hans Tzschach, H.~Waldschmidt, and Hermann~K.{-}G. Walter,
+  editors, {\em Theoretical Computer Science, 3rd GI-Conference, Darmstadt,
+  Germany, March 28-30, 1977, Proceedings}, volume~48 of {\em Lecture Notes in
+  Computer Science}, pages 319--328. Springer, 1977.
 
 \end{thebibliography}
