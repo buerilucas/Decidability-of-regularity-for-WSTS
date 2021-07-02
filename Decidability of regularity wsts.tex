@@ -125,7 +125,9 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
     \item On montre que l'ensemble $R(S)$ des configurations rationnelles d'un VASS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) est un ensemble clos par le bas. De plus, on montre qu'on peut calculer une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc qu'on peut aussi calculer un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas. Une fois l'ensemble $Z$ calculé, on peut répondre en temps linéaire en la taille de $Z$ si $S$ est rationnel à partir d'une configuration $x_0 \in \N^d$; il suffit de comparer $x_0$ avec les éléments dans $Z$. Si il existe un élément $z \in Z$ tel que $x_0 \leq z$ alors $L(S,x_0)$ est rationnel sinon $L(S,x_0)$ n'est pas rationnel. on donne donc un algo pour calculer les éléments maximaux (dans $\Nomega^d$) de l'ensemble des configurations rationnelles. Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
 
 \end{itemize}
-
+%%%%%%%%%
+\iffalse
+%%%%%%%%%
 \section{Réseaux de Petri}
 
 Un \petri $N = (P,T,B,F,M_0)$ est la donnée de
@@ -149,6 +151,9 @@ On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$
 
 Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\reach(N)\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
 
+%%%%%%%%%
+\fi
+%%%%%%%%%
 %----------------------------------------------------------------
 
 \section{VAS}
