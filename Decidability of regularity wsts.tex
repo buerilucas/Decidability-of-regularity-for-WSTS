@@ -104,12 +104,12 @@
 
 \section{Introduction}
 
-{\bf Context} les VASS et les  réseaux de Petri sont difficiles à analyser car de nombreux problèmes sont indécidables (comme l'inclusion des ensembles d'accessibilité ou l'inclusion des langages de deux VASS) et les problèmes décidables ont souvent une complexité élevée. Par exemple, l'accessibilité d'un état de contrôle (et de nombreux problèmes de model checking qui s'y réduisent) est EXSPSACE-complet tandis que l'accessibilté d'une configuration est Ackermann-complete \cite{DBLP:journals/corr/abs-2104-12695,DBLP:journals/corr/abs-2105-08551}. 
+{\bf Context} les VASS et les  réseaux de Petri sont difficiles à analyser car de nombreux problèmes sont indécidables (comme l'inclusion des ensembles d'accessibilité ou l'inclusion des langages de deux VASS) et les problèmes décidables ont souvent une complexité élevée. Par exemple, l'accessibilité d'un état de contrôle (et de nombreux problèmes de model checking qui s'y réduisent) est EXPSPACE-complet tandis que l'accessibilté d'une configuration est Ackermann-complete \cite{DBLP:journals/corr/abs-2104-12695,DBLP:journals/corr/abs-2105-08551}. 
 
-Savoir si le langage d'un VASS est rationnel est important car dans ce cas, on peut effectivement construire un automate fini équivalent (la taille de ceux-ci peut atteindre Ackermann \cite{vavn81}) et en conséquence, certains problèmes indécidables pour les VASS deviennent décidables pour les VASS rationnels (comme l'inclusion des langages de deux VASS étiquetés sur un même alphabet) et des problèmes décidables comme la couverture et l'accessibilité ont une complexité moindre qui est XXX \alain{en fait je n'en sais rien :)}. La rationalité du langage d'un VASS avec configurations finales, étiqueté même sans le mot vide, ainsi que l'universalité sont indécidables \cite{giyo80}. On considerera donc seulement les langages de traces (toutes les configurations sont finales) de VASS étiquetés injectivement et on dira qu'un VASS est rationnel quand son langage de traces est rationnel. 
+Savoir si le langage d'un VASS est rationnel est important car dans ce cas, on peut effectivement construire un automate fini équivalent (la taille de celui-ci peut atteindre Ackermann \cite{vavn81}) et en conséquence, certains problèmes indécidables pour les VASS deviennent décidables pour les VASS rationnels (comme l'inclusion des langages de deux VASS étiquetés sur un même alphabet) et des problèmes décidables comme la couverture et l'accessibilité ont une complexité moindre qui est XXX \alain{en fait je n'en sais rien :)}. La rationalité du langage d'un VASS avec configurations finales, étiqueté même sans le mot vide, ainsi que l'universalité sont indécidables \cite{giyo80}. On considerera donc seulement les langages de traces (toutes les configurations sont finales) de VASS étiquetés injectivement et on dira qu'un VASS est rationnel quand son langage de traces est rationnel. 
 
 On sait depuis 1977, par deux énoncés différents, de Yoeli et Ginzbourg  \cite{giyo80} et de Valk et Vidal-Naquet \cite{DBLP:conf/tcs/ValkV77,giyo80} que le problème de la rationalité du langage des traces d'un VASS étiqueté de façon injective est décidable \cite{giyo80,vavn81}. Yoeli et Ginzbourg réduisent la rationalité d'un VAS $S$ au fait qu'un nombre fini de VAS, construits à partir de $Clover(S)$, sont bornés (Théorème 2, \cite{giyo80}). Malheureusement, la preuve du (Théorème 2, \cite{giyo80}) est techniquement fausse même si elle contient les idées nécessaires mais les auteurs n'ont pas considéré la bonne relation d'équivalence utilisée dans leur preuve. Valk et Vidal-Naquet ont montré (Théorème 5,  \cite{vavn81}) qu'un réseau de Petri $S$ n'est pas rationnel s'il existe un circuit élémentaire, étiqueté par une séquence à effet strictement négatif sur au moins une coordonnée contenant un $\omega$, dans le graphe de Karp-Miller de $S$. Cet énoncé demande la construction du graphe de Karp-Miller mais nous verrons qu'on peut raisonner seulement sur Clover qui peut être beaucoup plus petit que le graphe de Karp-Miller.
-On sait aussi, par deux preuves différentes de Blockelet et Schmitz \cite{DBLP:conf/mfcs/BlockeletS11}, et de Demri \cite{DBLP:journals/jcss/Demri13}, que la complexité de la rationalité est EXSPSACE-complet. %	\cite{DBLP:conf/mfcs/BlockeletS11,DBLP:journals/jcss/Demri13}.
+On sait aussi, par deux preuves différentes de Blockelet et Schmitz \cite{DBLP:conf/mfcs/BlockeletS11}, et de Demri \cite{DBLP:journals/jcss/Demri13}, que la complexité de la rationalité est EXPSPACE-complet. %	\cite{DBLP:conf/mfcs/BlockeletS11,DBLP:journals/jcss/Demri13}.
 
 Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savoir de décider si un VASS est rationnel pour \emph{toute} configuration initiale (problème de la  \emph{rationalité structurelle}). Il est énoncé décidable (\cite{vavn81}, Théorème 6) mais la preuve est incomplète puisque la partie non triviale est seulement évoquée informelllement. De plus, la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée.
 \alain{il n'est pas évident que l'algorithme implicite demande de décider l'accessibilité car il s'agit de prouver l'existence d'une séquence de marquages accessibles mais pas de prouver l'accessibilité de deux marquages donnés.} 
@@ -117,7 +117,7 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
 
 {\bf Contribution}
 \begin{itemize}
-\item On corrige la preuve du résultat de Yoeli et Ginzbourg  \cite{giyo80} que nous utiliserons pour prouver la décidabilité du problème de la rationalité structurelle. Nous commençons par montrer que $S$ est rationnel ssi  le quotient d'une relation d'équivalence $\equiv_2$, que nous définissons, est fini. Ce résultat ressemble au résultat principal de \cite{giyo80} mais la preuve du Théorème 2 et du Lemme 2 sont incorrectes essentiellement car la relation d'équivalence utilisée $\equiv_1$ n'a pas les propriétés nécessaires pour prouver le Théorème 2 de \cite{giyo80}. 
+\item On corrige la preuve du résultat de Yoeli et Ginzbourg  \cite{giyo80} que nous utiliserons pour prouver la décidabilité du problème de la rationalité structurelle. Nous introduisons une relation d'équivalence $\equiv_S$ telle que XXX et nous montrons que $S$ est rationnel ssi  le quotient $\N^d/\equiv_S$ est fini. Ce résultat ressemble au résultat principal de \cite{giyo80} mais la preuve du Théorème 2 et du Lemme 2 sont incorrectes essentiellement car la relation d'équivalence utilisée $\equiv_{YG}$ ne permet pas de prouver le Théorème 2 de \cite{giyo80}. 
     \item on prouve que le pb de la rationalité structurelle est décidable et qu'il est dans NP. \alain{expliquer}XXXX
 %\item on corrige la preuve du résultat principal de \cite{giyo80} qui est formellement incorrecte. 
 %En effet, YG énoncent que $S$ est rationnel ssi le quotient d'une relation d'équivalence $\equiv_1$ est fini mais nous montrons que ceci est faux. 
@@ -125,7 +125,9 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
     \item On montre que l'ensemble $R(S)$ des configurations rationnelles d'un VASS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) est un ensemble clos par le bas. De plus, on montre qu'on peut calculer une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc qu'on peut aussi calculer un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas. Une fois l'ensemble $Z$ calculé, on peut répondre en temps linéaire en la taille de $Z$ si $S$ est rationnel à partir d'une configuration $x_0 \in \N^d$; il suffit de comparer $x_0$ avec les éléments dans $Z$. Si il existe un élément $z \in Z$ tel que $x_0 \leq z$ alors $L(S,x_0)$ est rationnel sinon $L(S,x_0)$ n'est pas rationnel. on donne donc un algo pour calculer les éléments maximaux (dans $\Nomega^d$) de l'ensemble des configurations rationnelles. Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
 
 \end{itemize}
-
+%%%%%%%%%
+\iffalse
+%%%%%%%%%
 \section{Réseaux de Petri}
 
 Un \petri $N = (P,T,B,F,M_0)$ est la donnée de
@@ -149,6 +151,9 @@ On étendra naturellement cette notation (ainsi que $B(p,\cdot)$ et $F(p,\cdot)$
 
 Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in T^\ast} {\fire{M_0}{w}}$ du \petri et les configurations accessibles $\reach(N)\defeq \set{M':P\to\N}{\exists w\in T^\ast, \fire{M_0}{w}M'}$.
 
+%%%%%%%%%
+\fi
+%%%%%%%%%
 %----------------------------------------------------------------
 
 \section{VAS}
@@ -537,205 +542,6 @@ On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (
 ainsi $\reach(S)/\rel_S$ est infini.
 \end{proof}
 
-\subsection{Rationalité par les circuits}
-\alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
-%\textbf{Méthode de Valk et Vidal-Naquet :}
-
-%On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
-%Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
-%L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
-
-On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
-On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
-
-Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
-
-Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
-ces coordonnées n'entrent donc pasa en compte dans le franchissement.
-
-\begin{Definition}
-Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
-On dit que $u$ est \emph{franchissable} sur $\vect{x}$ lorsque pour tout préfixe $v$ de $u$ et pour toute coordonnée $i \in \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{v}(i) \geq 0$.
-
-La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\vect{y} = \vect{x} + \valeur{u}$.
-Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
-\end{Definition}
-
-Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. \alain{vague}
-
-\begin{Definition}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable \xout{sur} $\vect{x}$ tel que \alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
-\begin{enumerate}
-    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
-    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
-\end{enumerate}
-\end{Definition}
-
-On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
-
-Cette définition fait le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context", qui se reformule ainsi :
-
-\begin{Definition}[\cite{vavn81} def p. 309]
-Soit $S = (A,\lambda,\xinit)$ un VAS (avec configuration initiale) et $\vect{y} \in \Nomega^d$ une $\omega$-configuration.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible dans $S$} lorsque
-% à modifier
-%lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
-$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\vect{y}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\vect{y}}, \vect{x}(i) = \vect{y}(i) \big)$$
-
-Si on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
-\end{Definition}
-
-\begin{Theorem}[\cite{vavn81} théorème 4]
-Soit $S$ un VAS.
-Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
-%non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
-\begin{enumerate}
-    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$,
-    \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
-    obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
-\end{enumerate}
-\end{Theorem}
-
-\begin{Theorem}[\cite{vavn81} lemme 3]
-Soit $S$ un VAS.
-Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
-tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
-\end{Theorem}
-
-%---------------------
-
-\begin{Definition}
-Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$ \xout{un mot}.
-On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur \alain{je répète tjs pas "sur" mais "à partir de "}$\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
-\end{Definition}
-
-\begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
-Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
-\begin{enumerate}
-    \item $\vect{y}$ est $\omega$-accessible depuis $\vect{x}$ dans $S$,
-    \item $v$ est cyclable sur $\vect{y}$,
-    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
-\end{enumerate}
-\end{Theorem}
-
-
-Si un mot est cyclable sur x, il l'est sur y>x.   une $\omega$-configuration plus grande.
-On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
-
-$\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
-
-%\begin{Theorem} % FAUX !!!
-%Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
-%$\vect{y}$ est générable en dessous de $\vect{x}$ 
-%ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
-%\begin{enumerate}
-%    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
-%    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
-%    \item $\vect{x'} \trans{}{S} \vect{y'}$
-%    \item $u$ est cyclable sur $\vect{y}$
-%    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
-%\end{enumerate}
-%\end{Theorem}
-
-\begin{Theorem}
-\lucas{À rectifier}
-Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
-On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
-il existe deux mots $u,v \in A^*$ vérifiant
-\begin{enumerate}
-    \item $\valeur{u} \geq \vect{0}$,
-    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
-    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
-    \item On peut accéder \alain{vague} depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ sur laquelle $u$ est franchissable.
-\end{enumerate}
-
-\lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
-\end{Theorem}
-
-%*****
-
-\begin{proof}
-\lucas{Pas encore au point, ne pas regarder}
-
-Supposons que $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$.
-On a donc une configuration initiale $\xinit \in \N^d$ telle que $\lang(S,\xinit)$ n'est pas rationnel.
-Il existe alors (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
-$\xinit \trans{u_k}{S} \vect{y}_k \trans{v_k}{S} \vect{z}_k$
-et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
-
-Remarquons qu'une séquence d'action qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs de $k$ inférieures.
-Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il  en reste une infinité :
-
-\begin{itemize}
-    \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\mathrm{i}\in I$ apparaissant une infinité de fois.
-    On peut ainsi supposer que $i_k = \mathrm{i}$ pour tout $k$.
-    %\alain{expliquer même si ça semble évident}
-    
-    \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
-    On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
-\end{itemize}
-
-Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
-Formellement, on définit 
-$$J = \set{j\in I}{sup \set{\valeur{u_k}(j)}{k\in\N} \text{ est fini}}
-\text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
-
-Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
-Commençons par fabriquer $u$ satisfaisant le point 1 :
-\begin{itemize}
-    \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
-    on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
-    On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
-    
-    \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
-    Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, la suite d'entiers $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
-    il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
-    On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
-\end{itemize}
-Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 %du théorème \ref{conf_struct_rat}
-: $\valeur{u_{k_0}'} > \vect{0}$.
-\vspace{2mm}
-
-Maintenant, procédons de façon similaire sur les $v_k$.
-Pour tout $j\in J$, $(\valeur{u_k}(j))_{k\in\N}$ est borné, donc $(\vect{x}_k(j))_{k\in\N}$ est borné également par $\ell_j = h_j + \xinit(j)$.
-On construit alors $v_k'$ en retirant de $v_k$ pour tout $j\in J$ les $\ell_j$ premières actions qui font décroître la coordonnée $j$.
-Tous les $v_k'$ vérifient le point 2 (avec $u = u_{k_0}'$), puisque si pour un $i\in I$, $\valeur{u_{k_0}'}(i) = 0$, alors $i\in J$, d'où $\valeur{v_k'}(i) \geq 0$.
-
-Enfin, en prenant $k_1 = 1 + \xi \times \sum_{j\in J} \ell_j$, on a $\valeur{v_{k_1}}(\mathrm{i}) \leq k_1$, d'où $\valeur{v_{k_1}'}(\mathrm{i}) < 0$, et $v_{k_1}'$ vérifie aussi le point 3.
-Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème \ref{conf_struct_rat}
-, ce qui montre l'implication directe.
-\vspace{5mm}
-
-Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
-Soit $\xinit$ une configuration sur laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
-Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
-
-Soit $k\in\N$.
-Notons $\rho = \text{max}\set{-\valeur{v}(i)}{i\in I}$, 
-et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
-
-\begin{itemize}
-    \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
-    Comme $u$ est franchissable sur $\xinit$, le mot $u^{\rho\times k}$ l'est également.
-    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte.
-    
-    \item D'après le point 2, si pour un $i\in I$, on a $\valeur{v^k}(i) < 0$, alors $\valeur{u}(i) > 0$, d'où $\vect{x}_k(i) \geq \rho\times k$.
-    Par définition de $\rho$, on en déduit que $\valeur{v^k}$ a bien les ressources nécessaires pour se déclencher sur $\vect{x}_k$, donc est bien franchissable.
-    Posons $\vect{y}_k = \vect{x}_k + \valeur{v^k}$ la nouvelle configuration atteinte.
-    
-    \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
-\end{itemize}
-Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
-On notera que $\xinit$ est bien indépendant de $k$.
-Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
-\end{proof}
-
 %------------------------------------
 
 \section{Décider la caractérisation (corrige Yoeli)}
@@ -821,7 +627,7 @@ Alors il existe une configuration $\vect{z}\in\mathfrak{m}$ vérifiant $\vect{y}
 Dans le VAS $S(\mathfrak{m},i)$, le mot $w(\mathfrak{m},i)$ appartient au langage $\lang(S(\mathfrak{m},i))$ 
 puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a 
 \begin{itemize}
-    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable sur $\vect{y}$,
+    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable à partir de $\vect{y}$,
     \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r = \card{J_\mathfrak{m}}$.
 \end{itemize}
 Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \reach(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
@@ -830,112 +636,9 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 %--------------------------------------------------
 
-\section{Calcul des configurations maximales rationnelles}
-\alain{on fait plus puisqu'on calcule les éléments minimaux pour lesquels le VAS n'est pas rationnel}
-
-\begin{Definition}
-Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel.
-\end{Definition}
-
-Nous allons considérer l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{ est rationnel }}$ et son complémentaire, l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{n'est pas rationnel}}$. 
-%	Comme  ainsi que l'ensemble de ses éléments minimaux.
-%
-	Dans cette partie, le comportement d'un VAS est donc étudié à partir de l'ensemble de ses configurations initiales possibles c'est-à-dire pour tout les $\vect{x} \in \N^d$.
-%
-Posons donc: $$\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$$
-
-\noindent
-Rappelons que nous notons $\overline{\inirat(S)}
-%	\set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ n'est pas rationnel}}  
-    = \N^d - \inirat(S)$.
-%
-Montrons que si $\lang(S,\vect{x})$ n'est pas rationnel alors $\lang(S,\vect{x'})$ n'est pas rationnel pour tout $\vect{x'} \geq \vect{x}$ ce qui revient à dire que la propriété de non-rationalité est monotone.
-%\xout{selon les configurations initiales choisies.}
-
-\begin{Proposition}\label{monotonie_rationnel}
-Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)}$ est clos par le haut et $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ où $\Min(\overline{\inirat(S)})$ est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
-\end{Proposition}
-
-%\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
-%\lucas{Oui, c'est le complémentaire.}
-
-\begin{proof}
-Montrons d'abord que $\overline{\inirat(S)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
-Supposons que $\lang(S,\vect{x})$ ne soit pas rationnel.
-
-D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
-Comme $\vect{x}\leq\vect{x'}$, du fait de la monotonie des VAS, la séquence $uv$ est aussi franchissable à partir de $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
-où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{z}_k + (\vect{x'} - \vect{x})$.
-
-On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(S,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
-On en déduit que $\lang(S,\vect{x'})$ n'est pas rationnel.
-
-L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow M_S$ d'après la proposition \ref{clos_haut_wqo}.
-\end{proof}
-
-\begin{Remark}
-On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$ est clos par le bas. Nous allons calculer une représentation finie de $\inirat(S)$ en calculant $\Min(\overline{\inirat(S)})$ qui est une représentation finie de son complémentaire $\overline{\inirat(S)}$.
-\end{Remark}
-
-Montrons maintenant que l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
-On utilise pour cela sur un résultat de Valk \& Jantzen \cite{vaja85}.
-\alain{noter plutôt VJ pour être équitable envers les auteurs ou bien Valk \& al. mais ValkJ est peu clair}
-\lucas{Les noms ne sont pas censés apparaître, seulement les numéros.}
-
-\begin{Theorem}[\cite{vaja85} théorème 2.14]
-Soit $K \subseteq \N^d$ un ensemble clos par le haut.
-Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
-\end{Theorem}
-
-\begin{Proposition}\label{minimaux}
-L'ensemble $M_S$ est calculable pour tout VAS $S$.
-
-\alain{Rapprocher le "d" du "VAS".}
-\lucas{Euh, c'est-à-dire ?}
-\end{Proposition}
-
-\begin{proof}
-Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(S)}}(\vect{x})$ est équivalent au prédicat "$\lang(S,\vect{x})$ est rationnel".
-Reste à considérer les cas où certaines coordonnées de $\vect{x}$ valent $\omega$.
-
-Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(S)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
-\alain{la preuve est à faire !!! }
-\end{proof}
-
-\begin{Corollary}\label{minimaux_cor}
-L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
-\end{Corollary}
-
-On en déduit le corollaire suivant :
-
-\begin{Proposition}\label{maximaux}
-L'ensemble des configurations rationnelles est clos par le bas et son ensemble d'idéaux maximaux est fini et calculable pour tout VAS $S$ 
-\end{Proposition}
-
-\begin{proof}
-On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble clos par le haut dans $\N^d$ à une représentation finie de son complémentaire (qui est clos par le bas) dans $\N^d$ \cite{GHKNS-til2020}.
-
-%@incollection{GHKNS-til2020,
-%  volume = 53,
-%  series = {Trends In Logic},
-%  publisher = {Springer},
-%  booktitle = {Well-Quasi Orders in Computation, Logic, Language and Reasoning},
-%  editor = {Schuster, Peter M. and Seisenberger, Monika and Weiermann, Andreas},
-%  author = {Jean Goubault{-}Larrecq and Simon Halfon and P. Karandikar and K. {Narayan Kumar} and {\relax Ph}ilippe Schnoebelen},
-%  title = {The Ideal Approach to Computing Closed Subsets in Well-Quasi-Orderings},
-%  pages = {55-105},
-%  year = 2020,
-%  doi = {10.1007/978-3-030-30229-0_3}
-%}
-\end{proof}
-
-\begin{Remark}
-Pour tout VAS $S$, nous avons donc découpé l'ensemble $\N^d$ des configurations initiales en deux sous-ensembles disjoints, $\inirat(S)$ et son complémentaire $\overline{\inirat(S)}$, tels que $\inirat(S)$ est clos par le bas (et $\overline{\inirat(S)}$ est clos par le haut).
-Quelle est la complexité du calcul de $\Min(\overline{\inirat(S)})$ ? L'algorithme proposé demande de calculer $\clover(S)$ donc la complexité de l'algorithme est Ackermann. Ceci ne veut pas dire qu'on ne puisse pas faire mieux. 
-\end{Remark}
-
-%%%%%%%%%%%%%%%%%%
 \section{Décidabilité et complexité de la rationalité structurelle}
+
+\lucas{J'ai mis cette partie avant de parler de configurations maximales, donc il y a des affirmations qui ne vont pas.}
 
 Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. Bien sûr, une conséquence de la section précédente permet de conclure que ce problème est décidable puisqu'on peut calculer $\Min(\overline{\inirat(S)})$ et décider si $\Min(\overline{\inirat(S)})=\vide$.
 
@@ -1031,7 +734,7 @@ Ainsi, le mot $u = u_n$ satisfait le lemme.
 \end{proof}
 
 %%%%%%%%%%%%%%
-On notera que le mot $u$ ainsi construit n'est pas forcément franchissable sur $\xinit$.
+On notera que le mot $u$ ainsi construit n'est pas forcément franchissable à partir de $\xinit$.
 Néanmoins, la rationnalité structurelle permet d'éviter cette contrainte.
 
 \begin{Theorem}\label{conf_struct_rat}
@@ -1080,7 +783,7 @@ Pour se faire, remarquons que si on remplace cette suite par une sous-suite $\bi
 alors les mêmes propriétés sont vérifiées :
 Pour tout $k\in\N$,
 \begin{itemize}
-    \item le mot $u_{\phi(k)} v_{\phi(k)}$ est franchissable sur $\xinit$, et on a $\xinit \trans{u_{\phi(k)}}{S} \vect{x}_{\phi(k)} \trans{v_{\phi(k)}}{S} \vect{y}_{\phi(k)}$,
+    \item le mot $u_{\phi(k)} v_{\phi(k)}$ est franchissable à partir de $\xinit$, et on a $\xinit \trans{u_{\phi(k)}}{S} \vect{x}_{\phi(k)} \trans{v_{\phi(k)}}{S} \vect{y}_{\phi(k)}$,
     \item il existe une coordonnée $i_{\phi(k)} \in I$ telle que $\valeur{v_{\phi(k)}}(i_{\phi(k)}) \leq -\phi(k) \leq -k$.
 \end{itemize}
 Par conséquent, on peut se restreindre à une sous-suite, et ainsi sélectionner uniquement les séquences d'actions qui nous intéresse.
@@ -1113,7 +816,7 @@ et pour $j\in J$, $h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$.
 On va raisonner à l'aide du graphe de couverture de $S$ à partir de la configuration initiale $\xinit$.
 Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières apparaissant dans les $\omega$-configurations du graphe de couverture, et regardons le comportement du mot $u_k$ sur ce graphe.
 
-$u_k$ est bien franchissable sur $\xinit$, et son franchissement dans le graphe de couverture atteint une $\omega$-configuration $\vect{x}$.
+$u_k$ est bien franchissable à partir de $\xinit$, et son franchissement dans le graphe de couverture atteint une $\omega$-configuration $\vect{x}$.
 Choisissons un élément maximal $\vect{x'}\in\clover$ tel que $\vect{x} \leq \vect{x'}$.
 \lucas{On n'a pas unicité !}
 Pour tout $j\in I-J$, on a $\valeur{u_k}(j) \geq k$, d'où $\vect{x'}(j) \geq \vect{x}(j) \geq k$, ce qui assure que $\vect{x'}(j) = \omega$ (grâce au le choix de $k$).
@@ -1132,13 +835,13 @@ et pour tout $j \notin J$, $\valeur{u}(j) > 0$.
 Intéressons-nous maintenant aux mots $v_k$.
 Posons $\xi = \max \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$, et notons $\gamma$ le nombre de sommets du graphe de couverture $G$ de $(S,\xinit)$.
 En choisissant $k > \gamma \times \xi$, on peut factoriser $v_k$ en $\gamma + 1$ mots $w_i$ 
-avec le franchissement de $v_k = w_1 w_2 \dots w_{\gamma + 1}$ sur $\vect{x_k}$ suivant :
+avec le franchissement de $v_k = w_1 w_2 \dots w_{\gamma + 1}$ à partir de $\vect{x_k}$ suivant :
 $$\vect{x_k} = \vect{z_0} \trans{w_1}{S} \vect{z_1} \trans{w_2}{S} \cdots \trans{w_{\gamma + 1}}{S} \vect{z_{\gamma + 1}} = \vect{y_k}$$
 de telle manière à ce que $\vect{z_0}(\mathrm{i}) > \vect{z_1}(\mathrm{i}) > \cdots > \vect{z_{\gamma + 1}}(\mathrm{i})$.
 On rappelle que $\mathrm{i} \in I$ est la coordonnée telle que $\valeur{v_k}(\mathrm{i}) \leq k$.
 
 % On repasse sur le graphe de couverture pour trouver un circuit
-Le mot $v_k$ est franchissable sur $x_k$, donc sur la $\omega$-configuration $\vect{x}$, mais également sur $\vect{x'}$.
+Le mot $v_k$ est franchissable à partir de $x_k$, donc à partir de la $\omega$-configuration $\vect{x}$, mais également à partir de $\vect{x'}$.
 Ce franchissement se factorise ainsi :
 $$\vect{x'} = \vect{q_0} \trans{w_1}{G} \vect{q_1} \trans{w_2}{G} \cdots \trans{w_{\gamma + 1}}{G} \vect{q_{\gamma + 1}}$$
 où les $\vect{q_\ell}$ sont des $\omega$-configurations.
@@ -1147,7 +850,7 @@ Par le lemme des tiroirs, deux de ces $\omega$-configurations $\vect{q_\ell}$ et
 
 \vspace{2mm}
 % On repasse aux configurations finies
-En revenant au franchissement de $v_k$ sur $\vect{x_k}$, on a donc un facteur $v$ tel que $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec
+En revenant au franchissement de $v_k$ à partir de $\vect{x_k}$, on a donc un facteur $v$ tel que $\vect{z_\ell} \trans{v}{S} \vect{z_{\ell'}}$ avec
 %$\vect{z_\ell} \eqfin \vect{z_\ell'}$ et $\vect{z_\ell}(\mathrm{i}) > \vect{z_\ell'}(\mathrm{i})$.
 
 \begin{itemize}
@@ -1189,7 +892,7 @@ Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structur
 \end{proof}
 
 \begin{Theorem}\label{NP conf_struct_rat}
-Le  problème de la rationalité structurelle est dans NP pour les VAS. \alain{notre modèle c'est les VAS ou les VASS ?}
+Le  problème de la rationalité structurelle est dans NP pour les VAS.
 \end{Theorem}
 
 \begin{proof}
@@ -1206,10 +909,309 @@ Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme comb
 C'est du Presburger existentiel et c'est donc dans NP.
 \end{proof}
 
-%\section{Conclusion et perspectives}
 
-a%	ppliquer aux very-WSTS, aux affine VAS,...
+
+\section{Rationnalité sur des $\omega$-configurations (Brouillon)}
+\alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
+%\textbf{Méthode de Valk et Vidal-Naquet :}
+
+%On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
+%Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
+%L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+
+On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
+On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
+
+Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
+
+Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
+ces coordonnées n'entrent donc pasa en compte dans le franchissement.
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
+On dit que $u$ est \emph{franchissable} à partir de $\vect{x}$ lorsque pour tout préfixe $v$ de $u$ et pour toute coordonnée $i \in \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{v}(i) \geq 0$.
+
+La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\vect{y} = \vect{x} + \valeur{u}$.
+Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
+\end{Definition}
+
+Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. \alain{vague}
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
+On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable à partir de $\vect{x}$ tel que \alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
+\begin{enumerate}
+    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
+    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
+\end{enumerate}
+\end{Definition}
+
+On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
+
+Cette définition fait le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context", qui se reformule ainsi :
+
+\begin{Definition}[\cite{vavn81} def p. 309]
+Soit $S = (A,\lambda,\xinit)$ un VAS (avec configuration initiale) et $\vect{y} \in \Nomega^d$ une $\omega$-configuration.
+On dit que $\vect{y}$ est \emph{$\omega$-accessible dans $S$} lorsque
+% à modifier
+%lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
+$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\vect{y}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\vect{y}}, \vect{x}(i) = \vect{y}(i) \big)$$
+
+Si on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
+\end{Definition}
+
+\begin{Theorem}[\cite{vavn81} théorème 4]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
+%non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
+\begin{enumerate}
+    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$,
+    \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
+    obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
+\end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}[\cite{vavn81} lemme 3]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
+tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
+\end{Theorem}
+
+%---------------------
+
+\begin{Definition}
+Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$ \xout{un mot}.
+On dit que $v$ est \emph{cyclable} à partir de $\vect{x}$ lorsque $v$ est franchissable à partir de $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+\end{Definition}
+
+\begin{Theorem}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
+Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
+il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+\begin{enumerate}
+    \item $\vect{y}$ est $\omega$-accessible depuis $\vect{x}$ dans $S$,
+    \item $v$ est cyclable à partir de $\vect{y}$,
+    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
+\end{enumerate}
+\end{Theorem}
+
+
+Si un mot est cyclable à partir de x, il l'est à partir de y>x.   une $\omega$-configuration plus grande.
+On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
+
+$\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\in A^*$ cyclable à partir de $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
+
+%\begin{Theorem} % FAUX !!!
+%Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
+%$\vect{y}$ est générable en dessous de $\vect{x}$ 
+%ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
+%\begin{enumerate}
+%    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
+%    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
+%    \item $\vect{x'} \trans{}{S} \vect{y'}$
+%    \item $u$ est cyclable à partir de $\vect{y}$
+%    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
+%\end{enumerate}
+%\end{Theorem}
+
+\begin{Theorem}
+\lucas{À rectifier}
+Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
+On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
+il existe deux mots $u,v \in A^*$ vérifiant
+\begin{enumerate}
+    \item $\valeur{u} \geq \vect{0}$,
+    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
+    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
+    \item On peut accéder \alain{vague} depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ à partir de laquelle $u$ est franchissable.
+\end{enumerate}
+
+\lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
+\end{Theorem}
+
+%*****
+
+\begin{proof}
+\lucas{Pas encore au point, ne pas regarder}
+
+Supposons que $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$.
+On a donc une configuration initiale $\xinit \in \N^d$ telle que $\lang(S,\xinit)$ n'est pas rationnel.
+Il existe alors (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
+$\xinit \trans{u_k}{S} \vect{y}_k \trans{v_k}{S} \vect{z}_k$
+et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
+
+Remarquons qu'une séquence d'action qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs de $k$ inférieures.
+Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il  en reste une infinité :
+
+\begin{itemize}
+    \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\mathrm{i}\in I$ apparaissant une infinité de fois.
+    On peut ainsi supposer que $i_k = \mathrm{i}$ pour tout $k$.
+    %\alain{expliquer même si ça semble évident}
+    
+    \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
+    On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
+\end{itemize}
+
+Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
+Formellement, on définit 
+$$J = \set{j\in I}{sup \set{\valeur{u_k}(j)}{k\in\N} \text{ est fini}}
+\text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
+
+Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
+Commençons par fabriquer $u$ satisfaisant le point 1 :
+\begin{itemize}
+    \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
+    on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
+    On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
+    
+    \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
+    Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
+    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, la suite d'entiers $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
+    il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
+    On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
+\end{itemize}
+Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 %du théorème \ref{conf_struct_rat}
+: $\valeur{u_{k_0}'} > \vect{0}$.
+\vspace{2mm}
+
+Maintenant, procédons de façon similaire sur les $v_k$.
+Pour tout $j\in J$, $(\valeur{u_k}(j))_{k\in\N}$ est borné, donc $(\vect{x}_k(j))_{k\in\N}$ est borné également par $\ell_j = h_j + \xinit(j)$.
+On construit alors $v_k'$ en retirant de $v_k$ pour tout $j\in J$ les $\ell_j$ premières actions qui font décroître la coordonnée $j$.
+Tous les $v_k'$ vérifient le point 2 (avec $u = u_{k_0}'$), puisque si pour un $i\in I$, $\valeur{u_{k_0}'}(i) = 0$, alors $i\in J$, d'où $\valeur{v_k'}(i) \geq 0$.
+
+Enfin, en prenant $k_1 = 1 + \xi \times \sum_{j\in J} \ell_j$, on a $\valeur{v_{k_1}}(\mathrm{i}) \leq k_1$, d'où $\valeur{v_{k_1}'}(\mathrm{i}) < 0$, et $v_{k_1}'$ vérifie aussi le point 3.
+Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème \ref{conf_struct_rat}
+, ce qui montre l'implication directe.
+\vspace{5mm}
+
+Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
+Soit $\xinit$ une configuration à partir de laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
+Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
+
+Soit $k\in\N$.
+Notons $\rho = \text{max}\set{-\valeur{v}(i)}{i\in I}$, 
+et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
+
+\begin{itemize}
+    \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
+    Comme $u$ est franchissable à partir de $\xinit$, le mot $u^{\rho\times k}$ l'est également.
+    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte.
+    
+    \item D'après le point 2, si pour un $i\in I$, on a $\valeur{v^k}(i) < 0$, alors $\valeur{u}(i) > 0$, d'où $\vect{x}_k(i) \geq \rho\times k$.
+    Par définition de $\rho$, on en déduit que $\valeur{v^k}$ a bien les ressources nécessaires pour se déclencher à partir de $\vect{x}_k$, donc est bien franchissable.
+    Posons $\vect{y}_k = \vect{x}_k + \valeur{v^k}$ la nouvelle configuration atteinte.
+    
+    \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
+\end{itemize}
+Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
+On notera que $\xinit$ est bien indépendant de $k$.
+Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
+\end{proof}
+
 %==================================================
+
+\section{Calcul des configurations maximales rationnelles}
+\alain{on fait plus puisqu'on calcule les éléments minimaux pour lesquels le VAS n'est pas rationnel}
+
+\begin{Definition}
+Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel.
+\end{Definition}
+
+Nous allons considérer l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{ est rationnel }}$ et son complémentaire, l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{n'est pas rationnel}}$. 
+%	Comme  ainsi que l'ensemble de ses éléments minimaux.
+%
+	Dans cette partie, le comportement d'un VAS est donc étudié à partir de l'ensemble de ses configurations initiales possibles c'est-à-dire pour tout les $\vect{x} \in \N^d$.
+%
+Posons donc: $$\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$$
+
+\noindent
+Rappelons que nous notons $\overline{\inirat(S)}
+%	\set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ n'est pas rationnel}}  
+    = \N^d - \inirat(S)$.
+%
+Montrons que si $\lang(S,\vect{x})$ n'est pas rationnel alors $\lang(S,\vect{x'})$ n'est pas rationnel pour tout $\vect{x'} \geq \vect{x}$ ce qui revient à dire que la propriété de non-rationalité est monotone.
+%\xout{selon les configurations initiales choisies.}
+
+\begin{Proposition}\label{monotonie_rationnel}
+Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)}$ est clos par le haut et $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ où $\Min(\overline{\inirat(S)})$ est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
+\end{Proposition}
+
+%\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
+%\lucas{Oui, c'est le complémentaire.}
+
+\begin{proof}
+Montrons d'abord que $\overline{\inirat(S)}$ est clos par le haut. Soit $\vect{x},\vect{x'}\in\N^d$ deux configurations vérifiant $\vect{x} \leq \vect{x'}$.
+Supposons que $\lang(S,\vect{x})$ ne soit pas rationnel.
+
+D'après le théorème \ref{caractérisation}, il existe pour tout $k\in\N$ une exécution $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ vérifiant $\valeur{v} = \vect{z}_k - \vect{y}_k \not\geq -k$.
+Comme $\vect{x}\leq\vect{x'}$, du fait de la monotonie des VAS, la séquence $uv$ est aussi franchissable à partir de $\vect{x'}$, et l'on obtient l'exécution $\vect{x'} \trans{u}{S} \vect{y'}_k \trans{v}{S} \vect{z'}_k$.
+où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{z}_k + (\vect{x'} - \vect{x})$.
+
+On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(S,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
+On en déduit que $\lang(S,\vect{x'})$ n'est pas rationnel.
+
+L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow M_S$ d'après la proposition \ref{clos_haut_wqo}.
+\end{proof}
+
+\begin{Remark}
+On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$ est clos par le bas. Nous allons calculer une représentation finie de $\inirat(S)$ en calculant $\Min(\overline{\inirat(S)})$ qui est une représentation finie de son complémentaire $\overline{\inirat(S)}$.
+\end{Remark}
+
+Montrons maintenant que l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
+On utilise pour cela sur un résultat de Valk \& Jantzen \cite{vaja85}.
+
+\begin{Theorem}[\cite{vaja85} théorème 2.14]
+Soit $K \subseteq \N^d$ un ensemble clos par le haut.
+Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
+\end{Theorem}
+
+\begin{Proposition}\label{minimaux}
+L'ensemble $M_S$ est calculable pour tout VAS $S$.
+\end{Proposition}
+
+\begin{proof}
+Si $\vect{x}\in\N^d$, le prédicat $p_{\overline{\inirat(S)}}(\vect{x})$ est équivalent au prédicat "$\lang(S,\vect{x})$ est rationnel".
+Reste à considérer les cas où certaines coordonnées de $\vect{x}$ valent $\omega$.
+
+Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \neq \emptyset)$ est décidable pour $K=\overline{\inirat(S)}$. Le principe doit être le même que la preuve du théorème 3.11 (toujours dans Valk) pour les 4 ensembles de marquages étudiés.
+\alain{la preuve est à faire !!! }
+\end{proof}
+
+\begin{Corollary}\label{minimaux_cor}
+L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
+\end{Corollary}
+
+On en déduit le corollaire suivant :
+
+\begin{Proposition}\label{maximaux}
+L'ensemble des configurations rationnelles est clos par le bas et son ensemble d'idéaux maximaux est fini et calculable pour tout VAS $S$ 
+\end{Proposition}
+
+\begin{proof}
+On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble clos par le haut dans $\N^d$ à une représentation finie de son complémentaire (qui est clos par le bas) dans $\N^d$ \cite{GHKNS-til2020}.
+
+%@incollection{GHKNS-til2020,
+%  volume = 53,
+%  series = {Trends In Logic},
+%  publisher = {Springer},
+%  booktitle = {Well-Quasi Orders in Computation, Logic, Language and Reasoning},
+%  editor = {Schuster, Peter M. and Seisenberger, Monika and Weiermann, Andreas},
+%  author = {Jean Goubault{-}Larrecq and Simon Halfon and P. Karandikar and K. {Narayan Kumar} and {\relax Ph}ilippe Schnoebelen},
+%  title = {The Ideal Approach to Computing Closed Subsets in Well-Quasi-Orderings},
+%  pages = {55-105},
+%  year = 2020,
+%  doi = {10.1007/978-3-030-30229-0_3}
+%}
+\end{proof}
+
+\begin{Remark}
+Pour tout VAS $S$, nous avons donc découpé l'ensemble $\N^d$ des configurations initiales en deux sous-ensembles disjoints, $\inirat(S)$ et son complémentaire $\overline{\inirat(S)}$, tels que $\inirat(S)$ est clos par le bas (et $\overline{\inirat(S)}$ est clos par le haut).
+Quelle est la complexité du calcul de $\Min(\overline{\inirat(S)})$ ? L'algorithme proposé demande de calculer $\clover(S)$ donc la complexité de l'algorithme est Ackermann. Ceci ne veut pas dire qu'on ne puisse pas faire mieux. 
+\end{Remark}
+
+%----------------------------------------------------
 
 \section{Commentaires}
 Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
