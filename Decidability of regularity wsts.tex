@@ -298,6 +298,9 @@ On montrera ainsi qu'un VAS est rationnel si et seulement s'il existe une borne 
 %ssi il existe une borne sur la décroissance possible des coordonnées des configurations.
 ($\vect{k}$ désignera le vecteur $(k,k,...,k)\in\N^d$).
 
+%%%%%%%%%%%
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%
 \subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
 Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\reach(S)$ (\cite{giyo80}, Théorème 1).
@@ -342,7 +345,9 @@ Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'e
 
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
 \end{Example}
-
+%%%%%%%%%%%%%%%%%%%%%
+\fi
+%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Une autre relation d'équivalence qui est d'index fini (utilisée en 4.3 puis en 7)}
 Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
@@ -446,11 +451,12 @@ La relation $\relGY$ de Ginzburg et Yoeli vérifie également cette propriété.
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
 Comme la seule règle restreignant les actions franchissables est un test de positivité, on va exiger que les configurations ne puissent pas trop décroître.
 
-Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suivants :
+Nous suivons le raisonnement de Ginzburg et Yoeli mais sur notre relation d'équivalence $\equiv_2$ %	proposent une caractérisation au travers des deux lemmes suivants :
+\alain{ne plus parler de Yoeli: on en aura parlé dans l'intro et dans l'annexe. On ne les cite pas sur leur lemme 1 si on change la relation}
 
 % Définir borné ?
-
-\begin{Statement}[\cite{giyo80} Lemme 1]
+\alain{écris ton lemme avec le maximum}
+\begin{Statement}[\cite{giyo80} Lemme 1]\alain{à virer}
     Supposons que dans un VAS $S=(A,\lambda,\xinit)$, les $n$ premières coordonnées soient non-bornées.
     Supposons aussi qu'il existe $n$ entiers positifs $k_1,k_2,\dots,k_n$ tels que pour tout $\vect{x}\in\reach(S)$, tout $w\in A^\ast$ et tout $i=1,2,\dots,n$, 
     $(\vect{x} +\valeur{w})\in\reach(S)$ implique
@@ -459,24 +465,24 @@ Ginzburg et Yoeli proposent une caractérisation au travers des deux lemmes suiv
     Alors $\reach(S)/\relGY$ est fini.
 \end{Statement}
 
-Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
-Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.
+\xout{Ce résultat est correct, et nous l'adapterons facilement à la relation $\rel_S$ en modifiant la propriété requise en conséquence.
+Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les $k_i$, il est tout à fait possible de considérer leur maximum.}
 
-\begin{Statement}[\cite{giyo80} Lemme 2]
+\begin{Statement}[\cite{giyo80} Lemme 2]\alain{en annexe}
     Soit $S=(A,\lambda,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
     pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\reach(S)$ et un mot $w\in A^\ast$ tels que 
     $(\vect{x} +\valeur{w}) \in\reach(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
     Alors l'ensemble $\reach(S)/\relGY$ est infini.
 \end{Statement}
 
-Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
+\xout{Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
 Il est affirmé que si $\vect{x} +\valeur{w} \in\reach(S)$, alors toutes les étapes intermédiaires sont accessibles, ce qui n'est pas forcément vrai.
-Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.
+Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la caractérisation souhaitée.}
 
 \vspace{5mm}
 
-Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
-La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.
+\xout{Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
+La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.}\alain{on trouve ça dans Valk-Vidal-Naquet, le dire}
 
 \begin{Theorem}\label{caractérisation}
     Soit $S=(A,\lambda,\xinit)$ un VAS.
@@ -515,7 +521,7 @@ On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \tran
 
 Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
 Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $i$ décroître,
-et l'on a une sous-séquence d'extractrice $\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
+et l'on a une sous-séquence d'extractrice \alain{pas le bon mot}$\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
 
 
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
@@ -532,7 +538,7 @@ ainsi $\reach(S)/\rel_S$ est infini.
 \end{proof}
 
 \subsection{Rationalité par les circuits}
-
+\alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
 %\textbf{Méthode de Valk et Vidal-Naquet :}
 
 %On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
@@ -555,11 +561,11 @@ La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\ve
 Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
 \end{Definition}
 
-Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. 
+Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. \alain{vague}
 
 \begin{Definition}
 Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable sur $\vect{x}$ tel que 
+On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable \xout{sur} $\vect{x}$ tel que \alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
 \begin{enumerate}
     \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
     \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
@@ -602,8 +608,8 @@ tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
 %---------------------
 
 \begin{Definition}
-Soit $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une $\omega$-configuration et $v\in A^*$ un mot.
-On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$ \xout{un mot}.
+On dit que $v$ est \emph{cyclable} sur $\vect{x}$ lorsque $v$ est franchissable sur \alain{je répète tjs pas "sur" mais "à partir de "}$\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
 \end{Definition}
 
 \begin{Theorem}
@@ -618,10 +624,10 @@ il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$
 \end{Theorem}
 
 
-Si un mot est cyclable, il l'est sur une $\omega$-configuration plus grande.
+Si un mot est cyclable sur x, il l'est sur y>x.   une $\omega$-configuration plus grande.
 On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
-$\vect{x}$ $\omega$-configuration générable s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
+$\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\in A^*$ cyclable sur $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
 
 %\begin{Theorem} % FAUX !!!
 %Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
@@ -638,14 +644,14 @@ $\vect{x}$ $\omega$-configuration générable s'il existe une mot $u\in A^*$ cyc
 
 \begin{Theorem}
 \lucas{À rectifier}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
+Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
 On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
 il existe deux mots $u,v \in A^*$ vérifiant
 \begin{enumerate}
     \item $\valeur{u} \geq \vect{0}$,
     \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
     \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
-    \item On peut accéder depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ sur laquelle $u$ est franchissable.
+    \item On peut accéder \alain{vague} depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ sur laquelle $u$ est franchissable.
 \end{enumerate}
 
 \lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
@@ -1183,7 +1189,7 @@ Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structur
 \end{proof}
 
 \begin{Theorem}\label{NP conf_struct_rat}
-Le  problème de la rationalité structurelle est dans NP pour les VAS.
+Le  problème de la rationalité structurelle est dans NP pour les VAS. \alain{notre modèle c'est les VAS ou les VASS ?}
 \end{Theorem}
 
 \begin{proof}
@@ -1191,7 +1197,7 @@ Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalit�
 
 Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $A$).
 
-Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire de $\lambda(A)$ vérifiant les 3 conditions suivantes:
+Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire à coéfficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes:
 \begin{enumerate}
     \item $\vect{u} > \vect{0}$,
     \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique $\vect{v}(i) \geq 0$,
@@ -1200,9 +1206,9 @@ Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme comb
 C'est du Presburger existentiel et c'est donc dans NP.
 \end{proof}
 
-\section{Conclusion et perspectives}
+%\section{Conclusion et perspectives}
 
-appliquer aux very-WSTS, aux affine VAS,...
+a%	ppliquer aux very-WSTS, aux affine VAS,...
 %==================================================
 
 \section{Commentaires}
@@ -1229,7 +1235,58 @@ que sait-on décider et à quel coût pour les regular VASS ?
 étudier le model checking pour  $CTL$  et $CTL^*$ des regular VASS.
 \begin{itemize}
   \item On remarque qu'on peut décider la rationalité avec Clover et qu'on n'a pas besoin du graphe de couverture ni même de l'ensemble des configurations de ce graphe. Cet énoncé revient aussi à dire qu'un certain nombre de VAS associés à $S$ sont bornés, ce qui a comme conséquence que la donnée de Clover est suffisante pour décider la rationalité dun VAS. La preuve de VV nécessite la construction du graphe de couverture dont la taille est au pire Ackermann tandis que celle de yoeli n'utilise que l'ensemble des configurations du graphe de Karp-Miller; cela dit cet ensemble peut aussi être de taille Ackermann. Mais parfois l'ensemble des éléments maximaux de l'ensemble des configurations du graphe de Karp-Miller, appelé Clover, est petit  et facile à calculer d'un point de vue algorithmique.  
+\item appliquer aux affine VAS et aux very-WSTS.
 \end{itemize}
+
+\section{Appendix}
+
+
+\subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini, Counter-example for Lemme 2 dans \cite{giyo80}}
+
+Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\reach(S)$ (\cite{giyo80}, Théorème 1).
+
+S'il est vrai que $\reach(S)/\relGY$ fini implique que $\lang(S)$ est rationnel, la réciproque est fausse et nous donnerons un contre-exemple d'un langage $\lang(S)$ rationnel tel que $\reach(S)/\relGY$ est infini. 
+Nous proposerons de reprendre l'idée de Ginzburg et Yoeli,
+mais en définissant une autre relation d'équivalence pour laquelle on obtiendra cette fois-ci l'équivalence entre la rationalité du langage et le quotient fini selon cette relation.
+
+\begin{Definition}[\cite{giyo80} section 3]
+Soit $S=(A,\lambda,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
+$$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$$
+\end{Definition}
+\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
+
+\begin{Remark}
+$\relGY$ est une relation d'équivalence sur l'ensemble $\reach(S)$ des configurations accessibles.
+\end{Remark}
+
+On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
+Cela est malheureusement faux, puisque pour $\vect{x}\in\reach(S)$ et $w\in A^\ast$, l'écriture $\vect{x} +\valeur{w}\in\reach(S)$ ne permet pas de dire si la séquence $w$ est franchissable à partir de $\vect{x}$.
+Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
+voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
+
+\alain{énoncer le lemma faux de Yoeli et expliquer et donner le contre-exemple}
+Plus précisément sur la preuve de \alain{non l'énoncé } de Ginzburg et Yoeli, 
+avoir $\reach(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prouvé en construisant explicitement l'automate.
+Par contre, la réciproque est fausse : 
+L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\reach(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
+
+\vspace{5mm}
+
+On donne ci-dessous un contre-exemple pour illustrer ce point.
+Il est nécessaire de se placer au moins en dimension 3, car le résultat de Ginzburg et Yoeli reste vrai en dimension inférieure.
+
+\lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
+
+\begin{Example}
+Soit le $3-$VAS $S = (A=\os{a,b,c}, \lambda, \xinit=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n=(n,0,0)$ pour $n\in\N$.
+
+Cependant, pour deux entiers $m>n>0$, bien que $\lang(S,\vect{x}_m) =\lang(S,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
+Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \reach(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \reach(S)$.
+
+La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
+\end{Example}
+
 
 \section{FSTTCS 2021}  
 41st IARCS Annual Conference on
