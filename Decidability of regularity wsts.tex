@@ -117,7 +117,7 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
 
 {\bf Contribution}
 \begin{itemize}
-\item On corrige la preuve du résultat de Yoeli et Ginzbourg  \cite{giyo80} que nous utiliserons pour prouver la décidabilité du problème de la rationalité structurelle. Nous introduisons une relation d'équivalence $\equiv_S$ telle que XXX et nous montrons que $S$ est rationnel ssi  le quotient $\N^d/\equiv_S$ est fini. Ce résultat ressemble au résultat principal de \cite{giyo80} mais la preuve du Théorème 2 et du Lemme 2 sont incorrectes essentiellement car la relation d'équivalence utilisée $\equiv_{YG}$ ne permet pas de prouver le Théorème 2 de \cite{giyo80}. 
+\item On corrige la preuve du résultat de Yoeli et Ginzbourg  \cite{giyo80} que nous utiliserons pour prouver la décidabilité du problème de la rationalité structurelle. Nous introduisons une relation d'équivalence $\equiv_S$ telle que XXX et nous montrons que $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_S$ est fini. Ce résultat ressemble au résultat principal de \cite{giyo80} mais la preuve du Théorème 2 et du Lemme 2 sont incorrectes essentiellement car la relation d'équivalence utilisée $\equiv_{YG}$ ne permet pas de prouver le Théorème 2 de \cite{giyo80}. 
     \item on prouve que le pb de la rationalité structurelle est décidable et qu'il est dans NP. \alain{expliquer}XXXX
 %\item on corrige la preuve du résultat principal de \cite{giyo80} qui est formellement incorrecte. 
 %En effet, YG énoncent que $S$ est rationnel ssi le quotient d'une relation d'équivalence $\equiv_1$ est fini mais nous montrons que ceci est faux. 
@@ -295,7 +295,7 @@ Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ain
 
 %----------------------------------------------------------------
 
-\section{Une caractérisation pour la rationalité}
+\section{Une nouvelle preuve de décidabilité de la rationalité}
 
 La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationalité.
@@ -354,8 +354,9 @@ La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{
 \fi
 %%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Une autre relation d'équivalence qui est d'index fini (utilisée en 4.3 puis en 7)}
-Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
+\subsection{Une nouvelle relation d'équivalence sur $\N^d$}
+%	 qui est d'index fini (utilisée en 4.3 puis en 7)
+%	Pour corriger ce problème, on va aussi regarder si les actions sont franchissables :
 
 \begin{Definition}
 Soit $S=(A,\lambda)$ un VAS. On introduit la relation $\rel_S$ sur les configurations en posant pour tout $\vect{x},\vect{y} \in\N^d$ :
@@ -364,7 +365,7 @@ $$\vect{x} \rel_S \vect{y} \ssi \lang(S,\vect{x}) = \lang(S,\vect{y})$$
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
 
-Constatons déjà que cette nouvelle relation est plus grande que celle de Ginzburg et Yoeli (au sens de l'inclusion) :
+Constatons déjà que cette nouvelle relation est incluse dans celle de Ginzburg et Yoeli :
 
 \begin{Proposition}
 Soit $S=(A,\lambda,\xinit)$ un VAS et $\vect{x},\vect{y} \in\lang(S)$.
@@ -425,7 +426,7 @@ Ainsi, le lemme \ref{lien avec Nérode} devient faux dès lors que $u,v\notin\la
 \end{Remark}
 
 
-\begin{Theorem}\label{lien relation-rationnel}(math)
+\begin{Theorem}\label{lien relation-rationnel}
     Pour un VAS $S$, $\lang(S)$ est rationnel si et seulement si $\reach(S)/\rel_S$ est fini.
 %	restreint aux configurations accessibles $\reach(S)$ admet un nombre fini de classes d'équivalence.
 \end{Theorem}
@@ -435,29 +436,32 @@ On a les équivalences suivantes: \\
 $\lang(S)$ est rationnel 
 ssi $A^\ast/\sim_{\lang(S)}$ est fini (propriété de la relation de Nérode) \\
 ssi $\lang(S)/\sim_{\lang(S)}$ est fini (car $\sim_{\lang(S)}$ admet un seule classe d'équivalence sur $A^\ast \setminus \lang(S)$) \\
-ssi $\reach(S)/\rel_S$ est fini (par le lemme \ref{lien avec Nérode}).
+ssi $\reach(S)/\rel_S$ est fini (par le Lemme \ref{lien avec Nérode}).
 \end{proof}
 
-Enfin, on donne une propriété de monotonie pour cette relation, qui appuie son intérêt pour l'étude du système de transition $S$.
+Enfin, on montre que
+%	donne une propriété de monotonie pour cette relation, qui appuie son intérêt pour l'étude du système de transition $S$. 
+la relation d'équivalence $\rel_S$ 
+%	sur les configurations d'un $d-$VAS $S$ 
+est compatible/monotone avec les actions :
 
 \begin{Proposition}\label{Monotonie relation}
-La relation d'équivalence $\rel_S$ sur les configurations d'un $d-$VAS $S$ est compatible/monotone avec les actions :
 Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\forall a\in A, \vect{x} +\valeur{a} \rel_S \vect{y} +\valeur{a}$.
 \end{Proposition}
-
-\begin{Remark}
-La relation $\relGY$ de Ginzburg et Yoeli vérifie également cette propriété.
-\end{Remark}
+%
+%\begin{Remark}
+%La relation $\relGY$ de Ginzburg et Yoeli vérifie également cette propriété.
+%\end{Remark}
 
 %--------------
 
 \subsection{Borne sur la décroissance (décidable)}
 
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
-Comme la seule règle restreignant les actions franchissables est un test de positivité, on va exiger que les configurations ne puissent pas trop décroître.
+Comme la seule règle restreignant les actions franchissables est un test de positivité, on va exiger que les configurations ne puissent pas trop décroître.\alain{cette explication est confuse}.
 
-Nous suivons le raisonnement de Ginzburg et Yoeli mais sur notre relation d'équivalence $\equiv_2$ %	proposent une caractérisation au travers des deux lemmes suivants :
-\alain{ne plus parler de Yoeli: on en aura parlé dans l'intro et dans l'annexe. On ne les cite pas sur leur lemme 1 si on change la relation}
+%	Nous suivons le raisonnement de Ginzburg et Yoeli mais sur notre relation d'équivalence $\equiv_2$ %	proposent une caractérisation au travers des deux lemmes suivants :
+%\alain{ne plus parler de Yoeli: on en aura parlé dans l'intro et dans l'annexe. On ne les cite pas sur leur lemme 1 si on change la relation}
 
 % Définir borné ?
 \alain{écris ton lemme avec le maximum}
@@ -477,7 +481,7 @@ Notons qu'il n'est pas nécessaire de prendre des valeurs différentes pour les 
     Soit $S=(A,\lambda,\xinit)$ un VAS, et supposons qu'il existe une coordonnée non-bornée $j$ telle que 
     pour tout $k\geq 0$, il existe une configuration $\vect{x}\in\reach(S)$ et un mot $w\in A^\ast$ tels que 
     $(\vect{x} +\valeur{w}) \in\reach(S)$ et $\vect{x}(j) - (\vect{x} +\valeur{w})(j) > k$.
-    Alors l'ensemble $\reach(S)/\relGY$ est infini.
+    Alors $\reach(S)/\relGY$ est infini.
 \end{Statement}
 
 \xout{Cette fois, la preuve donnée comporte une erreur de même nature que précédemment :
@@ -503,9 +507,9 @@ La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les m
 \end{Theorem}
 
 \begin{proof}
-Commençons par montrer le sens $\big($ \eqref{eq:caracterisation} $\Rightarrow \lang(S)$ rationnel $\big)$.
+Commençons par montrer que $S$ satisfait $ \eqref{eq:caracterisation} \Rightarrow \lang(S)$ rationnel.
 Soit $S$ un VAS vérifiant la propriété \eqref{eq:caracterisation} pour un $k\in\N$.
-
+%
 Soit $\vect{x},\vect{y}\in\reach(S)$.
 Supposons que $\vect{x}$ et $\vect{y}$ sont indiscernables pour les petites valeurs, c'est-à-dire que pour toute coordonnée $i\in I$, on a 
 soit $\vect{x}(i)=\vect{y}(i)$, 
@@ -513,15 +517,14 @@ soit $\big( \vect{x}(i)\geq k \text{ et } \vect{y}(i)\geq k \big)$.
 Alors $\vect{x}\rel_S \vect{y}$. 
 En effet, on a $\vect{x} +\valeur{w} \geq\vect{0} \equivaut \vect{y} +\valeur{w} \geq\vect{0}$ pour tout $w\in A^\ast$, 
 puisque les coordonnées qui diffèrent entre $\vect{x}$ et $\vect{y}$ ne peuvent devenir négatives.
+Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel (Théorème \ref{lien relation-rationnel}).
 
-Ainsi, $\rel_S$ admet au plus $(k+1)^d$ classes d'équivalences, donc $\lang(S)$ est rationnel (théorème \ref{lien relation-rationnel}).
-
-\vspace{4mm}\noindent
-Prouvons maintenant la réciproque $\big(\lang(S)$ rationnel $\Rightarrow$ \eqref{eq:caracterisation} $\big)$ par contraposée.
+%	\vspace{4mm}\noindent
+Prouvons maintenant, par contraposée, la réciproque $\lang(S)$ rationnel $\Rightarrow S$ vérifie $ \eqref{eq:caracterisation}$.
 Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(S,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
 
-On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en lisant $w=a_1\cdots a_n$.
+On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en \xout{lisant} franchissant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
 Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
@@ -532,7 +535,7 @@ et l'on a une sous-séquence d'extractrice \alain{pas le bon mot}$\phi$ vérifia
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
 En effet, si l'on avait $\vect{x}_{\phi(p)}\rel_S \vect{x}_{\phi(q)} = (\vect{x}_{\phi(p)} +\valeur{u})$ avec $0\leq p\leq q\leq h$ et en notant $u=a_{\phi(p)+1}\cdots a_{\phi(q)}$, 
 %cela donne $\vect{x}_{\phi(p)} \rel_S (\vect{x}_{\phi(p)} +\valeur{u})$, d'où
-alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la proposition \ref{Monotonie relation}).
+alors on aurait $(\vect{x}_{\phi(p)} +\valeur{u^r}) \rel_S (\vect{x}_{\phi(p)} +\valeur{u^{r+1}})$ pour tout $r\in\N$ (en procédant par récurrence sur $r$ avec la Proposition \ref{Monotonie relation}).
 
 Or $\valeur{u^r}(i) = r\times\valeur{u}(i) = r\times (\vect{x}_{\phi(q)}(i) -\vect{x}_{\phi(p)}(i)) < -r$, 
 ce qui prouve que $(\vect{x}_{\phi(p)} +\valeur{u^r})(i)<0$ à partir d'un certain $r\in\N$, 
@@ -544,13 +547,7 @@ ainsi $\reach(S)/\rel_S$ est infini.
 
 %------------------------------------
 
-\section{Décider la caractérisation (corrige Yoeli)}
-
-La procédure de décision nécessite de connaître deux choses :
-\begin{enumerate}
-    \item D'abord, on veut pouvoir accéder à la liste des idéaux maximaux $\clover(S)$ du VAS étudié,
-    \item Ensuite, il nous faut une procédure pour décider si un VAS donné est bornées.
-\end{enumerate}
+\subsection{Décider la caractérisation (corrige Yoeli)}
 
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
     Soit $S=(A,\lambda,\xinit)$ un VAS et $k\in\N$.
@@ -566,9 +563,9 @@ De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \
 \end{proof}
 
 \begin{Definition}
-Soit $S=(A,\lambda,\xinit)$ un VAS.
+Soient $S=(A,\lambda,\xinit)$ un VAS et $\mathfrak{m}\in\clover(S)$.
 %\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
-Pour tout idéal maximal $\mathfrak{m}\in\clover(S)$ de l'ensemble de couverture, notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
+\xout{Pour tout \xout{idéal maximal} $\mathfrak{m}\in\clover(S)$} \xout{de l'ensemble de couverture,} notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
 Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big( A(\mathfrak{m},i), \lambda(\mathfrak{m},i), \vect{x}_\mathfrak{m} \big)$ en posant
@@ -588,11 +585,12 @@ On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m
 pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \;\cdots\; a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
+\alain{c'est exactement le théorème 2, car ici on parle de Clover, et YG parle des éléments maximaux de KM}
 
-\begin{Theorem}[\cite{giyo80} théorème 2]\alain{ce n'est pas exactement le théorème 2, car ici on parle de Clover, dire donc que c'est similaire car ça ne parle que des Clover}
+\begin{Theorem}[\cite{giyo80} théorème 2]
     Un VAS   $S=(A,\lambda,\xinit)$ est rationnel si et seulement si 
     tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout \xout{idéal maximal} $\mathfrak{m} \in \clover(S)$ et pour tout $i \in I \setminus J_\mathfrak{m}$.
-    \alain{ressemble à l'énoncé et la preuve de Valk Vidal-Naquet de 1977}
+%    \alain{ressemble à l'énoncé et la preuve de Valk Vidal-Naquet de 1977}
     %Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
     %Alors $S$ est rationnel si et seulement si 
     %tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout idéal maximal $\mathfrak{m} \in \clover(S)$ et tout $i \in I \setminus J_\mathfrak{m}$.
@@ -634,6 +632,13 @@ Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mat
 
 \end{proof}
 
+
+
+La procédure de décision induite par le théorème XXX nécessite donc de connaître deux choses %	\alain{ce n'est pas argumenté donc ça n'explique rien, au contraire, à enlever}:
+\begin{enumerate}
+    \item $\clover(S)$ c'est-à-dire la liste des idéaux maximaux
+    \item Une procédure pour décider si un VAS est borné.
+\end{enumerate}
 %--------------------------------------------------
 
 \section{Décidabilité et complexité de la rationalité structurelle}
@@ -1016,7 +1021,7 @@ $\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\
 %\end{enumerate}
 %\end{Theorem}
 
-\begin{Theorem}
+\begin{Theorem}\alain{le theoreme 28 n'a rien à faire là}
 \lucas{À rectifier}
 Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
 On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
@@ -1135,7 +1140,10 @@ Montrons que si $\lang(S,\vect{x})$ n'est pas rationnel alors $\lang(S,\vect{x'}
 %\xout{selon les configurations initiales choisies.}
 
 \begin{Proposition}\label{monotonie_rationnel}
-Pour tout VAS $S = (A,\lambda)$, on a $\overline{\inirat(S)}$ est clos par le haut et $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ où $\Min(\overline{\inirat(S)})$ est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
+Pour tout VAS $S = (A,\lambda)$, on a
+%	l'ensemble $\overline{\inirat(S)}$ est clos par le haut 
+ $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ 
+%	où $\Min(\overline{\inirat(S)})$ %	est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
 \end{Proposition}
 
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
@@ -1152,7 +1160,7 @@ où $\vect{y'}_k = \vect{y}_k + (\vect{x'} - \vect{x})$ et $\vect{z'}_k = \vect{
 On a alors $\vect{z'}_k - \vect{y'}_k = \valeur{v} \not\geq -k$, donc $(S,\vect{x'})$ ne satisfait pas non plus la propriété $\eqref{eq:caracterisation}$.
 On en déduit que $\lang(S,\vect{x'})$ n'est pas rationnel.
 
-L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow M_S$ d'après la proposition \ref{clos_haut_wqo}.
+L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre sur $\N^d$. On déduit que $\overline{\inirat(S)}=\uparrow \Min(\overline{\inirat(S)})$ d'après la proposition \ref{clos_haut_wqo}.
 \end{proof}
 
 \begin{Remark}
@@ -1168,7 +1176,7 @@ Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomeg
 \end{Theorem}
 
 \begin{Proposition}\label{minimaux}
-L'ensemble $M_S$ est calculable pour tout VAS $S$.
+L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
 \end{Proposition}
 
 \begin{proof}
@@ -1179,11 +1187,11 @@ Montrons que le prédicat $p_K(\vect{x})=(\downarrow \vect{x} \cap \N^d \cap K \
 \alain{la preuve est à faire !!! }
 \end{proof}
 
-\begin{Corollary}\label{minimaux_cor}
-L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
-\end{Corollary}
+%\begin{Corollary}\label{minimaux_cor}
+%L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
+%\end{Corollary}
 
-On en déduit le corollaire suivant :
+%On en déduit le corollaire suivant :
 
 \begin{Proposition}\label{maximaux}
 L'ensemble des configurations rationnelles est clos par le bas et son ensemble d'idéaux maximaux est fini et calculable pour tout VAS $S$ 
