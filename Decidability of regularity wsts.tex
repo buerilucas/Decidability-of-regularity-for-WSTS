@@ -493,7 +493,7 @@ Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la
 \xout{Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
 La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.}\alain{on trouve ça dans Valk-Vidal-Naquet, le dire}
 
-\begin{Theorem}\label{caractérisation}
+\begin{Theorem}[\cite{vavn81} théorème 3, \cite{giyo80}]\label{caractérisation}
     Soit $S=(A,\lambda,\xinit)$ un VAS.
     Alors $\lang(S)$ est rationnel si et seulement si
     \begin{equation}
@@ -903,9 +903,9 @@ Le  problème de la rationalité structurelle est dans NP pour les VAS.
 \begin{proof}
 Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalité structurelle revient à décider le problème de décision suivant.
 
-Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $A$).
+Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $S = (A,\lambda)$).
 
-Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire à coéfficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes:
+Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire à coefficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes:
 \begin{enumerate}
     \item $\vect{u} > \vect{0}$,
     \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique $\vect{v}(i) \geq 0$,
