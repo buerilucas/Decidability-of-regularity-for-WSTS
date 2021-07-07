@@ -930,7 +930,7 @@ On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
 
 Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
-ces coordonnées n'entrent donc pasa en compte dans le franchissement.
+ces coordonnées n'entrent donc pas en compte dans le franchissement.
 
 \begin{Definition}
 Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
@@ -940,30 +940,25 @@ La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\ve
 Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
 \end{Definition}
 
-Maintenant, pour obtenir un $\omega$ depuis une coordonnée finie, on requiert de pouvoir augmenter cette coordonnée autant que nécessaire. \alain{vague}
+Cette notion de franchissement ne modifie pas les coordonnées valant $\omega$, et agit sans en tenir compte.
+Dans le cas où $\vect{x}$ a toutes ses coordonnées finies, on retrouve le franchissement classique dans $\N^d$.
+
+Maintenant, pour permettre de générer des $\omega$ depuis une coordonnée finie, on va exiger de pouvoir augmenter cette coordonnée autant que nécessaire.
+\alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
 
 \begin{Definition}
 Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable à partir de $\vect{x}$ tel que \alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
+On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable à partir de $\vect{x}$ tel que 
 \begin{enumerate}
     \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
     \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
 \end{enumerate}
 \end{Definition}
 
+Ce processus correspond aux transitions du graphe de couverture.
+On le retrouve sous le nom d'\emph{accélération} dans \cite{FHK-fossacs2020}, et de \emph{coordonnées non-bornées avec contexte \vect{x}} dans \cite{vavn81}.
 On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
 
-Cette définition fait le lien avec une notion similaire introduite par Valk et Vidal-Naquet \cite{vavn81}, nommé "unbounded with context", qui se reformule ainsi :
-
-\begin{Definition}[\cite{vavn81} def p. 309]
-Soit $S = (A,\lambda,\xinit)$ un VAS (avec configuration initiale) et $\vect{y} \in \Nomega^d$ une $\omega$-configuration.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible dans $S$} lorsque
-% à modifier
-%lorsque pour tout $k\in\N$, on peut accéder à une configuration $\vect{x}\in\reach(S)$ dont les coordonnées vérifient $\vect{x}(i) \geq k$ pour tout $i\in J$, et $\vect{x}(i) = \mathfrak{m}(i)$ pour tout $i\in I-J$.
-$$\forall k\in\N, \exists \vect{x}\in\reach(S), \big( \forall i\in \Jinf{\vect{y}}, \vect{x}(i) \geq k \;\land\; \forall i \in \Jfin{\vect{y}}, \vect{x}(i) = \vect{y}(i) \big)$$
-
-Si on ne peut pas accéder à une $\omega$-configuration  plus grande que $\vect{y}$, on dit que $\vect{y}$ est \emph{maximal}.
-\end{Definition}
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
 Soit $S$ un VAS.
@@ -971,7 +966,7 @@ Alors $\lang(S)$ n'est pas rationnel si et seulement si
 il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
 %non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
 \begin{enumerate}
-    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$,
+    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$ (c'est-à-dire $\omega$-accessible depuis $\xinit$ et il n'existe pas de configuration $\omega$-accessible plus grande dans $\Nomega^d$),
     \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
     obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
 \end{enumerate}
@@ -1021,7 +1016,7 @@ $\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\
 %\end{enumerate}
 %\end{Theorem}
 
-\begin{Theorem}\alain{le theoreme 28 n'a rien à faire là}
+\begin{Theorem}\alain{ce théorème n'a rien à faire là}
 \lucas{À rectifier}
 Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
 On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi

@@ -13,6 +13,15 @@ St{\'{e}}phane Demri.
 \newblock On selective unboundedness of {VASS}.
 \newblock {\em J. Comput. Syst. Sci.}, 79(5):689--713, 2013.
 
+\bibitem{FHK-fossacs2020}
+Alain Finkel, Serge Haddad, and Igor Khmelnitsky.
+\newblock Minimal coverability tree construction made complete and efficient.
+\newblock In Barbara K{\"o}nig and Jean Goubault-Larrecq, editors, {\em
+  {P}roceedings of the 23rd {I}nternational {C}onference on {F}oundations of
+  {S}oftware {S}cience and {C}omputation {S}tructures ({FoSSaCS}'20)}, Lecture
+  Notes in Computer Science, pages 237--256, Dublin, Ireland, April 2020.
+  Springer.
+
 \bibitem{giyo80}
 A.~Ginzburg and M.~Yoeli.
 \newblock Vector addition systems and regular languages.

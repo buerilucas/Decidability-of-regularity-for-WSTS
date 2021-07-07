@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6 32-bit) (preloaded format=pdflatex 2021.6.25)  7 JUL 2021 13:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (MiKTeX 21.6 32-bit) (preloaded format=pdflatex 2021.6.25)  7 JUL 2021 16:49
 entering extended mode
 **"./Decidability of regularity wsts.tex"
 (Decidability of regularity wsts.tex
@@ -416,17 +416,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 664--665
  []
 
 [6] [7] [8] [9] [10] [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 1238--1241
+Underfull \hbox (badness 10000) in paragraph at lines 1233--1236
 
  []
 
 [13] (Decidability of regularity wsts.bbl) [14]
 (Decidability of regularity wsts.aux) ) 
 Here is how much of TeX's memory you used:
- 7050 strings out of 478864
- 100636 string characters out of 2848660
- 491293 words of memory out of 3000000
- 24871 multiletter control sequences out of 15000+600000
+ 7051 strings out of 478864
+ 100653 string characters out of 2848660
+ 491298 words of memory out of 3000000
+ 24872 multiletter control sequences out of 15000+600000
  426326 words of font info for 94 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,16n,66p,1245b,424s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -465,10 +465,10 @@ ler/eufm7.pfb><C:/Users/Lucas/AppData/Local/Programs/MiKTeX/fonts/type1/public/
 amsfonts/symbols/msam10.pfb><C:/Users/Lucas/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Lucas/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on "Decidability of regularity wsts.pdf" (14 pages, 398550 bytes
+Output written on "Decidability of regularity wsts.pdf" (14 pages, 399888 bytes
 ).
 PDF statistics:
- 523 PDF objects out of 1000 (max. 8388607)
+ 527 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
