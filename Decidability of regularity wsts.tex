@@ -118,11 +118,11 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
 {\bf Contribution}
 \begin{itemize}
 \item Nous montrons que la preuve du (Théorème 2, \cite{giyo80}) est techniquement fausse bien qu'elle contienne les bonnes idées; les auteurs ont considéré une relation d'équivalence $\equiv_{YG}$ qui ne satisfait pas la propriété : $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_{YG}$ est fini. Nous introduisons une autre relation d'équivalence $\equiv_S$ telle que: $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_S$ est fini.
-    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informelllement en une phrase. Nous donnons une preuve complète que ce problème est décidable ; nous montrons en fait qu'il est NP-complet. \alain{expliquer le principe de la preuve}  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
+    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informelllement en une phrase. Nous donnons une preuve complète que ce problème est bien décidable  \alain{expliquer le principe de la preuve}. Nous montrons en fait qu'il est NP-complet.  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
 %\item on corrige la preuve du résultat principal de \cite{giyo80} qui est formellement incorrecte. 
 %En effet, YG énoncent que $S$ est rationnel ssi le quotient d'une relation d'équivalence $\equiv_1$ est fini mais nous montrons que ceci est faux. 
   
-    \item On étudie l'ensemble $R(S)$ des configurations rationnelles d'un VAS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) et on montre que $R(S)$ est un ensemble clos par le bas. On montre, En utilisant un résultat de Valk \& Jantzen \cite{vaja85}, qu'on peut calculer une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc qu'on peut aussi calculer un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas. Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
+    \item On étudie l'ensemble $R(S)$ des configurations rationnelles d'un VAS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) et on montre que $R(S)$ est un ensemble clos par le bas. On montre, En utilisant un résultat de Valk \& Jantzen \cite{vaja85}, on calcule une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc on obtient aussi un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas. Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
 Une fois l'ensemble $Z$ calculé, on peut répondre en temps linéaire en la taille de $Z$ si $S$ est rationnel à partir d'une configuration $x_0 \in \N^d$; il suffit de comparer $x_0$ avec les éléments dans $Z$. Si il existe un élément $z \in Z$ tel que $x_0 \leq z$ alors $L(S,x_0)$ est rationnel sinon $L(S,x_0)$ n'est pas rationnel. 
 
 \end{itemize}
@@ -253,8 +253,7 @@ Alors $E$ est une union finie d'idéaux de $\N^d$.
 \end{Proposition}
 
 Par conséquent, tout sous-ensemble de $\N^d$ clos par le bas peut être représenté par un ensemble fini d'éléments de $\Nomega^d$.
-
-\vspace{5mm}
+%	\vspace{5mm}
 Pour les sous-ensembles $E$ de $\N^d$ clos par le haut, on va regarder ses éléments minimaux.
 Notons $\Min(E) \defeq \set{x\in E}{\forall y < x, y \notin E}$.
 
@@ -265,14 +264,14 @@ Alors $\Min(E)$ est fini et $\uparrow \Min(E) = E$.
 \end{Proposition}
 
 On peut maintenant introduire l'ensemble de couverture $\cover(S) \defeq \downarrow \reach(S,\xinit)$ d'un VAS $S = (A,\lambda,\xinit)$.
-Il est clos par le bas dans $(\N^d,\leq)$ bien ordonné, donc se décomposition comme une union finie d'idéaux.
+Il est clos par le bas dans $(\N^d,\leq)$, donc il se décompose en une union finie d'idéaux.
 
 %\alain{dire que $\uparrow \emptyset = \emptyset$)}
 
 \begin{Definition}
 Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
 On définit $\clover(S) \subseteq \Nomega^d$ comme l'ensemble des idéaux maximaux inclus dans $\cover(S)$.
-C'est aussi l'unique ensemble de taille minimale d'idéaux dont l'union correspond à $\cover(S)$.
+C'est aussi l'unique ensemble, de taille minimale, d'idéaux dont l'union représente $\cover(S)$.
 \end{Definition}
 
 %-----------
@@ -646,7 +645,7 @@ La procédure de décision induite par le théorème XXX nécessite donc de conn
 
 \lucas{J'ai mis cette partie avant de parler de configurations maximales, donc il y a des affirmations qui ne vont pas.}
 
-Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. Bien sûr, une conséquence de la section précédente permet de conclure que ce problème est décidable puisqu'on peut calculer $\Min(\overline{\inirat(S)})$ et décider si $\Min(\overline{\inirat(S)})=\vide$.
+Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. 
 
 \begin{Definition}
 On dit qu'un VAS $S$ est \emph{structurellement rationnel} si $\lang(S,\vect{x})$ est rationnel pour tout $\vect{x} \in \N^d$.
@@ -1209,6 +1208,8 @@ On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble c
 %  doi = {10.1007/978-3-030-30229-0_3}
 %}
 \end{proof}
+
+Une conséquence de la section xxx permet de conclure que le problème est décidable puisque cela revient à calculer $\Min(\overline{\inirat(S)})$ et à décider si $\Min(\overline{\inirat(S)})=\vide$.
 
 \begin{Remark}
 Pour tout VAS $S$, nous avons donc découpé l'ensemble $\N^d$ des configurations initiales en deux sous-ensembles disjoints, $\inirat(S)$ et son complémentaire $\overline{\inirat(S)}$, tels que $\inirat(S)$ est clos par le bas (et $\overline{\inirat(S)}$ est clos par le haut).
