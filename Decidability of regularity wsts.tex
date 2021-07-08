@@ -118,7 +118,7 @@ Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savo
 {\bf Contribution}
 \begin{itemize}
 \item Nous montrons que la preuve du (Théorème 2, \cite{giyo80}) est techniquement fausse bien qu'elle contienne les bonnes idées; les auteurs ont considéré une relation d'équivalence $\equiv_{YG}$ qui ne satisfait pas la propriété : $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_{YG}$ est fini. Nous introduisons une autre relation d'équivalence $\equiv_S$ telle que: $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_S$ est fini.
-    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informelllement en une phrase. Nous donnons une preuve complète que ce problème est bien décidable  \alain{expliquer le principe de la preuve}. Nous montrons en fait qu'il est NP-complet.  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
+    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informelllement en une phrase. Nous donnons une preuve complète que ce problème est bien décidable  \alain{expliquer le principe de la preuve}. Nous reformulons la caractérisation de non-rationalité jusqu'à obtenir un problème NP-complet.  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
 %\item on corrige la preuve du résultat principal de \cite{giyo80} qui est formellement incorrecte. 
 %En effet, YG énoncent que $S$ est rationnel ssi le quotient d'une relation d'équivalence $\equiv_1$ est fini mais nous montrons que ceci est faux. 
   
@@ -905,10 +905,10 @@ Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalit�
 
 Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $S = (A,\lambda)$).
 
-Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire à coefficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes:
+Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison semi-linéaire à coefficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes: \alain{finalement je ne comprends pas ces 3 conditions: je ne vois pas bien le lien entre u et v et j'ai envie de dire que si u existe c'est facile de trouver un v: supposons qu'on a trouvé un u tel que (1). on pose  v=u sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients. Si ça marche on a juste besoin de supposer qu'il existe un u...satisfaisant (1)...}
 \begin{enumerate}
     \item $\vect{u} > \vect{0}$,
-    \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique $\vect{v}(i) \geq 0$,
+    \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique \alain{ce n'est pas vraiment une implication logique} $\vect{v}(i) \geq 0$,
     \item  $\lnot(\vect{v} \geq 0)$.
 \end{enumerate}
 C'est du Presburger existentiel et c'est donc dans NP.
