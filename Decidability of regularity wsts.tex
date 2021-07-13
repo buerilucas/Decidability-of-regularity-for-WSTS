@@ -907,16 +907,44 @@ Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalit�
 Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $S = (A,\lambda)$).
 
 Question : Existe-t-il deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison linéaire à coefficients entiers positifs de $\lambda(A)$ vérifiant les 3 conditions suivantes:
-\alain{finalement je ne comprends pas ces 3 conditions: je ne vois pas bien le lien entre u et v et j'ai envie de dire que si u existe c'est facile de trouver un v: supposons qu'on a trouvé un u tel que (1). on pose  v=u  Si ça marche on a juste besoin de supposer qu'il existe un u...satisfaisant (1)...}
+
+%\alain{finalement je ne comprends pas ces 3 conditions: je ne vois pas bien le lien entre u et v et j'ai envie de dire que si u existe c'est facile de trouver un v: supposons qu'on a trouvé un u tel que (1). on pose  v=u  Si ça marche on a juste besoin de supposer qu'il existe un u...satisfaisant (1)...}
 \begin{enumerate}
-    \item $\vect{u} > \vect{0}$, \alain{revient à tester d fois si $Ax\geq b$ avec A la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
-    \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique \alain{ce n'est pas vraiment une implication logique, il suffit de prendre v=u presque partout} $\vect{v}(i) \geq 0$,
-    \item  $\lnot(\vect{v} \geq 0)$. \alain{sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients: prendre $\beta_j=-\alpha_j$}
+    \item $\vect{u} > \vect{0}$, 
+\alain{revient à tester d fois si $Ax\geq b$ avec A la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
+    \item Pour tout $i \in I$, $\vect{u}(i)=0$ implique 
+%\alain{ce n'est pas vraiment une implication logique, il suffit de prendre v=u presque partout} 
+$\vect{v}(i) \geq 0$,
+    \item  $\lnot(\vect{v} \geq 0)$. 
+%\alain{sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients: prendre $\beta_j=-\alpha_j$}
 \end{enumerate}
 c'est donc dans \alain{co-NP-complet et pas nécessairement dans NP-complet}.
 \end{proof}
 
+%%%%%%%%
+\alain{je reformule avec les combinaisons linéaires explicitées}\\
 
+Donnée : un ensemble fini de $n$ vecteurs $A=\{\vect{a_1}, \vect{a_1},...\vect{a_n}\} \subseteq \Z^d$ et $M_A$ la matrice associée.
+%	(les étiquettes des actions de $S = (A,\lambda)$).
+
+Question : Existe-t-il $2n$ entiers positifs $x_1,x_2,...,x_n, y_1,y_2,...,y_n $
+%
+%	deux vecteurs $\vect{u}$ et $\vect{v}$ obtenus comme combinaison linéaire à coefficients entiers positifs de $\lambda(A)$ 
+vérifiant les 3 conditions suivantes:
+
+%\alain{finalement je ne comprends pas ces 3 conditions: je ne vois pas bien le lien entre u et v et j'ai envie de dire que si u existe c'est facile de trouver un v: supposons qu'on a trouvé un u tel que (1). on pose  v=u  Si ça marche on a juste besoin de supposer qu'il existe un u...satisfaisant (1)...}
+\begin{enumerate}
+    \item $\Sigma_{i=1}^n x_i \vect{a_i} > \vect{0}$
+    \item Pour tout $j \in I$, $\Sigma_{i=1}^n x_i \vect{a_i}(j)=0$ implique
+%\alain{ce n'est pas vraiment une implication logique, il suffit de prendre v=u presque partout} 
+$\Sigma_{i=1}^n y_i \vect{a_i}(j) \geq \vect{0}$,
+    \item  $\lnot(\Sigma_{i=1}^n y_i \vect{a_i}, \geq \vect{0})$. 
+%\alain{sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients: prendre $\beta_j=-\alpha_j$}
+\end{enumerate}
+
+\alain{1 revient à tester d fois si $M_Ax\geq b$ avec $M_A$ la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
+
+Le théoème précédent montre que décider la non rationalité structurelle revient à décider la staisfiabilité d'une formule de Presburger avec uniquement des quantificateurs existentiels. Dans ce cas, on sait que le problème est dans NP, donc la non rationalité structurelle est dans co-NP. \alain{reduire 3-SAT à RAT structurelle}
 
 \section{Rationnalité sur des $\omega$-configurations (Brouillon)}
 \alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
