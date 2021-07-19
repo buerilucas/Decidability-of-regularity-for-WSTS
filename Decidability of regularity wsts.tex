@@ -72,7 +72,7 @@
 \newcommand{\lang}{\ensuremath{\mathcal{L}}}
 \newcommand{\reach}{\ensuremath{\textit{Reach}}}
 \newcommand{\cover}{\ensuremath{\mathcal{C}}}
-\newcommand{\clover}{\textit{Clover}}
+\newcommand{\clover}{\textit{Clover}\xspace}
 \newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
 \newcommand{\transZ}[1]{\ensuremath{\stackrel{#1}{\rightsquigarrow}}}
 
@@ -209,6 +209,9 @@ On pourra alors regarder $\lang(S) \defeq \lang(S,\xinit)$ le langage du VAS $S 
 Un VAS $S = (A,\lambda,\xinit)$ est \emph{rationnel} lorsque $\lang(S)$ est rationnel sur $A^\ast$.
 \end{Definition}
 
+%%%%%%%%
+\iffalse
+%%%%%%%%
 \begin{Definition}
 Soit $S = (A,\lambda)$ un $d-$VAS,
 $J\subseteq I$ un sous-ensemble d'indices et $\vect{x}\in\N^d$ une configuration.
@@ -222,6 +225,9 @@ On dit que
     où $\unite{J}$ désigne le vecteur valant $1$ aux coordonnées dans $J$, et $0$ ailleurs.
 \end{itemize}
 \end{Definition}
+%%%%%
+\fi
+%%%%%
 
 Enfin, on dénotera par $Rat$ l'ensemble des langages rationnels (sur un alphabet fini).
 %----------------------------------------------------------------
@@ -277,8 +283,9 @@ C'est aussi l'unique ensemble, de taille minimale, d'idéaux dont l'union repré
 %-----------
 
 %Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
-\lucas{À revoir.}
-
+\lucas{Partie pour redéfinir le graphe de couverture ? (Caché)}
+\iffalse
+%%%%%%%%
 Le \emph{graphe de couverture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
@@ -292,6 +299,48 @@ Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ain
     où $\vect{y'}\in \Nomega^d$ est la configuration de coordonnées $\vect{y'}(i) = \vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i) = \omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
     \item Si la configuration $\vect{y}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{y}$ et une arête de $s$ à $s'$ étiquetée par $a$.
 \end{itemize}
+
+\fi
+%%%
+
+%----------------------------------------------------------------
+
+\subsection{Omega-accessibilité}
+
+On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
+Les omegas dans une coordonnée signifie que l'on a accès à autant de matériel que nécessaire, et qu'il n'y a plus à se préoccuper de franchissement pour cette coordonnée.
+Détaillons alors le fonctionnement du VAS sur ces $\omega$-configurations.
+
+Pour une $\omega$-configuration $\vect{x} \in \Nomega^d$, on notera $\Jfin{\vect{x}} = \set{i\in I}{\vect{x}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\vect{x}} = \set{i\in I}{\vect{x}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\vect{x}$.
+
+%Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
+%Ces coordonnées n'entrent donc pas en compte dans le franchissement.
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
+On dit que $u$ est \emph{franchissable} à partir de $\vect{x}$ lorsque pour tout préfixe $v$ de $u$ et pour toute coordonnée $i \in \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{v}(i) \geq 0$.
+
+La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\vect{y} = \vect{x} + \valeur{u}$.
+Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
+\end{Definition}
+
+Cette notion de franchissement ne modifie pas les coordonnées valant $\omega$, et agit sans en tenir compte.
+Dans le cas où $\vect{x}$ a toutes ses coordonnées finies, on retrouve le franchissement classique dans $\N^d$.
+
+Maintenant, pour permettre de générer des $\omega$ depuis une coordonnée finie, on va exiger de pouvoir augmenter cette coordonnée autant que nécessaire.
+
+\begin{Definition}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
+On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable à partir de $\vect{x}$ tel que 
+\begin{enumerate}
+    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
+    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
+\end{enumerate}
+\end{Definition}
+
+Ce processus correspond aux transitions du graphe de couverture.
+On le retrouve sous le nom d'\emph{accélération} dans \cite{FHK-fossacs2020}, et de \emph{coordonnées non-bornées avec contexte \vect{x}} dans \cite{vavn81}.
+On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
 
 %----------------------------------------------------------------
 
@@ -457,12 +506,13 @@ Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\fora
 
 \subsection{Borne sur la décroissance (décidable)}
 
-Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche une borne à partir de laquelle les configurations accessibles sont indiscernables.
-Comme la seule règle restreignant les actions franchissables est un test de positivité, on va exiger que les configurations ne puissent pas trop décroître.\alain{cette explication est confuse}.
+Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche les configurations qui sont indiscernables pour le VAS.
+Comme seul le test de positivité permet d'identifier les actions franchissables, il va falloir qu'au delà d'une certaine valeur, les coordonnées ne peuvent plus décroître jusqu'à zéro.
 
-%	Nous suivons le raisonnement de Ginzburg et Yoeli mais sur notre relation d'équivalence $\equiv_2$ %	proposent une caractérisation au travers des deux lemmes suivants :
-%\alain{ne plus parler de Yoeli: on en aura parlé dans l'intro et dans l'annexe. On ne les cite pas sur leur lemme 1 si on change la relation}
+Le théorème ci-dessous donne ainsi une caractérisation des VAS à langage rationnel en bornant la décroissance des coordonnées.
+Il correspond au théorème 3 de \cite{vavn81} et corrige les lemmes 1 et 2 de \cite{giyo80}.
 
+\iffalse
 % Définir borné ?
 \alain{écris ton lemme avec le maximum}
 \begin{Statement}[\cite{giyo80} Lemme 1]\alain{à virer}
@@ -492,6 +542,8 @@ Le résultat semble cependant vrai \lucas{(à vérifier)}, mais n'apporte pas la
 
 \xout{Donnons maintenant une caractérisation similaire pour la relation $\rel_S$.
 La preuve suit les idées de Ginzburg et Yoeli \cite{giyo80} en effectuant les modifications nécessaires.}\alain{on trouve ça dans Valk-Vidal-Naquet, le dire}
+
+\fi
 
 \begin{Theorem}[\cite{vavn81} théorème 3, \cite{giyo80}]\label{caractérisation}
     Soit $S=(A,\lambda,\xinit)$ un VAS.
@@ -549,6 +601,9 @@ ainsi $\reach(S)/\rel_S$ est infini.
 
 \subsection{Décider la caractérisation (corrige Yoeli)}
 
+Une première façon de décider la rationnalité des langages de VAS en utilisant le théorème \ref{caractérisation}.
+On s'inspire du théorème 2 de \cite{giyo80}, en faisant appel à l'ensemble \clover plutôt qu'au graphe de couverture.
+
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
     Soit $S=(A,\lambda,\xinit)$ un VAS et $k\in\N$.
     Supposons qu'il existe une configuration $\vect{x}\in \reach(S)$ et un mot $v\in\lang(S,\vect{x})$ franchissable tel que $\valeur{v}(i) < -k$ pour un certain $i \in I$.
@@ -564,32 +619,31 @@ De plus, pour tout préfixe $u$ de $w$, on a $\valeur{u}(i) = \valeur{zu}(i) - \
 
 \begin{Definition}
 Soient $S=(A,\lambda,\xinit)$ un VAS et $\mathfrak{m}\in\clover(S)$.
-%\alain{pourquoi se mettre à dire d-VAS ? dire seulement VAS et que le d est implicite}
-\xout{Pour tout \xout{idéal maximal} $\mathfrak{m}\in\clover(S)$} \xout{de l'ensemble de couverture,} notons $J_\mathfrak{m} \defeq \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
+Regardons $\Jfin{\mathfrak{m}} = \set{j}{\mathfrak{m}(j)\neq \omega}$ l'ensemble des coordonnées bornées pour les configurations de $\mathfrak{m}$.
 On écrit $J_\mathfrak{m}=\os{j_1,\dots,j_r}$.
 
-Pour tout $i\notin J_\mathfrak{m}$, on définit un $(r+1)-$VAS $S(\mathfrak{m},i) = \big( A(\mathfrak{m},i), \lambda(\mathfrak{m},i), \vect{x}_\mathfrak{m} \big)$ en posant
+Pour tout $i \in \Jinf{\mathfrak{m}}$, on définit un $(r+1)-$VAS que l'on notera $S_{(\mathfrak{m},i)} = \big( A, \lambda_{(\mathfrak{m},i)}, \vect{x}_\mathfrak{m} \big)$ en posant
 \begin{itemize}
-    \item $A(\mathfrak{m},i) \defeq \set{a(\mathfrak{m},i)} {a\in A}$ 
-    l'alphabet des actions
-    \item $\lambda$ l'étiquetage qui à toute lettre $a(\mathfrak{m},i)$ associe le vecteur $\valeur{a(\mathfrak{m},i)} \defeq \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
+    \item $\lambda_{(\mathfrak{m},i)}$ l'étiquetage qui à toute lettre $a\in A$ associe le vecteur $
+    %\valeur{a(\mathfrak{m},i)} \defeq 
+    \big(\valeur{a}(j_1), \dots, \valeur{a}(j_r), -\valeur{a}(i) \big)$,
     \item $\vect{x}_\mathfrak{m} \defeq \big(\mathfrak{m}(j_1), \dots, \mathfrak{m}(j_r), 0\big) \in \N^{r+1}$ la configuration initiale.
 \end{itemize}
 \end{Definition}
 
 \lucas{Revoir def, thm et preuve en gardant le même alphabet $A$, mais en changeant l'étiquetage.}
 
-\noindent On regarde ainsi le comportement de chaque coordonnée non-bornée indépendamment \alain{expliquer} des autres.
+\noindent On isole ainsi chaque coordonnée de $\Jinf{\mathfrak{m}}$ pour regarder son comportement.
 
-On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
-pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \;\cdots\; a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
+%On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
+%pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \;\cdots\; a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
 \alain{c'est exactement le théorème 2, car ici on parle de Clover, et YG parle des éléments maximaux de KM}
 
-\begin{Theorem}[\cite{giyo80} théorème 2]
+\begin{Theorem}[\cite{giyo80} théorème 2]\label{rat_decision}
     Un VAS   $S=(A,\lambda,\xinit)$ est rationnel si et seulement si 
-    tous les VAS $S(\mathfrak{m},i)$ sont bornés pour tout \xout{idéal maximal} $\mathfrak{m} \in \clover(S)$ et pour tout $i \in I \setminus J_\mathfrak{m}$.
+    tous les VAS $S_{(\mathfrak{m},i)}$ sont bornés pour tout $\mathfrak{m} \in \clover(S)$ et pour tout $i \in \Jinf{\mathfrak{m}}$.
 %    \alain{ressemble à l'énoncé et la preuve de Valk Vidal-Naquet de 1977}
     %Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
     %Alors $S$ est rationnel si et seulement si 
@@ -597,44 +651,44 @@ Le théorème suivant est alors obtenu :
 \end{Theorem}
 
 \begin{proof}
-Supposons que l'un des $S(\mathfrak{m},i)$ ne soit pas borné, et posons $r = \card{J_\mathfrak{m}}$.
+Supposons que l'un des $S_{(\mathfrak{m},i)}$ ne soit pas borné, et posons $r = \card{\Jfin{\mathfrak{m}}}$.
 La coordonnée $r+1$ (associée à $\mathfrak{m}(i)$) est la seule à pouvoir être non-bornée.
-Pour tout $k\in\N$, il existe donc un mot $w(\mathfrak{m},i) \in \lang(S(\mathfrak{m},i))$ vérifiant $\valeur{w(\mathfrak{m},i)}(r+1) >k$.
+Pour tout $k\in\N$, il existe donc un mot $w \in \lang(S_{(\mathfrak{m},i)})$ vérifiant $\lambda_{(\mathfrak{m},i)}(w)(r+1) >k$.
 
 Alors on peut trouver une configuration $\vect{x}\in\reach(S)$ de $\mathfrak{m}$ telle que $w\in\lang(S,\vect{x})$.
-En effet, $w$ a le même effet sur les coordonnées $j_p \in J_\mathfrak{m}$ que $w(\mathfrak{m},i)$ sur $p\leq r$,
-puisque pour tout $x\in\reach(S)$ et tout préfixe $u$ de $w$, on a
+En effet, $w$ a le même effet sur les coordonnées $j_p \in \Jfin{\mathfrak{m}}$ que sur $p\leq r$,
+puisque pour tout $\vect{x} \in\reach(S)$ et tout préfixe $u$ de $w$, on a
 $(\vect{x} +\valeur{u})(j_p) = 
 \mathfrak{m}(j_p) +\valeur{u}(j_p) = 
 %(\vect{x}(\mathfrak{m},i) +\valeur{u(\mathfrak{m},i)})(p) = 
 %\mathfrak{m}(j_p) +\valeur{u(\mathfrak{m},i)})(p) = 
-\vect{x}_\mathfrak{m}(p) +\valeur{u(\mathfrak{m},i)})(p) \geq 0$.
+\vect{x}_\mathfrak{m}(p) +\lambda_{(\mathfrak{m},i)}(u)(p) \geq 0$.
 Les autres coordonnées (non-bornées dans $\mathfrak{m}$) peuvent ensuite être choisies aussi grandes que nécessaire pour franchir $w$.
 
-Comme $\valeur{w}(i) = -\valeur{w(\mathfrak{m},i)}(r+1) < -k$, on sait que $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$, 
+Comme $\valeur{w}(i) = -\lambda_{(\mathfrak{m},i)}(w)(r+1) < -k$, on sait que $S$ ne vérifie pas \eqref{eq:caracterisation} pour ce $k$, 
 ce qui assure que $\lang(S)$ n'est pas rationnel (par le théorème \ref{caractérisation}).
 
 %----Réciproque
 \vspace{3mm}
-On suppose maintenant qu'il existe un entier $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S(\mathfrak{m},i)$.
+On suppose maintenant qu'il existe un entier $k\in\N$ majorant les coordonnées de toutes les configurations accessibles de tous les $S_{(\mathfrak{m},i)}$.
 Par l'absurde, supposons que la propriété \eqref{eq:caracterisation} n'est pas vérifiée pour ce $k$.
 Par le lemme \ref{mot décroissant}, il existe une coordonnée $i\leq d$, une configuration $\vect{y}$ et un mot $w\in \lang(S,\vect{y})$ tel que  $\valeur{w}(i) < -k$ et $\valeur{u}(i) \leq 0$ pour tout préfixe $u$ de $w$.
 
 Soit $\mathfrak{m} \in\clover(S)$ un élément maximal contenant $\vect{y}$.
 Alors il existe une configuration $\vect{z}\in\mathfrak{m}$ vérifiant $\vect{y} \leq \vect{z}$.
-Dans le VAS $S(\mathfrak{m},i)$, le mot $w(\mathfrak{m},i)$ appartient au langage $\lang(S(\mathfrak{m},i))$ 
-puisque pour tout préfixe $u(\mathfrak{m},i)$ de $w(\mathfrak{m},i)$, on a 
+Dans le VAS $S_{(\mathfrak{m},i)}$, le mot $w$ appartient au langage $\lang(S_{(\mathfrak{m},i)})$ 
+puisque pour tout préfixe $u$ de $w$, on a 
 \begin{itemize}
-    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable à partir de $\vect{y}$,
-    \item $(\vect{x}_\mathfrak{m} +\valeur{u (\mathfrak{m},i)} )(r+1) = -\valeur{u}(i) \geq 0$ où $r = \card{J_\mathfrak{m}}$.
+    \item $\big(\vect{x}_\mathfrak{m} +\lambda_{ (\mathfrak{m},i)} (u)\big) (p) = (\vect{z} +\valeur{u})(j_p) \geq (\vect{y} +\valeur{u})(j_p) \geq 0$ pour tout $p$ car $u$ est franchissable à partir de $\vect{y}$,
+    \item $(\vect{x}_\mathfrak{m} +\lambda_{ (\mathfrak{m},i)} (u)\big) (r+1) = -\valeur{u}(i) \geq 0$ où $r = \card{\Jfin{\mathfrak{m}}}$.
 \end{itemize}
-Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \valeur{w(\mathfrak{m},i)}) \in \reach(S(\mathfrak{m},i))$ contredit l'hypothèse de borne puisque $\valeur{w(\mathfrak{m},i)}(r+1) = -\valeur{w}(i) > k$.
+Néanmoins, la configuration accessible $(\vect{x}_\mathfrak{m} + \lambda_{(\mathfrak{m},i)}(w) \in \reach(S_{(\mathfrak{m},i)})$ contredit l'hypothèse de borne puisque $\lambda_{ (\mathfrak{m},i)} (w)(r+1) = -\valeur{w}(i) > k$.
 
 \end{proof}
 
 
-
-La procédure de décision induite par le théorème XXX nécessite donc de connaître deux choses %	\alain{ce n'est pas argumenté donc ça n'explique rien, au contraire, à enlever}:
+La procédure de décision induite par le théorème \ref{rat_decision} nécessite donc de connaître deux choses :
+% \alain{ce n'est pas argumenté donc ça n'explique rien, au contraire, à enlever}
 \begin{enumerate}
     \item $\clover(S)$ c'est-à-dire la liste des idéaux maximaux
     \item Une procédure pour décider si un VAS est borné.
@@ -643,8 +697,6 @@ La procédure de décision induite par le théorème XXX nécessite donc de conn
 
 \section{Décidabilité et complexité de la rationalité structurelle}
 
-\lucas{J'ai mis cette partie avant de parler de configurations maximales, donc il y a des affirmations qui ne vont pas.}
-
 Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. 
 
 \begin{Definition}
@@ -652,22 +704,24 @@ On dit qu'un VAS $S$ est \emph{structurellement rationnel} si $\lang(S,\vect{x})
 \end{Definition}
 
 \begin{Remark}
+\lucas{À déplacer dans la partie suivante}
 On a donc que $S$ est structurellement rationnel si et seulement si $\inirat(S) = \N^d$ ou encore si
  $\Min(\overline{\inirat(S)})=\vide$. On observe que $S$ n'est jamais rationnel si $\Min(\overline{\inirat(S)})=\os{\vect{0}}$.  
 %		$\lang(S,\vect{x})$ %(ou $(S,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Remark}
 
-Nous allons étudier le problème de décision suivant appelé \emph{rationalité structurelle}:
+\noindent Nous allons étudier le problème de décision suivant appelé \emph{rationalité structurelle}:
 
-Donnée : un $d-$VAS $S=(A,\lambda)$
-
-Question : $S$ est-il structurellement rationnel ? \\
+\begin{itemize}
+    \item[$\bullet$] Donnée : un $d-$VAS $S=(A,\lambda)$
+    \item[$\bullet$] Question : $S$ est-il structurellement rationnel ? 
+\end{itemize}
 
 Pour $\vect{x},\vect{y}\in\Z^d$ (pas forcément positifs), on note $\vect{x} \transZ{u} \vect{y}$ pour $u\in A^*$ lorsque $\vect{y} = \vect{x} + \valeur{u}$.
 Il s'agit ici d'une simple égalité vectorielle dans $\Z^d$, sans notion de franchissement (on pourra parler de $\Z$-VAS).
 On écrira $\vect{x} \transZ{*} \vect{y}$ quand il existe $u\in A^*$ tel que $\vect{x} \transZ{u} \vect{y}$ .
 
-Valk et Vidal-Naquet proposent dans \cite{vavn81} \alain{VV} une caractérisation pour la propriété de rationalité structurelle.
+Valk et Vidal-Naquet proposent dans \cite{vavn81} une caractérisation pour la propriété de rationalité structurelle.
 
 \begin{Theorem}[\cite{vavn81} théorème 6]
 \label{rat_struct_valk}
@@ -701,10 +755,9 @@ On propose ainsi un autre théorème qui ne demande pas de décider l'accessibil
 
 \begin{proof}
 %On raisonne dans le graphe de couverture $G$ de $S$.
-Comme $\vect{x}$ étiquette un sommet de $G$, il existe \xout{un mot $w \in A^*$ étiquetant} un chemin dans $G$ \xout{permettant d'accéder de $\xinit$  à $\vect{x}$ que l'on note} $\xinit = \vect{x_0} \trans{a_1}{G} \vect{x_1} \trans{a_2}{G} \cdots \trans{a_n}{G} \vect{x_n} = \vect{x}$ pour $w = a_1 a_2 \dots a_n$.
-
-Considérons la séquence des sommets du graphe parcourue en lisant le mot $w$, 
-que l'on notera $\xinit = \vect{x_0} \trans{a_1}{G} \vect{x_1} \trans{a_2}{G} \cdots \trans{a_n}{G} \vect{x_n} = \vect{x}$ pour $w = a_1 a_2 \dots a_n$.
+Comme $\vect{x}$ étiquette un sommet de $G$, il existe un chemin dans $G$ de la forme
+$\xinit = \vect{x_0} \trans{a_1}{G} \vect{x_1} \trans{a_2}{G} \cdots \trans{a_n}{G} \vect{x_n} = \vect{x}$
+pour $w = a_1 a_2 \dots a_n$.
 
 Les omegas apparaissant dans une de ces $\omega$-configurations ne peuvent disparaître au cours de l'exécution.
 On a donc les inclusions $\vide = \Jinf{\vect{x_0}} \subseteq \Jinf{\vect{x_1}} \subseteq \cdots \subseteq \Jinf{\vect{x_n}}$.
@@ -824,7 +877,7 @@ Fixons un $k\in\N$ strictement plus grand que toutes les valeurs entières appar
 
 $u_k$ est bien franchissable à partir de $\xinit$, et son franchissement dans le graphe de couverture atteint une $\omega$-configuration $\vect{x}$.
 Choisissons un élément maximal $\vect{x'}\in\clover$ tel que $\vect{x} \leq \vect{x'}$.
-\lucas{On n'a pas unicité !}
+%\lucas{On n'a pas unicité !}
 Pour tout $j\in I-J$, on a $\valeur{u_k}(j) \geq k$, d'où $\vect{x'}(j) \geq \vect{x}(j) \geq k$, ce qui assure que $\vect{x'}(j) = \omega$ (grâce au le choix de $k$).
 Ainsi, on a l'inclusion $I-J \subseteq \Jinf{\vect{x'}}$ (ce qui se réécrit en $\Jfin{\vect{x'}} \subseteq J$).
 
@@ -874,7 +927,7 @@ Prouvons maintenant le sens réciproque du théorème \ref{rat_struct_nouveau}.
 \begin{proof}
 Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2 et 3.
 En choisissant des coordonnées suffisamment grandes, on peut trouver une configuration $\xinit \in \N^d$ à partir de laquelle le mot $u$ est franchissable.
-\lucas{Est-ce plus clair ainsi ?}
+%\lucas{Est-ce plus clair ainsi ?}
 Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
 
 Soit $k\in\N$.
@@ -954,40 +1007,7 @@ Le théoème précédent montre que décider la non rationalité structurelle re
 %Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
 %L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
 
-On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
-On retrouve alors le lien avec les idéaux exposé dans la section 2.2.
 
-Pour une $\omega$-configuration $\mathfrak{m} \in \Nomega^d$, on notera $\Jfin{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i) \text{ est fini}}$ l'ensemble des coordonnées bornées et  $\Jinf{\mathfrak{m}} = \set{i\in I}{\mathfrak{m}(i)=\omega}$ l'ensemble des coordonnées non-bornées de $\mathfrak{m}$.
-
-Une coordonnée valant $\omega$ dans une configuration signifie que l'on a autant de ressources que nécessaires.
-ces coordonnées n'entrent donc pas en compte dans le franchissement.
-
-\begin{Definition}
-Soit $S = (A,\lambda)$ un VAS, $\vect{x} \in \Nomega^d$ une $\omega$-configuration et $u \in A^*$ une séquence d'actions.
-On dit que $u$ est \emph{franchissable} à partir de $\vect{x}$ lorsque pour tout préfixe $v$ de $u$ et pour toute coordonnée $i \in \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{v}(i) \geq 0$.
-
-La $\omega$-configuration obtenue en appliquant $u$ à $\vect{x}$ est alors $\vect{y} = \vect{x} + \valeur{u}$.
-Ainsi, $\Jinf{\vect{x}} = \Jinf{\vect{y}}$.
-\end{Definition}
-
-Cette notion de franchissement ne modifie pas les coordonnées valant $\omega$, et agit sans en tenir compte.
-Dans le cas où $\vect{x}$ a toutes ses coordonnées finies, on retrouve le franchissement classique dans $\N^d$.
-
-Maintenant, pour permettre de générer des $\omega$ depuis une coordonnée finie, on va exiger de pouvoir augmenter cette coordonnée autant que nécessaire.
-\alain{faire le lien avec la definition d'omega transition et d'acceleration dans papier avec Igor et Serge}
-
-\begin{Definition}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y} \in \Nomega^d$ deux $\omega$-configurations.
-On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lorsque pour tout $k\in\N$, il existe un mot $u_k \in A^*$ franchissable à partir de $\vect{x}$ tel que 
-\begin{enumerate}
-    \item pour tout $i\in\Jfin{\vect{y}}$, on a $\vect{x}(i) + \valeur{u_k}(i) = \vect{y}(i)$
-    \item pour tout $i\in \Jinf{\vect{y}} \inter \Jfin{\vect{x}}$, on a $\vect{x}(i) + \valeur{u_k}(i) \geq k$
-\end{enumerate}
-\end{Definition}
-
-Ce processus correspond aux transitions du graphe de couverture.
-On le retrouve sous le nom d'\emph{accélération} dans \cite{FHK-fossacs2020}, et de \emph{coordonnées non-bornées avec contexte \vect{x}} dans \cite{vavn81}.
-On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
 
 
 \begin{Theorem}[\cite{vavn81} théorème 4]
