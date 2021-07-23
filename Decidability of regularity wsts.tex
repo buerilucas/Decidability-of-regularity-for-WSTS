@@ -631,8 +631,6 @@ Pour tout $i \in \Jinf{\mathfrak{m}}$, on définit un $(r+1)-$VAS que l'on noter
 \end{itemize}
 \end{Definition}
 
-\lucas{Revoir def, thm et preuve en gardant le même alphabet $A$, mais en changeant l'étiquetage.}
-
 \noindent On isole ainsi chaque coordonnée de $\Jinf{\mathfrak{m}}$ pour regarder son comportement.
 
 %On étend la correspondance entre les actions de $S$ et celles de $S(\mathfrak{m},i)$ aux mots : 
@@ -997,7 +995,7 @@ $\Sigma_{i=1}^n y_i \vect{a_i}(j) \geq \vect{0}$,
 
 \alain{1 revient à tester d fois si $M_Ax\geq b$ avec $M_A$ la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
 
-Le théoème précédent montre que décider la non rationalité structurelle revient à décider la staisfiabilité d'une formule de Presburger avec uniquement des quantificateurs existentiels. Dans ce cas, on sait que le problème est dans NP, donc la non rationalité structurelle est dans co-NP. \alain{reduire 3-SAT à RAT structurelle}
+Le théorème précédent montre que décider la non rationalité structurelle revient à décider la satisfaisabilité d'une formule de Presburger avec uniquement des quantificateurs existentiels. Dans ce cas, on sait que le problème est dans NP, donc la non rationalité structurelle est dans co-NP. \alain{reduire 3-SAT à RAT structurelle}
 
 \section{Rationnalité sur des $\omega$-configurations (Brouillon)}
 \alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
@@ -1031,8 +1029,10 @@ tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
 
 %---------------------
 
+\lucas{Un théorème permettant de parler de la rationalité des $\omega$-configuration :}
+
 \begin{Definition}
-Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$ \xout{un mot}.
+Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$.
 On dit que $v$ est \emph{cyclable} à partir de $\vect{x}$ lorsque $v$ est franchissable à partir de $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
 \end{Definition}
 
@@ -1051,7 +1051,8 @@ il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$
 Si un mot est cyclable à partir de x, il l'est à partir de y>x.   une $\omega$-configuration plus grande.
 On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
 
-$\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\in A^*$ cyclable à partir de $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
+\lucas{Possible définition :}
+$\vect{x}$ $\omega$-configuration \emph{générable} s'il existe une mot $u\in A^*$ cyclable à partir de $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
 
 %\begin{Theorem} % FAUX !!!
 %Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
@@ -1066,99 +1067,33 @@ $\vect{x}$ $\omega$-configuration générable \alain{???}s'il existe une mot $u\
 %\end{enumerate}
 %\end{Theorem}
 
-\begin{Theorem}\alain{ce théorème n'a rien à faire là}
-\lucas{À rectifier}
+\begin{Theorem}
+\lucas{FAUX?}
 Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
-On a $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$ ssi
-il existe deux mots $u,v \in A^*$ vérifiant
+$S$ est rationnel en partant d'une configuration de $\downarrow \vect{x}$ (ce qui se note $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$)
+ssi il existe deux mots $u,v \in A^*$ vérifiant
 \begin{enumerate}
     \item $\valeur{u} \geq \vect{0}$,
     \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
     \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
-    \item On peut accéder \alain{vague} depuis $\vect{x}$ à une $\omega$-configuration $\vect{y}$ à partir de laquelle $u$ est franchissable.
+    \item Il existe $\vect{y}\in\Nomega$ tel que $\vect{y}$ est $\omega$-franchissable depuis $\vect{x}$ et $u$ est franchissable sur $\vect{y}$.
 \end{enumerate}
 
 \lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
 \end{Theorem}
 
-%*****
+Pistes de réflexion pour trouver un théorème de ce genre :
 
-\begin{proof}
-\lucas{Pas encore au point, ne pas regarder}
-
-Supposons que $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$.
-On a donc une configuration initiale $\xinit \in \N^d$ telle que $\lang(S,\xinit)$ n'est pas rationnel.
-Il existe alors (d'après le théorème \ref{caractérisation}) pour tout $k\in\N$ une séquence d'actions franchissable 
-$\xinit \trans{u_k}{S} \vect{y}_k \trans{v_k}{S} \vect{z}_k$
-et une coordonnée $i_k \in I$ tels que $\valeur{v_k}(i_k) \leq k$.
-
-Remarquons qu'une séquence d'action qui convient pour un certain $k\in\N$ fonctionne aussi pour les valeurs de $k$ inférieures.
-Par conséquent, on peut sélectionner uniquement les séquences qui nous intéresse, pour peu qu'il  en reste une infinité :
-
-\begin{itemize}
-    \item Comme $I$ est fini, les indices $i_k$ ne peuvent prendre qu'un nombre fini de valeurs possibles, donc (par le principe des tiroirs) il existe un $\mathrm{i}\in I$ apparaissant une infinité de fois.
-    On peut ainsi supposer que $i_k = \mathrm{i}$ pour tout $k$.
-    %\alain{expliquer même si ça semble évident}
-    
-    \item Comme $(\N^d,\leq)$ forme un bel ordre, la suite $(\valeur{u_k})_{k\in\N}$ admet une sous-suite croissante pour $\leq$.
-    On peut donc se ramener au cas où $(\valeur{u_k})_{k\in\N}$ est croissante.
-\end{itemize}
-
-Notons $J\subseteq I$ l'ensemble des coordonnées bornées dans les $\valeur{u_k}$.
-Formellement, on définit 
-$$J = \set{j\in I}{sup \set{\valeur{u_k}(j)}{k\in\N} \text{ est fini}}
-\text{, et pour } j\in J,\hspace{2mm} h_j = \max \set{\valeur{u_k}(j)}{k\in\N}$$
-
-Il nous faut maintenant définir des mots $u$ et $v$ vérifiant les trois points du théorème.
-Commençons par fabriquer $u$ satisfaisant le point 1 :
-\begin{itemize}
-    \item Pour que les coordonnées dans $J$ des $\valeur{u_k}$ soient positives pour chaque $k\in\N$, 
-    on construit $u_k'$ en retirant de $u_k$ pour tout $j\in J$ les $h_j$ premières actions qui font décroître la coordonnée $j$ (ou moins s'il n'y en a plus).
-    On obtient ainsi $\valeur{u_k'}(j) \geq 0$ pour tout $k\in\N$ et $j\in J$.
-    
-    \item Posons $\xi = \set{\abs{\valeur{a}(i)}} {a\in A,i\in I}$.
-    Lors du passage de $u_k$ à $u_k'$, les coordonnées $i\in I\setminus J$ ne peuvent décroître d'au plus $\xi \times \sum_{j\in J} h_j$.
-    Par ailleurs, comme $(\valeur{u_k})_{k\in\N}$ est croissante et que pour tout $i\in I\setminus J$, la suite d'entiers $(\valeur{u_k}(i))_{k\in\N}$ tend vers l'infini, 
-    il existe un $k_0\in\N$ tel que pour tout $i\in I\setminus J$, $\valeur{u_{k_0}}(i) > \xi \times \sum_{j\in J} h_j$.
-    On en déduit que $\forall i\in I\setminus J, \hspace{1mm} \valeur{u_{k_0}}(i) > 0$.
-\end{itemize}
-Par conséquent, le mot $u_{k_0}'$ vérifie le point 1 %du théorème \ref{conf_struct_rat}
-: $\valeur{u_{k_0}'} > \vect{0}$.
-\vspace{2mm}
-
-Maintenant, procédons de façon similaire sur les $v_k$.
-Pour tout $j\in J$, $(\valeur{u_k}(j))_{k\in\N}$ est borné, donc $(\vect{x}_k(j))_{k\in\N}$ est borné également par $\ell_j = h_j + \xinit(j)$.
-On construit alors $v_k'$ en retirant de $v_k$ pour tout $j\in J$ les $\ell_j$ premières actions qui font décroître la coordonnée $j$.
-Tous les $v_k'$ vérifient le point 2 (avec $u = u_{k_0}'$), puisque si pour un $i\in I$, $\valeur{u_{k_0}'}(i) = 0$, alors $i\in J$, d'où $\valeur{v_k'}(i) \geq 0$.
-
-Enfin, en prenant $k_1 = 1 + \xi \times \sum_{j\in J} \ell_j$, on a $\valeur{v_{k_1}}(\mathrm{i}) \leq k_1$, d'où $\valeur{v_{k_1}'}(\mathrm{i}) < 0$, et $v_{k_1}'$ vérifie aussi le point 3.
-Finalement, $u_{k_0}'$ et $v_{k_1}'$ vérifient les trois points %du théorème \ref{conf_struct_rat}
-, ce qui montre l'implication directe.
-\vspace{5mm}
-
-Réciproquement, supposons qu'il existe deux mots $u,v\in A^*$ vérifiant les points 1, 2, et 3.
-Soit $\xinit$ une configuration à partir de laquelle $u$ est franchissable (on choisit des coordonnées aussi grandes que nécessaire).
-Montrons que $\lang(S,\xinit)$ n'est pas rationnel.
-
-Soit $k\in\N$.
-Notons $\rho = \text{max}\set{-\valeur{v}(i)}{i\in I}$, 
-et montrons alors que $u^{\rho\times k} v^k \in \lang(S,\xinit)$.
-
-\begin{itemize}
-    \item D'après le point 1, on a $\valeur{u} > \vect{0}$, donc $\xinit + \valeur{u} > \xinit$.
-    Comme $u$ est franchissable à partir de $\xinit$, le mot $u^{\rho\times k}$ l'est également.
-    Posons $\vect{x}_k = \xinit + \valeur{u^{\rho\times k}}$ la configuration atteinte.
-    
-    \item D'après le point 2, si pour un $i\in I$, on a $\valeur{v^k}(i) < 0$, alors $\valeur{u}(i) > 0$, d'où $\vect{x}_k(i) \geq \rho\times k$.
-    Par définition de $\rho$, on en déduit que $\valeur{v^k}$ a bien les ressources nécessaires pour se déclencher à partir de $\vect{x}_k$, donc est bien franchissable.
-    Posons $\vect{y}_k = \vect{x}_k + \valeur{v^k}$ la nouvelle configuration atteinte.
-    
-    \item Enfin, d'après le point 3, il existe un $i\in I$ tel que $\valeur{v}(i) < 0$, d'où $\valeur{v^k}(i) \leq -k$.
-\end{itemize}
-Par conséquent, l'exécution $\xinit \trans{u^{\rho\times k}}{S} \vect{x}_k \trans{v^k}{S} \vect{y}_k$ vérifie la propriété \eqref{eq:caracterisation} pour ce $k$.
-On notera que $\xinit$ est bien indépendant de $k$.
-Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structurellement rationnel.
-\end{proof}
+\begin{enumerate}
+    \item On peut adapter la preuve de la rationalité classique (théorème \ref{caractérisation}, et preuve de Vidal-Naquet).
+    Nécessite de s'appuyer soit sur le graphe de couverture (fini), soit sur Clover.
+    Mais ces deux notions ne sont pas définis de manière satisfaisante lorsque la configuration initiale peut varier (dans $\downarrow \vect{x}$, certaines coordonnées peuvent être choisies arbitrairement).
+    \item On ne peut ignorer ces coordonnées, car arbitraire ne veut pas dire infini : il est toujours nécessaire de vérifier si besoin que l'on peut faire croître ces coordonnées infiniment.
+    \item On peut s'inspirer de la preuve de rationalité structurelle (comme le fait le théorème ci-dessus), mais certaines choses deviennent aussi impossible, comme d'intervertir des actions (même résultat final, mais peut entraver le franchissement).
+    \item Une première idée est de mélanger les deux preuves, en distinguant les coordonnées finies et infinies de $\vect{x}$.
+    \item Une autre idée consiste à modifier le VAS pour se ramener à un problème de rationalité de VAS classique.
+    Pour gérer les omegas dans $\vect{x}$, on peut par exemple dupliquer les coordonnées associées pour simuler (dans un graphe fini comme pour le graphe de couverture) une coordonnée initialisé à 0 qui peut valoir des coordonnées négatives.
+\end{enumerate}
 
 %==================================================
 
