@@ -234,8 +234,9 @@ Enfin, on dénotera par $Rat$ l'ensemble des langages rationnels (sur un alphabe
 
 \subsection{Clover et le graphe de couverture}
 
-On aimerait avoir un meilleur aperçu des configurations accessibles, et notamment décrire de manière finie les capacités pour le VAS d'atteindre des configurations non-bornées.
-Rappelons d'abord la notion d'idéal :
+Avant d'étudier le langage des séquences d'actions franchissables $\lang(S)$, on va s'intéresser aux configurations accessibles $\reach(S)$.
+Comme c'est un ensemble généralement infini, il nous faut un moyen de représenter et d'exploiter cet ensemble d'accessibilité.
+Pour se faire, on commence par rappeler la notion d'idéal :
 
 \begin{Definition}
 Soit $(X,\leq)$ un ensemble ordonné et $E\subseteq X$ un sous-ensemble de $E$.
@@ -283,10 +284,24 @@ C'est aussi l'unique ensemble, de taille minimale, d'idéaux dont l'union repré
 %-----------
 
 %Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
-\lucas{Partie pour redéfinir le graphe de couverture ? (Caché)}
-\iffalse
+\lucas{Partie pour redéfinir le graphe de couverture}
 %%%%%%%%
-Le \emph{graphe de couverture} a pour sommets des configurations de $\Nomega^d$ et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+
+\vspace{3mm}
+
+L'ensemble fini \clover permet ainsi en utilisant les idéaux de représenter les configurations \emph{recouvrables} (c'est-à-dire celles en dessous d'une configuration accessible).
+La couverture remplace alors l'accessibilité, ce qui reste satisfaisant pour notre étude de $\lang(S)$ puisque toute action $a\in A$ franchissable sur une configuration $\vect{x}\in\N^d$ reste franchissable sur une configuration $\vect{y} \geq \vect{x}$ plus grande.
+
+On pourra donc être intéressé par un \emph{graphe de couverture} du VAS $S$, qui a pour sommets des idéaux de $\N^d$ (vus dans $\Nomega^d$) et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+
+\begin{Definition}
+Soit $S$ un VAS.
+On construit l'arbre de couverture de $S$ de la manière suivante :
+On part d'un sommet racine étiqueté par $\xinit \in\Nomega^d$ (qui représente l'idéal $\downarrow \xinit$).
+Ensuite, pour chaque sommet étiqueté par $\mathfrak{m}\in\Nomega^d$ et chaque action $a\in A$, si $a$ est franchissable à partir d'une configuration de l'idéal $\mathfrak{m}$, alors
+\end{Definition}
+
+\iffalse
 Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
 
 Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
