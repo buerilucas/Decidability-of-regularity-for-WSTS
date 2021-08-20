@@ -28,16 +28,6 @@ A.~Ginzburg and M.~Yoeli.
 \newblock {\em Journal of Computer and System Sciences}, 20(3):277--284, jun
   1980.
 
-\bibitem{GHKNS-til2020}
-Jean Goubault{-}Larrecq, Simon Halfon, P.~Karandikar, K.~{Narayan Kumar}, and
-  {\relax Ph}ilippe Schnoebelen.
-\newblock The ideal approach to computing closed subsets in
-  well-quasi-orderings.
-\newblock In Peter~M. Schuster, Monika Seisenberger, and Andreas Weiermann,
-  editors, {\em Well-Quasi Orders in Computation, Logic, Language and
-  Reasoning}, volume~53 of {\em Trends In Logic}, pages 55--105. Springer,
-  2020.
-
 \bibitem{DBLP:journals/corr/abs-2105-08551}
 Slawomir Lasota.
 \newblock Improved ackermannian lower bound for the {VASS} reachability

@@ -92,9 +92,9 @@
 
 %================================================================
 
-\title{Décidabilité de la rationalité pour les WSTS}
-\author{Lucas \textsc{Bueri}}
-\date{Stage M2 - 2021}
+\title{Décidabilité de la rationalité pour les VAS}
+\author{Lucas \textsc{Bueri}, encadré par Alain \textsc{Finkel}, au LMF}
+\date{Stage M2 du 22 mars au 30 juillet 2021}
 
 \begin{document}
 
@@ -104,28 +104,126 @@
 
 \section{Introduction}
 
-{\bf Context} les VASS et les  réseaux de Petri sont difficiles à analyser car de nombreux problèmes sont indécidables (comme l'inclusion des ensembles d'accessibilité ou l'inclusion des langages de deux VASS) et les problèmes décidables ont souvent une complexité élevée. Par exemple, l'accessibilité d'un état de contrôle (et de nombreux problèmes de model checking qui s'y réduisent) est EXPSPACE-complet tandis que l'accessibilté d'une configuration est Ackermann-complete \cite{DBLP:journals/corr/abs-2104-12695,DBLP:journals/corr/abs-2105-08551}. 
+\subsection*{Le contexte général}
 
-Savoir si le langage d'un VASS est rationnel est important car dans ce cas, on peut effectivement construire un automate fini équivalent (la taille de celui-ci peut atteindre Ackermann \cite{vavn81}) et en conséquence, certains problèmes indécidables pour les VASS deviennent décidables pour les VASS rationnels (comme l'inclusion des langages de deux VASS étiquetés sur un même alphabet) et des problèmes décidables comme la couverture et l'accessibilité ont une complexité moindre qui est XXX \alain{en fait je n'en sais rien :)}. La rationalité du langage d'un VASS avec configurations finales, étiqueté même sans le mot vide, ainsi que l'universalité sont indécidables \cite{giyo80}. On considerera donc seulement les langages de traces (toutes les configurations sont finales) de VASS étiquetés injectivement et on dira qu'un VASS est rationnel quand son langage de traces est rationnel. 
+%De quoi s'agit-il ? 
+%D'où vient-il ? 
+%Quels sont les travaux déjà accomplis dans ce domaine dans le monde ?
 
-On sait depuis 1977, par deux énoncés différents, de Yoeli et Ginzbourg  \cite{giyo80} et de Valk et Vidal-Naquet \cite{DBLP:conf/tcs/ValkV77,giyo80} que le problème de la rationalité du langage des traces d'un VASS étiqueté de façon injective est décidable \cite{giyo80,vavn81}. Yoeli et Ginzbourg réduisent la rationalité d'un VAS $S$ au fait qu'un nombre fini de VAS, construits à partir de $Clover(S)$, sont bornés (Théorème 2, \cite{giyo80}). Valk et Vidal-Naquet ont montré (Théorème 5,  \cite{vavn81}) qu'un réseau de Petri $S$ n'est pas rationnel s'il existe un circuit élémentaire, étiqueté par une séquence à effet strictement négatif sur au moins une coordonnée contenant un $\omega$, dans le graphe de Karp-Miller de $S$. Cet énoncé demande la construction du graphe de Karp-Miller mais nous verrons qu'on peut raisonner seulement sur Clover qui peut être beaucoup plus petit que le graphe de Karp-Miller.
+%étude des VASS = réseaux de petri = VAS
+%système d'action concurrent
+%état global et transitions : franchir une action modifie les paramètres globaux
+
+%rationalité -> question posé avec lien avec automates (nb fini d'actions, notion de langages)
+%facilite
+
+L'idée des systèmes de transitions est de modéliser une situation par un marquage, un état global du système.
+Cet état courant (appelé configuration) varie alors en effectuant des actions.
+Chaque action va, si elle est exécutable, modifier les paramètres globaux du système.
+
+On s'intéressera ici plus précisément aux systèmes d'addition de vecteurs (VAS) et aux réseaux de Petri (qui est un modèle équivalent).
+Dans ces deux modèles, une contrainte supplémentaire a été ajoutée au système :
+une notion de ressources, nécessaires pour effectuer certaines actions.
+Ainsi, les actions des réseaux de Petri exigent d'avoir suffisamment de jetons dans une place.
+Dans les VAS, ce sont les coordonnées des vecteurs qui doivent être suffisamment importantes.
+
+Plus que l'effet des actions sur le système, c'est le respect des contraintes qui est modélisé ici.
+C'est pourquoi le lien de ces systèmes avec les langages formels est très fort, à travers l'étude du langage des séquences d'actions réalisables.
+
+\vspace{3mm}
+Les VAS et les réseaux de Petri sont difficiles à analyser car de nombreux problèmes y sont indécidables (comme l'inclusion des ensembles d'accessibilité ou l'inclusion des langages de deux VAS) et les problèmes décidables ont souvent une complexité élevée.
+Par exemple, l'accessibilité d'un état de contrôle (et de nombreux problèmes de model-checking qui s'y réduisent) est EXPSPACE-complet tandis que l'accessibilté d'une configuration est Ackermann-complet \cite{DBLP:journals/corr/abs-2104-12695,DBLP:journals/corr/abs-2105-08551}. 
+
+Savoir si le langage d'un VAS est rationnel est important car dans ce cas, on peut effectivement construire un automate fini équivalent (la taille de celui-ci peut atteindre Ackermann \cite{vavn81}) et en conséquence, certains problèmes indécidables pour les VAS deviennent décidables pour les VAS rationnels (comme l'inclusion des langages de deux VAS étiquetés sur un même alphabet) et des problèmes décidables ont une complexité moindre.
+%comme la couverture et l'accessibilité  qui est XXX \alain{en fait je n'en sais rien :)}.
+La rationalité du langage d'un VAS avec configurations finales, étiqueté même sans le mot vide, ainsi que l'universalité sont indécidables \cite{giyo80}. On considérera donc seulement les langages de traces (toutes les configurations sont finales) de VAS étiquetés injectivement et on dira qu'un VAS est rationnel quand son langage de traces est rationnel. 
+
+\vspace{3mm}
+On sait depuis 1977, par deux énoncés différents, de Valk et Vidal-Naquet \cite{vavn81,DBLP:conf/tcs/ValkV77} et de Yoeli et Ginzbourg \cite{giyo80}, que le problème de la rationalité du langage des traces d'un VAS étiqueté de façon injective est décidable \cite{giyo80,vavn81}.
+Yoeli et Ginzbourg réduisent la rationalité d'un VAS $S$ au fait qu'un nombre fini de VAS, construits à partir de $\clover(S)$, sont bornés (Théorème 2, \cite{giyo80}).
+Valk et Vidal-Naquet ont montré (Théorème 5,  \cite{vavn81}) qu'un réseau de Petri $S$ n'est pas rationnel s'il existe un circuit élémentaire, étiqueté par une séquence à effet strictement négatif sur au moins une coordonnée contenant un $\omega$, dans le graphe de couverture (ou de Karp-Miller) de $S$.
+Cet énoncé demande la construction du graphe de Karp-Miller mais nous verrons qu'on peut raisonner seulement sur $\clover$ qui peut être beaucoup plus petit que le graphe de Karp-Miller.
 On sait aussi, par deux preuves différentes de Blockelet et Schmitz \cite{DBLP:conf/mfcs/BlockeletS11}, et de Demri \cite{DBLP:journals/jcss/Demri13}, que la complexité de la rationalité est EXPSPACE-complet. %	\cite{DBLP:conf/mfcs/BlockeletS11,DBLP:journals/jcss/Demri13}.
 
-Un autre problème de rationalité a été étudié dans  \cite{vavn81}, à savoir de décider si un VASS est rationnel pour \emph{toute} configuration initiale (problème de la  \emph{rationalité structurelle}).
-\alain{il n'est pas évident que l'algorithme implicite demande de décider l'accessibilité car il s'agit de prouver l'existence d'une séquence de marquages accessibles mais pas de prouver l'accessibilité de deux marquages donnés.} 
+Un autre problème de rationalité a été évoqué dans  \cite{vavn81}, à savoir de décider si un VAS est rationnel pour \emph{toute} configuration initiale (problème de la  \emph{rationalité structurelle}).
+Il n'est pas évident que l'algorithme implicite demande de décider l'accessibilité car il s'agit de prouver l'existence d'une séquence de marquages accessibles mais pas de prouver l'accessibilité de deux marquages donnés.
 
+\subsection*{Le problème étudié}
 
-{\bf Contribution}
+%Quelle est la question que vous avez abordée ? 
+%Pourquoi est-elle importante, à quoi cela sert-il d'y répondre ?  
+%Est-ce un nouveau problème ?
+%Si oui, pourquoi êtes-vous le premier chercheur de l'univers à l'avoir posée ?
+%Si non, pourquoi pensiez-vous pouvoir apporter une contribution originale ?
+
+L'idée initiale du stage était d'étendre la décidabilité du problème de rationalité sur les VAS à d'autres systèmes.
+Les VAS sont en effet une sous-classe des systèmes de transition bien-structurés (WSTS).
+Comme la rationalité est indécidable sur les WSTS, nous cherchions une classe de systèmes intermédiaire parmi quelques extensions récentes intéressantes (comme les WSTS affines).
+
+Cependant, lors de notre tour d'horizon des VAS, plusieurs autres problèmes ont attiré notre attention.
+Il nous a donc paru utile de développer ces problèmes, parmi lesquels des études de complexité, des preuves à détailler et des propriétés nouvelles.
+En plus de nous faire progresser vers l'objectif initial, ces problèmes ont permis de mieux comprendre les VAS et de donner de nouvelles pistes de réflexion.
+
+\subsection*{La contriburation proposée}
+
 \begin{itemize}
-\item Nous montrons que la preuve du (Théorème 2, \cite{giyo80}) est techniquement fausse bien qu'elle contienne les bonnes idées; les auteurs ont considéré une relation d'équivalence $\equiv_{YG}$ qui ne satisfait pas la propriété : $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_{YG}$ est fini. Nous introduisons une autre relation d'équivalence $\equiv_S$ telle que: $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_S$ est fini.
-    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informelllement en une phrase. Nous donnons une preuve complète que ce problème est bien décidable  \alain{expliquer le principe de la preuve}. Nous reformulons la caractérisation de non-rationalité jusqu'à obtenir un problème NP-complet.  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
+	\item Nous montrons que la preuve du (Théorème 2, \cite{giyo80}) est techniquement fausse bien qu'elle contienne les bonnes idées; les auteurs ont considéré une relation d'équivalence $\equiv_{YG}$ qui ne satisfait pas la propriété : $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_{YG}$ est fini.
+	Nous introduisons une autre relation d'équivalence $\equiv_S$ telle que: $S$ est rationnel ssi  le quotient $Reach(S)/\equiv_S$ est fini.
+    \item  Le problème de la rationalité structurelle est énoncé décidable (\cite{vavn81}, Théorème 6) mais la partie non triviale de la preuve est seulement évoquée informellement en une phrase.
+    Nous donnons une preuve complète que ce problème est bien décidable  %\alain{expliquer le principe de la preuve}.
+    Nous reformulons la caractérisation de non-rationalité jusqu'à obtenir un problème NP-complet.  (la complexité du problème de la rationalité structurelle semble n'avoir jamais été étudiée). 
 %\item on corrige la preuve du résultat principal de \cite{giyo80} qui est formellement incorrecte. 
 %En effet, YG énoncent que $S$ est rationnel ssi le quotient d'une relation d'équivalence $\equiv_1$ est fini mais nous montrons que ceci est faux. 
   
-    \item On étudie l'ensemble $R(S)$ des configurations rationnelles d'un VAS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) et on montre que $R(S)$ est un ensemble clos par le bas. On montre, En utilisant un résultat de Valk \& Jantzen \cite{vaja85}, on calcule une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc on obtient aussi un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas. Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
-Une fois l'ensemble $Z$ calculé, on peut répondre en temps linéaire en la taille de $Z$ si $S$ est rationnel à partir d'une configuration $x_0 \in \N^d$; il suffit de comparer $x_0$ avec les éléments dans $Z$. Si il existe un élément $z \in Z$ tel que $x_0 \leq z$ alors $L(S,x_0)$ est rationnel sinon $L(S,x_0)$ n'est pas rationnel. 
+    \item On étudie l'ensemble $R(S)$ des configurations rationnelles d'un VAS $S$ (une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel) et on montre que $R(S)$ est un ensemble clos par le bas. On cherche alors, en utilisant un résultat de Valk \& Jantzen \cite{vaja85}, à calculer une base finie $Y \subseteq \N^d$ du complémentaire (clos par le haut) de $R(S)$ et donc obtenir aussi un ensemble fini $Z \subseteq \Nomega^d$ qui représente cet ensemble clos par le bas.
+    %Cet algorithme est au pire Ackermannian.\alain{est-il Ack-dur ? EXSPSACE dur ?}
+%Une fois l'ensemble $Z$ calculé, on peut répondre en temps linéaire en la taille de $Z$ si $S$ est rationnel à partir d'une configuration $x_0 \in \N^d$; il suffit de comparer $x_0$ avec les éléments dans $Z$. Si il existe un élément $z \in Z$ tel que $x_0 \leq z$ alors $L(S,x_0)$ est rationnel sinon $L(S,x_0)$ n'est pas rationnel. 
 
 \end{itemize}
+
+\subsection*{Les arguments en faveur de sa validité}
+
+%Qu'est-ce qui montre que cette solution est une bonne solution ?
+%Des expériences, des corollaires ? 
+%Commentez la \emph{robustesse} de votre proposition : 
+%comment la validité de la solution dépend-elle des hypothèses de travail ?
+
+Les notions de base des VAS ont été étudiés par plusieurs chercheurs, et plusieurs papier valident les propriétés connus utilisés dans ce rapport.
+Quant aux résultats obtenus, qu'ils soient nouveaux ou précisent un travail déjà existant, ils sont intégralement démontrés.
+
+Les nombreuses connaissances sur les langages rationnels permettent de décider plus rapidement les problèmes usuels lorsque les VAS sont rationnels (pour du model-checking par exemple).
+Cela justifie l'intérêt des résultats mis en évidence, ainsi que les pistes de recherche explorés.
+
+Malheureusement, la preuve de calculabilité de l'ensemble des configurations rationnelles reste encore incomplète.
+Les différentes idées exploitées sont néanmoins prometteuses et à poursuivre.
+
+\subsection*{Le bilan et les perspectives}
+
+%Et après ? En quoi votre approche est-elle générale ? 
+%Qu'est-ce que votre contribution a apporté au domaine ? 
+%Que faudrait-il faire maintenant ? 
+%Quelle est la bonne \emph{prochaine} question ?
+
+Si la preuve de décidabilité de la rationalité (classique) dans les VAS ne vient que reformuler les démonstrations existantes, les outils utilisés (caractérisations et congruences) permettent de mieux comprendre le problème et donne des idées pour les autres résultats.
+
+La rationalité structurelle propose quant à elle un problème de rationalité alternatif avec une complexité moindre.
+En effet, alors que la rationalité classique est connue être Ackermann-complet pour les VAS, nous avons pu montrer que la rationalité structurelle est un problème dans la classe NP.
+
+Enfin, les résultats de monotonie des configurations rationnelles apportent de nouveaux outils pour explorer la rationalité.
+Notamment, les propriétés mises en évidence permettent de poursuivre la classification des VAS rationnels.
+Elles apportent également de nouveaux éléments pour étendre le problème de rationalité à des systèmes de transitions plus développés.
+
+%=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+% DEBUT RAPPORT
+%=+=+=+=+=+=+=+=+=+=+=+=+=+=+
+
+\newpage
+
+Dans la partie 2, nous donnons les définitions de base nécessaires pour la suite du rapport.
+La partie 3 propose une preuve de la décidabilité de la rationalité des VAS, en s'appuyant sur une caractérisation (théorème \ref{caractérisation}) réutilisée par la suite.
+La partie 4 détaille la rationalité structurelle et apporte une preuve de complexité dans NP.
+Enfin, la partie 5 expose la notion de configuration rationnelle ainsi que les résultats intermédiaires rattachés.
+
 %%%%%%%%%
 \iffalse
 %%%%%%%%%
@@ -157,12 +255,12 @@ Deux ensembles nous intéresseront alors : le langage $\lang(N)\defeq \set{w\in 
 %%%%%%%%%
 %----------------------------------------------------------------
 
-\section{VAS}
+\section{Systèmes d'addition de vecteurs (VAS)}
 
 \subsection{La structure}
 
 Un \emph{système d'addition de vecteurs de dimension} $d\in\N$ ($d-$VAS) $S=(A,\lambda)$ est la donnée 
-d'un alphabet fini $A$ muni d'un étiquetage $\lambda:A\to\Z^d$.
+d'un alphabet fini $A$ muni d'un étiquetage $\lambda:A\to\Z^d$ injectif.
 À chaque \emph{action} $a\in A$ est ainsi associé un unique vecteur $\lambda(a)\in \Z^d$, de telle manière à ce que deux actions ne soient pas associées au même vecteur.
 Pour des raisons de lisibilité, on notera $\valeur{a}=\lambda(a)$.
 \vspace{3mm}
@@ -197,11 +295,11 @@ Nous allons étudier deux ensembles naturellement associés à un VAS $S=(A,\lam
     \item 
     $\lang(S,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ qui est le \emph{langage} des séquences d'actions franchissables à partir de la configuration $\vect{x}$,
     
-    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des configurations \emph{accessibles} à partir de $\vect{x}$. 
+    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ qui est l'ensemble des \emph{configurations accessibles} à partir de $\vect{x}$. 
 \end{enumerate}
 
 \vspace{2mm}
-On choisira souvent une configuration initiale $\xinit\in\N^d$, qu'on pourra ajouter à la définition du VAS.
+On choisira souvent une configuration \emph{initiale} $\xinit\in\N^d$, qu'on pourra ajouter à la définition du VAS.
 On pourra alors regarder $\lang(S) \defeq \lang(S,\xinit)$ le langage du VAS $S = (A,\lambda,\xinit)$, et $\reach(S) \defeq \reach(S,\xinit)$ son ensemble d'accessibilité.
 
 % A déplacer ?
@@ -232,7 +330,7 @@ On dit que
 Enfin, on dénotera par $Rat$ l'ensemble des langages rationnels (sur un alphabet fini).
 %----------------------------------------------------------------
 
-\subsection{Clover et le graphe de couverture}
+\subsection{Omega-configurations}
 
 Avant d'étudier le langage des séquences d'actions franchissables $\lang(S)$, on va s'intéresser aux configurations accessibles $\reach(S)$.
 Comme c'est un ensemble généralement infini, il nous faut un moyen de représenter et d'exploiter cet ensemble d'accessibilité.
@@ -254,7 +352,7 @@ Ainsi, un élément $\mathfrak{m}\in \Nomega^d$ représente l'idéal $\set{\vect
 On a alors le résultat suivant :
 
 \begin{Proposition}
-\lucas{référence ?}
+%\lucas{référence ?}
 Soit $E \subseteq \N^d$ clos par le bas.
 Alors $E$ est une union finie d'idéaux de $\N^d$.
 \end{Proposition}
@@ -270,59 +368,10 @@ Soit $E\subseteq \N^d$ clos par le haut.
 Alors $\Min(E)$ est fini et $\uparrow \Min(E) = E$.
 \end{Proposition}
 
-On peut maintenant introduire l'ensemble de couverture $\cover(S) \defeq \downarrow \reach(S,\xinit)$ d'un VAS $S = (A,\lambda,\xinit)$.
-Il est clos par le bas dans $(\N^d,\leq)$, donc il se décompose en une union finie d'idéaux.
+%-*-*-*-*-*
 
-%\alain{dire que $\uparrow \emptyset = \emptyset$)}
 
-\begin{Definition}
-Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
-On définit $\clover(S) \subseteq \Nomega^d$ comme l'ensemble des idéaux maximaux inclus dans $\cover(S)$.
-C'est aussi l'unique ensemble, de taille minimale, d'idéaux dont l'union représente $\cover(S)$.
-\end{Definition}
-
-%-----------
-
-%Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
-\lucas{Partie pour redéfinir le graphe de couverture}
-%%%%%%%%
-
-\vspace{3mm}
-
-L'ensemble fini \clover permet ainsi en utilisant les idéaux de représenter les configurations \emph{recouvrables} (c'est-à-dire celles en dessous d'une configuration accessible).
-La couverture remplace alors l'accessibilité, ce qui reste satisfaisant pour notre étude de $\lang(S)$ puisque toute action $a\in A$ franchissable sur une configuration $\vect{x}\in\N^d$ reste franchissable sur une configuration $\vect{y} \geq \vect{x}$ plus grande.
-
-On pourra donc être intéressé par un \emph{graphe de couverture} du VAS $S$, qui a pour sommets des idéaux de $\N^d$ (vus dans $\Nomega^d$) et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
-
-\begin{Definition}
-Soit $S$ un VAS.
-On construit l'arbre de couverture de $S$ de la manière suivante :
-On part d'un sommet racine étiqueté par $\xinit \in\Nomega^d$ (qui représente l'idéal $\downarrow \xinit$).
-Ensuite, pour chaque sommet étiqueté par $\mathfrak{m}\in\Nomega^d$ et chaque action $a\in A$, si $a$ est franchissable à partir d'une configuration de l'idéal $\mathfrak{m}$, alors
-\end{Definition}
-
-\iffalse
-Il est obtenu en partant d'un sommet initial $s_0:\xinit$ étiqueté par la configuration initiale $\xinit\in \N^d$, puis par récurrence sur la profondeur des noeuds en indiquant les voisins des noeuds accessibles :
-
-Pour chaque noeud $s:\vect{x}$ associé à la configuration $\vect{x}\in \Nomega^d$, on fait partir de $s$ autant d'arêtes que d'actions $a\in A$ qui sont franchissables à partir de $\vect{x}$.
-Le sommet d'arrivée de l'arête associée à une action $a$ est déterminé ainsi :
-\begin{itemize}
-    \item Si $\vect{x}\trans{a}{} \vect{y}$ (déclencher $a$ aboutit à la configuration $\vect{y} = \vect{x} + \valeur{a}$) 
-    et qu'il existe un sommet déjà existant $r:\vect{y}$ associé à cette configuration, alors on crée une arête étiquetée par $a$ de $s:\vect{x}$ vers $r:\vect{y}$ ;
-    \item Si $\vect{x}\trans{a}{} \vect{y}$ et qu'il existe un ancêtre $r:\vect{z}$ de $s$ (c'est-à-dire tel qu'il existe une chemin dans le graphe déjà créé de $r$ à $s$) avec $\vect{y}>\vect{z}$, 
-    alors on crée un nouveau sommet $s':\vect{y'}$ et une arête de $s:\vect{y}$ vers $s':\vect{y'}$ étiquetée par $a$, 
-    où $\vect{y'}\in \Nomega^d$ est la configuration de coordonnées $\vect{y'}(i) = \vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i) = \omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
-    \item Si la configuration $\vect{y}$ atteinte n'est pas dans les cas précédents, on crée simplement un nouveau sommet $s':\vect{y}$ et une arête de $s$ à $s'$ étiquetée par $a$.
-\end{itemize}
-
-\fi
-%%%
-
-%----------------------------------------------------------------
-
-\subsection{Omega-accessibilité}
-
-On étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
+Pour poursuivre cette idée, on étend les configurations de $\N^d$ à des $\omega$-configurations dans $\Nomega^d$.
 Les omegas dans une coordonnée signifie que l'on a accès à autant de matériel que nécessaire, et qu'il n'y a plus à se préoccuper de franchissement pour cette coordonnée.
 Détaillons alors le fonctionnement du VAS sur ces $\omega$-configurations.
 
@@ -353,13 +402,73 @@ On dit que $\vect{y}$ est \emph{$\omega$-accessible} à partir de $\vect{x}$ lor
 \end{enumerate}
 \end{Definition}
 
-Ce processus correspond aux transitions du graphe de couverture.
+Ce processus correspond aux transitions du graphe de couverture que l'on va présenter ci-dessous.
 On le retrouve sous le nom d'\emph{accélération} dans \cite{FHK-fossacs2020}, et de \emph{coordonnées non-bornées avec contexte \vect{x}} dans \cite{vavn81}.
 On constate que cette notion correspond à l'accessibilité classique lorsque $\vect{x}$ et $\vect{y}$ sont des configurations (finies) de $\N^d$.
 
+\subsection{Clover et le graphe de couverture}
+
+On introduit l'ensemble de couverture $\cover(S) \defeq \downarrow \reach(S,\xinit)$ d'un VAS $S = (A,\lambda,\xinit)$.
+Il est clos par le bas dans $(\N^d,\leq)$, donc il se décompose en une union finie d'idéaux.
+
+%\alain{dire que $\uparrow \emptyset = \emptyset$)}
+
+\begin{Definition}
+Soit $S=(A,\lambda,\xinit)$ un $d-$VAS.
+On définit $\clover(S) \subseteq \Nomega^d$ comme l'ensemble des idéaux maximaux inclus dans $\cover(S)$.
+C'est aussi l'unique ensemble, de taille minimale, d'idéaux dont l'union représente $\cover(S)$.
+\end{Definition}
+
+%-----------
+
+%Cela va nous permettre de représenter le graphe des configurations accessibles de manière finie (bien qu'il puisse exister une infinité de configurations accessibles).
+%\lucas{Partie pour redéfinir le graphe de couverture}
+%%%%%%%%
+
+\vspace{3mm}
+
+L'ensemble fini \clover permet ainsi en utilisant les idéaux de représenter les configurations \emph{recouvrables} (c'est-à-dire celles en dessous d'une configuration accessible).
+La couverture remplace alors l'accessibilité, ce qui reste satisfaisant pour notre étude de $\lang(S)$ puisque toute action $a\in A$ franchissable sur une configuration $\vect{x}\in\N^d$ reste franchissable sur une configuration $\vect{y} \geq \vect{x}$ plus grande.
+
+On pourra donc être intéressé par un \emph{graphe de couverture}  (ou graphe de Karp-Miller) du VAS $S$, qui a pour sommets des idéaux de $\N^d$ (vus dans $\Nomega^d$) et pour arêtes des transitions du VAS, étiquetés par une action de $A$.
+On rappelle sa définition et ses propriétés de base dans la suite de cette partie.
+
+\begin{Definition}
+Soit $S$ un VAS.
+On construit l'\emph{arbre de couverture} de $S$ de la manière suivante :
+On part d'un nœud racine étiqueté par $\xinit \in\Nomega^d$ (qui représente l'idéal $\downarrow \xinit$).
+Ensuite, pour chaque nœud $s$ étiqueté par $\vect{x}\in\Nomega^d$ et chaque action $a\in A$ franchissable à partir de $\vect{x}$, notons $\vect{y} = \vect{x} + \valeur{a}$ la $\omega$-configuration atteinte en lisant $a$ depuis $\vect{x}$.
+\begin{itemize}
+    \item Si $s$ a un ancêtre étiqueté par $\vect{y}$, alors on crée une arête étiquetée par $a$ de $s$ vers une nouvelle feuille étiqueté par $\vect{y}$ ;
+    \item Si $s$ a un ancêtre étiqueté par une $\omega$-configuration $\vect{z} > \vect{y}$, alors on crée une arête étiquetée par $a$ de $s$ vers un nouveau nœud $s'$ étiqueté par $\vect{y'}$, 
+    défini par $\vect{y'}(i) = \vect{y}(i)$ pour les $1\leq i\leq d$ tels que $\vect{y}(i)=\vect{z}(i)$, et $\vect{y'}(i) = \omega$ si $\vect{y}(i)>\vect{z}(i)$ ;
+    \item Sinon, on crée simplement une arête étiquetée par $a$ de $s$ vers un nouveau nœud $s'$ étiqueté par $\vect{y}$.
+\end{itemize}
+On continue ensuite la construction en réappliquant le processus sur les nœuds ainsi créés.
+\end{Definition}
+
+\begin{Theorem}
+Soit $S$ un VAS. Alors l'arbre de couverture de $S$ (tel que construit ci-dessus) est fini.
+\end{Theorem}
+
+\begin{Definition}
+À partir de l'arbre de couverture d'un VAS $S$, on construit le \emph{graphe de couverture} de $S$ en quotientant les sommets de manière à confondre ceux ayant la même étiquette de $\Nomega$.
+
+Ainsi, à chaque fois que le franchissement d'un mot aboutit à  un sommet dont l'étiquette est déjà visitée, on obtient un cycle dans le graphe.
+\end{Definition}
+
+\begin{Proposition}
+Dans le graphe de couverture d'un VAS $S$, les étiquettes des sommets donnent une liste d'idéaux dont l'union correspond exactement aux configurations de $\cover(S)$.
+Ce graphe étiqueté peut alors se voir comme une automate fini dont le langage reconnu est $\lang(S)$ et dont les idéaux étiquetant les sommets (ou états lorsque vu comme un automate) contiennent les configurations atteintes sur ce sommet.
+%En outre, pour tout mot $u\in A^*$, $u$ est franchissable sur $\xinit$ si et seulement si les lettres de $u$ étiquettent une branche de l'arbre de couverture, en partant de la racine.
+%L'idéal étiquetant le sommet atteint par cette branche contient alors la configuration $\vect{y} = \xinit + \valeur{u}$.
+\end{Proposition}
+
 %----------------------------------------------------------------
 
-\section{Une nouvelle preuve de décidabilité de la rationalité}
+%----------------------------------------------------------------
+
+\section{Une preuve de décidabilité de la rationalité des VAS}
 
 La preuve de décidabilité se divise en deux étapes.
 Tout d'abord, on va donner une caractérisation mathématique équivalente à la rationalité.
@@ -429,7 +538,12 @@ $$\vect{x} \rel_S \vect{y} \ssi \lang(S,\vect{x}) = \lang(S,\vect{y})$$
 
 % Regarder la relation d'ordre associée $x \sqsubseteq  y$ ssi $\lang(S,x) \subseteq \lang(S,y)$
 
-Constatons déjà que cette nouvelle relation est incluse dans celle de Ginzburg et Yoeli :
+Constatons déjà que cette nouvelle relation est incluse dans celle de Ginzburg et Yoeli \cite{giyo80}, dont on redonne la définition ci-dessous :
+
+\begin{Definition}[\cite{giyo80} section 3]
+Soit $S=(A,\lambda,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
+$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$
+\end{Definition}
 
 \begin{Proposition}
 Soit $S=(A,\lambda,\xinit)$ un VAS et $\vect{x},\vect{y} \in\lang(S)$.
@@ -454,6 +568,9 @@ En résumé, on a les transitions valides $\vect{x} \trans{u}{S} \vect{x} +\vale
 On conclut enfin que $\lang(S,\vect{x}) = \lang(S,\vect{y})$ par symétrie.
 \end{proof}
 
+\noindent Attention, l'inclusion réciproque est fausse, un contre exemple est donnée en annexe (partie 7)
+
+\vspace{2mm}
 On va établir le lien avec la relation de Nérode $\sim_L$ associée à un langage $L \subseteq A^*$. 
 Pour tout $u,v\in A^\ast$, on définit: 
 $$ u\sim_L v \ssi \forall w\in A^\ast, uw\in L \equivaut vw\in L $$
@@ -519,7 +636,7 @@ Pour tout $\vect{x},\vect{y} \in\N^d$, $\vect{x}\rel_S \vect{y}$ implique $\fora
 
 %--------------
 
-\subsection{Borne sur la décroissance (décidable)}
+\subsection{Borne (décidable) sur la décroissance}
 
 Pour obtenir un nombre fini de classes d'équivalence pour $\rel_S$, on cherche les configurations qui sont indiscernables pour le VAS.
 Comme seul le test de positivité permet d'identifier les actions franchissables, il va falloir qu'au delà d'une certaine valeur, les coordonnées ne peuvent plus décroître jusqu'à zéro.
@@ -591,12 +708,13 @@ Prouvons maintenant, par contraposée, la réciproque $\lang(S)$ rationnel $\Rig
 Si $S$ ne vérifie pas la propriété \eqref{eq:caracterisation}, alors
 pour tout $k\in\N$, il existe une configuration accessible $\vect{x}$, un mot $w\in \lang(S,\vect{x})$ et une coordonnée $i\in I$ tels que $(\vect{x} +\valeur{w})(i)\leq \vect{x}(i)-k$.
 
-On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en \xout{lisant} franchissant $w=a_1\cdots a_n$.
+On note $\vect{x_p} = \vect{x} +\valeur{a_1\cdots a_p} \in\reach(S)$ les différentes configurations obtenues en franchissant $w=a_1\cdots a_n$.
 On a alors $\vect{x}=\vect{x}_0 \trans{a_1}{}\vect{x}_1 \trans{a_2}{}\dots \trans{a_n}{}\vect{x}_n= \vect{x} +\valeur{w}$.
 
 Notons $\xi = \text{max}\set{\abs{\valeur{a}(j)}} {a\in A, j\in I}$ la valeur de la plus grande variation d'une coordonnée possible par une action.
 Alors, au moins $k/\xi$ configurations $\vect{x}_p$ voient leur coordonnée $i$ décroître,
-et l'on a une sous-séquence d'extractrice \alain{pas le bon mot}$\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
+et l'on a une sous-séquence d'extractrice %\alain{pas le bon mot}
+$\phi$ vérifiant $\vect{x}_{\phi(0)}(i)>\vect{x}_{\phi(1)}(i)>\dots>\vect{x}_{\phi(h)}(i)$ où $h\geq k/\xi$.
 
 
 Ces configurations ne sont pas équivalentes pour $\rel_S$ :
@@ -612,11 +730,22 @@ On conclut qu'il existe au moins $k/\xi$ classes d'équivalences pour $\rel_S$ (
 ainsi $\reach(S)/\rel_S$ est infini.
 \end{proof}
 
+%*--*--*--*
+
+On conclut cette sous-partie en présentant une transformation de la caractérisation \ref{eq:caracterisation}, permettant de décider la rationalité des VAS à partir du graphe de couverture.
+
+\begin{Theorem}[\cite{vavn81} lemme 3]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
+tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
+\end{Theorem}
+
 %------------------------------------
 
-\subsection{Décider la caractérisation (corrige Yoeli)}
+\subsection{Décider la caractérisation}
 
-Une première façon de décider la rationnalité des langages de VAS en utilisant le théorème \ref{caractérisation}.
+On présente ici une façon de décider la rationalité des langages de VAS en utilisant le théorème \ref{caractérisation}.
 On s'inspire du théorème 2 de \cite{giyo80}, en faisant appel à l'ensemble \clover plutôt qu'au graphe de couverture.
 
 \begin{Lemma}[\cite{giyo80} lemme 3]\label{mot décroissant}
@@ -652,7 +781,7 @@ Pour tout $i \in \Jinf{\mathfrak{m}}$, on définit un $(r+1)-$VAS que l'on noter
 %pour $w = a_1\cdots a_n \in A^\ast$, on pose $w(\mathfrak{m},i) \defeq a_1(\mathfrak{m},i) \;\cdots\; a_n(\mathfrak{m},i) \in A(\mathfrak{m},i)^\ast$.
 
 Le théorème suivant est alors obtenu :
-\alain{c'est exactement le théorème 2, car ici on parle de Clover, et YG parle des éléments maximaux de KM}
+%\alain{c'est exactement le théorème 2, car ici on parle de Clover, et YG parle des éléments maximaux de KM}
 
 \begin{Theorem}[\cite{giyo80} théorème 2]\label{rat_decision}
     Un VAS   $S=(A,\lambda,\xinit)$ est rationnel si et seulement si 
@@ -710,11 +839,13 @@ La procédure de décision induite par le théorème \ref{rat_decision} nécessi
 
 \section{Décidabilité et complexité de la rationalité structurelle}
 
-Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour tout $\vect{x} \in \N^d$. 
+Nous allons montrer qu'on peut décider dans NP si un VAS $S$ est rationnel pour toute configuration initiale $\vect{x} \in \N^d$. 
 
 \begin{Definition}
 On dit qu'un VAS $S$ est \emph{structurellement rationnel} si $\lang(S,\vect{x})$ est rationnel pour tout $\vect{x} \in \N^d$.
 \end{Definition}
+
+\iffalse
 
 \begin{Remark}
 \lucas{À déplacer dans la partie suivante}
@@ -722,6 +853,8 @@ On a donc que $S$ est structurellement rationnel si et seulement si $\inirat(S) 
  $\Min(\overline{\inirat(S)})=\vide$. On observe que $S$ n'est jamais rationnel si $\Min(\overline{\inirat(S)})=\os{\vect{0}}$.  
 %		$\lang(S,\vect{x})$ %(ou $(S,\vect{x})$ ?)  est rationnel pour tout  $\vect{x}\in\N^d$.
 \end{Remark}
+
+\fi
 
 \noindent Nous allons étudier le problème de décision suivant appelé \emph{rationalité structurelle}:
 
@@ -748,11 +881,13 @@ Un $d-$VAS $S=(A,\lambda)$ n'est pas structurellement rationnel si et seulement 
 \end{enumerate}
 \end{Theorem}
 
+On peut déjà remarquer que le problème d'accessibilité n'est pas nécessaire (évitant ainsi sa complexité Ackermann-dur) puisqu'on évite la notion de franchissement.
+En effet, on peut augmenter au besoin la configuration initiale pour permettre de franchir les étapes intermédiaires.
 
-Énoncé ainsi, décider la rationalité avec le théorème \ref{rat_struct_valk} \xout{ demande d'utiliser un algorithme pour résoudre l'accessibilité ce qui est maintenant connu comme Ackermann-dur (ref récentes).}
-Mais on peut remarquer que lister les configurations rencontrées dans le point 4 ci-dessus est inutile pour la rationalité structurelle, puisqu'on peut augmenter au besoin la configuration initiale  pour permettre les étapes intermédiaires.
-On propose ainsi un autre théorème qui ne demande pas de décider l'accessibilité et - mieux - qui sera dans NP.
-\alain{Reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait.}
+Donnons maintenant une version simplifiée de ce résultat qui se débarrasse également des configurations du théorème \ref{rat_struct_valk}.
+On donnera une preuve de ce résultat et - mieux - une borne de complexité dans NP.
+%\alain{Reste à prouver la NP-dureté, c'est dommage si ce n'est pas fait.}
+On rappelle les définitions $\Jfin{\vect{x}} = \set{i\in I}{\vect{x}(i) \text{ est fini}}$ et $\Jinf{\vect{x}} = \set{i\in I}{\vect{x}(i)=\omega}$ pour une $\omega$-configuration $\vect{x} \in \Nomega^d$.
 
 %---THM-STRUCT-RAT---
 
@@ -807,7 +942,7 @@ Ainsi, le mot $u = u_n$ satisfait le lemme.
 
 %%%%%%%%%%%%%%
 On notera que le mot $u$ ainsi construit n'est pas forcément franchissable à partir de $\xinit$.
-Néanmoins, la rationnalité structurelle permet d'éviter cette contrainte.
+Néanmoins, la rationalité structurelle permet d'éviter cette contrainte.
 
 \begin{Theorem}\label{conf_struct_rat}
 \label{rat_struct_nouveau}
@@ -964,11 +1099,13 @@ Le langage $\lang(S,\xinit)$ n'est donc pas rationnel, et $S$ n'est pas structur
 \end{proof}
 
 \begin{Theorem}\label{NP conf_struct_rat}
-Le  problème de la rationalité structurelle est dans NP pour les VAS.
+Le  problème de la rationalité structurelle est dans co-NP pour les VAS.
 \end{Theorem}
 
 \begin{proof}
 Le théorème \ref{rat_struct_nouveau} montre que le problème de la rationalité structurelle revient à décider le problème de décision suivant.
+
+\iffalse
 
 Donnée : un ensemble de vecteurs $\lambda(A) \subseteq \Z^d$ (les étiquettes des actions de $S = (A,\lambda)$).
 
@@ -985,12 +1122,13 @@ $\vect{v}(i) \geq 0$,
 %\alain{sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients: prendre $\beta_j=-\alpha_j$}
 \end{enumerate}
 c'est donc dans \alain{co-NP-complet et pas nécessairement dans NP-complet}.
-\end{proof}
 
 %%%%%%%%
 \alain{je reformule avec les combinaisons linéaires explicitées}\\
 
-Donnée : un ensemble fini de $n$ vecteurs $A=\{\vect{a_1}, \vect{a_1},...\vect{a_n}\} \subseteq \Z^d$ et $M_A$ la matrice associée.
+\fi
+
+Donnée : un ensemble fini de $n$ vecteurs $\lambda(A)=\{\vect{a_1}, \vect{a_1},...\vect{a_n}\} \subseteq \Z^d$ et $M_A$ la matrice associée.
 %	(les étiquettes des actions de $S = (A,\lambda)$).
 
 Question : Existe-t-il $2n$ entiers positifs $x_1,x_2,...,x_n, y_1,y_2,...,y_n $
@@ -1008,118 +1146,25 @@ $\Sigma_{i=1}^n y_i \vect{a_i}(j) \geq \vect{0}$,
 %\alain{sauf sur un indice i (qui existe) où u(i)>0 et alors on pose v(i)=-u(i), vérifier que c'est possible en jouant sur les coefficients: prendre $\beta_j=-\alpha_j$}
 \end{enumerate}
 
-\alain{1 revient à tester d fois si $M_Ax\geq b$ avec $M_A$ la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
+%\alain{1 revient à tester d fois si $M_Ax\geq b$ avec $M_A$ la matrice du VAS et b=(1,0,...0), b=(0,1,...0), b=(0,0...1)}
 
-Le théorème précédent montre que décider la non rationalité structurelle revient à décider la satisfaisabilité d'une formule de Presburger avec uniquement des quantificateurs existentiels. Dans ce cas, on sait que le problème est dans NP, donc la non rationalité structurelle est dans co-NP. \alain{reduire 3-SAT à RAT structurelle}
+Le théorème précédent montre que décider la non-rationalité structurelle revient à décider la satisfaisabilité d'une formule de Presburger avec uniquement des quantificateurs existentiels. Dans ce cas, on sait que le problème est dans NP, donc la rationalité structurelle est dans co-NP.
+%\alain{reduire 3-SAT à RAT structurelle}
 
-\section{Rationnalité sur des $\omega$-configurations (Brouillon)}
-\alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
-%\textbf{Méthode de Valk et Vidal-Naquet :}
-
-%On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
-%Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
-%L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
-
-
-
-
-\begin{Theorem}[\cite{vavn81} théorème 4]
-Soit $S$ un VAS.
-Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
-%non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
-\begin{enumerate}
-    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$ (c'est-à-dire $\omega$-accessible depuis $\xinit$ et il n'existe pas de configuration $\omega$-accessible plus grande dans $\Nomega^d$),
-    \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
-    obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
-\end{enumerate}
-\end{Theorem}
-
-\begin{Theorem}[\cite{vavn81} lemme 3]
-Soit $S$ un VAS.
-Alors $\lang(S)$ n'est pas rationnel si et seulement si
-il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
-tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
-\end{Theorem}
-
-%---------------------
-
-\lucas{Un théorème permettant de parler de la rationalité des $\omega$-configuration :}
-
-\begin{Definition}
-Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration} et $v\in A^*$.
-On dit que $v$ est \emph{cyclable} à partir de $\vect{x}$ lorsque $v$ est franchissable à partir de $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
-\end{Definition}
-
-\begin{Theorem}
-Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
-Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
-il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
-\begin{enumerate}
-    \item $\vect{y}$ est $\omega$-accessible depuis $\vect{x}$ dans $S$,
-    \item $v$ est cyclable à partir de $\vect{y}$,
-    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
-\end{enumerate}
-\end{Theorem}
-
-
-Si un mot est cyclable à partir de x, il l'est à partir de y>x.   une $\omega$-configuration plus grande.
-On peut donc exiger que $\vect{y}$ soit maximal (donc dans Clover).
-
-\lucas{Possible définition :}
-$\vect{x}$ $\omega$-configuration \emph{générable} s'il existe une mot $u\in A^*$ cyclable à partir de $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
-
-%\begin{Theorem} % FAUX !!!
-%Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
-%$\vect{y}$ est générable en dessous de $\vect{x}$ 
-%ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
-%\begin{enumerate}
-%    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
-%    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
-%    \item $\vect{x'} \trans{}{S} \vect{y'}$
-%    \item $u$ est cyclable à partir de $\vect{y}$
-%    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
-%\end{enumerate}
-%\end{Theorem}
-
-\begin{Theorem}
-\lucas{FAUX?}
-Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
-$S$ est rationnel en partant d'une configuration de $\downarrow \vect{x}$ (ce qui se note $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$)
-ssi il existe deux mots $u,v \in A^*$ vérifiant
-\begin{enumerate}
-    \item $\valeur{u} \geq \vect{0}$,
-    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
-    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
-    \item Il existe $\vect{y}\in\Nomega$ tel que $\vect{y}$ est $\omega$-franchissable depuis $\vect{x}$ et $u$ est franchissable sur $\vect{y}$.
-\end{enumerate}
-
-\lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
-\end{Theorem}
-
-Pistes de réflexion pour trouver un théorème de ce genre :
-
-\begin{enumerate}
-    \item On peut adapter la preuve de la rationalité classique (théorème \ref{caractérisation}, et preuve de Vidal-Naquet).
-    Nécessite de s'appuyer soit sur le graphe de couverture (fini), soit sur Clover.
-    Mais ces deux notions ne sont pas définis de manière satisfaisante lorsque la configuration initiale peut varier (dans $\downarrow \vect{x}$, certaines coordonnées peuvent être choisies arbitrairement).
-    \item On ne peut ignorer ces coordonnées, car arbitraire ne veut pas dire infini : il est toujours nécessaire de vérifier si besoin que l'on peut faire croître ces coordonnées infiniment.
-    \item On peut s'inspirer de la preuve de rationalité structurelle (comme le fait le théorème ci-dessus), mais certaines choses deviennent aussi impossible, comme d'intervertir des actions (même résultat final, mais peut entraver le franchissement).
-    \item Une première idée est de mélanger les deux preuves, en distinguant les coordonnées finies et infinies de $\vect{x}$.
-    \item Une autre idée consiste à modifier le VAS pour se ramener à un problème de rationalité de VAS classique.
-    Pour gérer les omegas dans $\vect{x}$, on peut par exemple dupliquer les coordonnées associées pour simuler (dans un graphe fini comme pour le graphe de couverture) une coordonnée initialisé à 0 qui peut valoir des coordonnées négatives.
-\end{enumerate}
+\end{proof}
 
 %==================================================
 
-\section{Calcul des configurations maximales rationnelles}
-\alain{on fait plus puisqu'on calcule les éléments minimaux pour lesquels le VAS n'est pas rationnel}
+\section{Configurations maximales rationnelles}
+%\alain{on fait plus puisqu'on calcule les éléments minimaux pour lesquels le VAS n'est pas rationnel}
+
+\subsection{Monotonie de la rationalité}
 
 \begin{Definition}
 Pour un VAS $S$, une configuration $\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} si $\lang(S,\vect{x})$ est rationnel.
 \end{Definition}
 
-Nous allons considérer l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{ est rationnel }}$ et son complémentaire, l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{n'est pas rationnel}}$. 
+Nous allons considérer l'ensemble des configurations $\vect{x}$ pour lesquelles ${\lang(S,\vect{x}) \text{ est rationnel }}$ et son complémentaire, l'ensemble des configurations $\vect{x}$ pour lesquelles $\lang(S,\vect{x}) $ n'est pas rationnel. 
 %	Comme  ainsi que l'ensemble de ses éléments minimaux.
 %
 	Dans cette partie, le comportement d'un VAS est donc étudié à partir de l'ensemble de ses configurations initiales possibles c'est-à-dire pour tout les $\vect{x} \in \N^d$.
@@ -1134,12 +1179,12 @@ Rappelons que nous notons $\overline{\inirat(S)}
 Montrons que si $\lang(S,\vect{x})$ n'est pas rationnel alors $\lang(S,\vect{x'})$ n'est pas rationnel pour tout $\vect{x'} \geq \vect{x}$ ce qui revient à dire que la propriété de non-rationalité est monotone.
 %\xout{selon les configurations initiales choisies.}
 
-\begin{Proposition}\label{monotonie_rationnel}
+\begin{Theorem}\label{monotonie_rationnel}
 Pour tout VAS $S = (A,\lambda)$, on a
 %	l'ensemble $\overline{\inirat(S)}$ est clos par le haut 
  $\overline{\inirat(S)} = \uparrow \Min(\overline{\inirat(S)})$ 
 %	où $\Min(\overline{\inirat(S)})$ %	est l'ensemble fini des éléments minimaux de $\overline{\inirat(S)}$.
-\end{Proposition}
+\end{Theorem}
 
 %\alain{peut-on déduire que $\set{\vect{x}}{\lang(S,\vect{x}) \text{ est  rationnel}}$ est clos par le bas ?}
 %\lucas{Oui, c'est le complémentaire.}
@@ -1159,16 +1204,20 @@ L'ensemble $\Min(\overline{\inirat(S)})$ est fini car $\leq$ est un bel-ordre su
 \end{proof}
 
 \begin{Remark}
-On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$ est clos par le bas. Nous allons calculer une représentation finie de $\inirat(S)$ en calculant $\Min(\overline{\inirat(S)})$ qui est une représentation finie de son complémentaire $\overline{\inirat(S)}$.
+On en déduit que $\inirat(S) = \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \text{ est rationnel}}$ est clos par le bas.
+%Nous allons calculer une représentation finie de $\inirat(S)$ en calculant $\Min(\overline{\inirat(S)})$ qui est une représentation finie de son complémentaire $\overline{\inirat(S)}$.
 \end{Remark}
 
-Montrons maintenant que l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
-On utilise pour cela sur un résultat de Valk \& Jantzen \cite{vaja85}.
+Il est alors naturel de se demander si l'ensemble fini $\Min(\overline{\inirat(S)})$ est calculable.
+Une piste explorée est issue d'un résultat de Valk \& Jantzen \cite{vaja85}.
 
-\begin{Theorem}[\cite{vaja85} théorème 2.14]
+\begin{Theorem}[\cite{vaja85} théorème 2.14]\label{thvaja}
 Soit $K \subseteq \N^d$ un ensemble clos par le haut.
 Alors $\Min(K)$ est calculable si et seulement si pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
 \end{Theorem}
+
+%********
+\iffalse
 
 \begin{Proposition}\label{minimaux}
 L'ensemble $\Min(\overline{\inirat(S)})$ est fini et calculable pour tout VAS $S$.
@@ -1211,13 +1260,137 @@ On utilise le fait qu'on peut passer d'une représentation finie d'un ensemble c
 
 Une conséquence de la section xxx permet de conclure que le problème est décidable puisque cela revient à calculer $\Min(\overline{\inirat(S)})$ et à décider si $\Min(\overline{\inirat(S)})=\vide$.
 
+\fi
+
+
 \begin{Remark}
 Pour tout VAS $S$, nous avons donc découpé l'ensemble $\N^d$ des configurations initiales en deux sous-ensembles disjoints, $\inirat(S)$ et son complémentaire $\overline{\inirat(S)}$, tels que $\inirat(S)$ est clos par le bas (et $\overline{\inirat(S)}$ est clos par le haut).
-Quelle est la complexité du calcul de $\Min(\overline{\inirat(S)})$ ? L'algorithme proposé demande de calculer $\clover(S)$ donc la complexité de l'algorithme est Ackermann. Ceci ne veut pas dire qu'on ne puisse pas faire mieux. 
+%Quelle est la complexité du calcul de $\Min(\overline{\inirat(S)})$ ? L'algorithme proposé demande de calculer $\clover(S)$ donc la complexité de l'algorithme est Ackermann. Ceci ne veut pas dire qu'on ne puisse pas faire mieux. 
 \end{Remark}
+
+\subsection{Travail sur la rationalité des $\omega$-configurations}
+%\alain{dans le papier Valk 1977..., la rationalité est donnée comme plus tard dans Yoeli. 1980..}
+%\textbf{Méthode de Valk et Vidal-Naquet :}
+
+%On prouve d'abord la réciproque en construisant un automate fini reconnaissant $\lang(S)$.
+%Pour cela, on restreint simplement les états aux configurations de $\os{0,\dots,c}^d$ pour une certaine constante $c\in\N$ obtenue à partir de $k$.
+%L'autre sens est montré par l'absurde, en s'appuyant sur les circuits dans le graphe de couverture de $S$.
+
+
+L'objectif est de calculer $\Min(\overline{\inirat(S)})$.
+On s'appuie pour cela sur le théorème \ref{thvaja}, en réduisant le calcul au problème suivant :
+
+\begin{itemize}
+	\item[$\bullet$] Donnée : un VAS $S=(A,\lambda)$ et une $\omega$-configuration $\vect{x}\in\Nomega^d$ ;
+	\item[$\bullet$] Question : $S$ admet une configuration rationnelle dans $\downarrow \vect{x}$.
+\end{itemize}
+
+\noindent Il nous faut donc des outils pour traiter la rationalité des $\omega$- configurations.
+
+\iffalse %%%%%
+
+\begin{Theorem}[\cite{vavn81} théorème 4]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe une $\omega$-configuration $\vect{y} \in \Nomega^d$ tel que
+%non-borné sur les coordonnées de $J = \set{i\in I}{\mathfrak{m}(i)=\omega}$ tel que
+\begin{enumerate}
+    \item $\vect{y}$ est $\omega$-accessible maximal dans $S$ (c'est-à-dire $\omega$-accessible depuis $\xinit$ et il n'existe pas de configuration $\omega$-accessible plus grande dans $\Nomega^d$),
+    \item $\Jinf{\vect{y}}$ n'est pas borné inférieurement pour la configuration $\vect{y'}\in\N^d$, 
+    obtenue en posant $\vect{y'}(i) = 0$ si $i\in \Jinf{\vect{y}}$ et $\vect{y'}(i) = \mathfrak{i}$ si $i\in \Jfin{\vect{y}}$.
+\end{enumerate}
+\end{Theorem}
+
+\begin{Theorem}[\cite{vavn81} lemme 3]
+Soit $S$ un VAS.
+Alors $\lang(S)$ n'est pas rationnel si et seulement si
+il existe un circuit étiqueté par $v\in A^*$ dans le graphe de couverture partant d'une $\omega$-configuration $\omega$-accessible maximale $\vect{y}$, 
+tel que $\valeur{v}(i) < 0$ pour une coordonnée $i\in \Jinf{\vect{y}}$.
+\end{Theorem}
+
+\fi
+
+%---------------------
+
+%\lucas{Un théorème permettant de parler de la rationalité des $\omega$-configuration :}
+
+\begin{Definition}
+Soient $S = (A,\lambda)$ un VAS, $\vect{x}\in\Nomega^d$ une $\omega$-configuration et $v\in A^*$.
+On dit que $v$ est \emph{cyclable} à partir de $\vect{x}$ lorsque $v$ est franchissable à partir de $\vect{x}$, et qu'il permet d'accéder à la même $\omega$-configuration $\vect{x}$ (i.e. $\vect{x} \trans{v}{S} \vect{x}$).
+\end{Definition}
+
+\begin{Theorem}
+Soit $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ une $\omega$-configuration.
+Alors $\lang(S,\vect{x})$ n'est pas rationnel si et seulement si
+il existe une $\omega$-configuration $\vect{y}\in\Nomega^d$ et un mot $v\in A^*$ tels que
+\begin{enumerate}
+    \item $\vect{y}$ est $\omega$-accessible depuis $\vect{x}$ dans $S$,
+    \item $v$ est cyclable à partir de $\vect{y}$,
+    \item $\valeur{v} \not\geq \vect{0}$ (i.e. il existe un $i\in I$ tel que $\valeur{v}(i)<0$).
+\end{enumerate}
+\end{Theorem}
+
+La preuve de ce théorème est similaire à la preuve du lemme 3 de Valk et Vidal-Naquet \cite{vavn81}.
+Elle n'est pas détaillée ici comme le théorème n'a pas permis de conclure notre problème.
+C'est une façon parmi plusieurs de caractériser la rationalité des $\omega$-configurations qui semble intéressante.
+
+
+Par ailleurs, notons que si un mot est cyclable à partir de $\vect{x}$, il l'est à partir de $\vect{y}>\vect{x}$ une $\omega$-configuration plus grande.
+On peut donc exiger que $\vect{y}$ soit maximal (donc dans $\clover$).
+
+\iffalse
+
+\lucas{Possible définition :}
+$\vect{x}$ $\omega$-configuration \emph{générable} s'il existe une mot $u\in A^*$ cyclable à partir de $\vect{x}$ tel que $\valeur{u}(i) > 0$ pour tout $i\in J$ %J= truc infini
+
+%\begin{Theorem} % FAUX !!!
+%Soit $S = (A,\lambda)$ un VAS et $\vect{x},\vect{y}\in\Nomega^d$ deux $\omega$-configurations.
+%$\vect{y}$ est générable en dessous de $\vect{x}$ 
+%ssi il existe deux configurations finies $\vect{x'},\vect{y'}\in\N^d$ et un mot $u\in A^*$ tels que
+%\begin{enumerate}
+%    \item $\vect{x'} \in\; \downarrow\vect{x}$ ($\vect{x'}$ est dans l'idéal représenté par $\vect{x}$)
+%    \item $\vect{y'} \eqfin \vect{y}$ (égalité des coordonnées finies)
+%    \item $\vect{x'} \trans{}{S} \vect{y'}$
+%    \item $u$ est cyclable à partir de $\vect{y}$
+%    \item $\valeur{u}(i) > 0$ pour tout $i\in \Jinf{\vect{x}}$
+%\end{enumerate}
+%\end{Theorem}
+
+\begin{Theorem}
+\lucas{FAUX?}
+Soient $S = (A,\lambda)$ un VAS et $\vect{x}\in\Nomega^d$ \xout{une $\omega$-configuration}.
+$S$ est rationnel en partant d'une configuration de $\downarrow \vect{x}$ (ce qui se note $\downarrow \vect{x} \inter \overline{\inirat(S)} \neq \vide$)
+ssi il existe deux mots $u,v \in A^*$ vérifiant
+\begin{enumerate}
+    \item $\valeur{u} \geq \vect{0}$,
+    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
+    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$,
+    \item Il existe $\vect{y}\in\Nomega$ tel que $\vect{y}$ est $\omega$-franchissable depuis $\vect{x}$ et $u$ est franchissable sur $\vect{y}$.
+\end{enumerate}
+
+\lucas{On se restreint aux coordonnées de $\Jfin{\vect{x}}$ et on demande à surpasser la configuration obtenue en prenant la valeur minimale pour chaque coordonnée franchissant $u$.}
+\end{Theorem}
+
+\fi
+
+\vspace{3mm}
+Quelques pistes de réflexion :
+%pour trouver un théorème de ce genre :
+
+\begin{enumerate}
+    \item On peut adapter la preuve de la rationalité classique (théorème \ref{caractérisation}, et preuve de Vidal-Naquet).
+    Nécessite de s'appuyer soit sur le graphe de Karp-Miller (fini), soit sur l'ensemble $\clover$.
+    Mais ces deux notions ne sont pas définis de manière satisfaisante lorsque la configuration initiale peut varier (dans $\downarrow \vect{x}$, certaines coordonnées peuvent être choisies arbitrairement).
+    \item On ne peut ignorer les coordonnées valant $\omega$ dans $\vect{x}$ comme on le faisait pour la rationalité structurelle, car arbitraire ne veut pas dire infini : il est toujours nécessaire de vérifier si besoin que l'on peut faire croître ces coordonnées infiniment.
+    \item On peut s'inspirer de la preuve de rationalité structurelle (comme le fait le théorème ci-dessus), mais certaines choses deviennent aussi impossible, comme d'intervertir des actions (même résultat final, mais peut entraver le franchissement).
+    \item Une idée partiellement explorée est de mélanger les deux preuves (de rationalité classique et structurelle), en distinguant les coordonnées finies et infinies de $\vect{x}$.
+    \item Une autre idée consiste à modifier le VAS pour se ramener à un problème de rationalité de VAS classique.
+    Pour gérer les omegas dans $\vect{x}$, on peut par exemple dupliquer les coordonnées associées pour simuler (dans un graphe fini comme pour le graphe de couverture) une coordonnée initialisé à 0 qui peut valoir des coordonnées négatives.
+\end{enumerate}
 
 %----------------------------------------------------
 
+\iffalse
 \section{Commentaires}
 Vérifier qu'on peut énoncer Vidal-Naquet sur le graphe de couverture minimal défini par le graphe de Karp-Miller dans lequel on a gardé que les marquages maximaux.\\
 Vérifier que ce nouveau graphe peut être obtenu à partir de Clover en ajoutant les transitions possibles (prolongées par continuité sur $\N^d$). Vérifier qu'il ne manque pas de transitions utiles.
@@ -1236,7 +1409,12 @@ Programme:
 recherche jusqu'au 15 juin
 écriture article du 15 juin au 15 juillet \\
 
-\section{Conclusion et perspectives}
+\fi
+
+\section{Conclusion}
+
+\iffalse %%%
+
 que sait-on décider et à quel coût pour les regular VASS ?
 
 étudier le model checking pour  $CTL$  et $CTL^*$ des regular VASS.
@@ -1245,10 +1423,25 @@ que sait-on décider et à quel coût pour les regular VASS ?
 \item appliquer aux affine VAS et aux very-WSTS.
 \end{itemize}
 
+\fi %%%%%%%%
+
+Revisiter les preuves existantes de rationalité a permis d'explorer de nombreuses reformulation équivalentes au problème de rationalité.
+Notamment, le théorème \ref{caractérisation}, déjà présent chez Valk et Vidal-Naquet, a orienté nos recherches pour la rationalité structurelle, et reste très prometteur pour trouver les configurations rationnelles minimales.
+
+La monotonie de la rationalité exposé en partie 5 offre beaucoup de perspectives.
+D'abord cette hiérarchie peut permettre d'identifier plus facilement les configurations rationnelles - qui permettent, rappelons-le, de réduire la complexité des problèmes classiques (model-checking).
+Par ailleurs, tout comme la rationalité structurelle, cela permet d'avoir une vision globale du comportement du VAS, sans avoir à fixer une configuration initiale.
+
+\vspace{5mm}
+Pour conclure ce stage, je dirai que cela m'a permis de comprendre en profondeur les systèmes de transition rattachés aux VAS.
+Les problèmes liés à la rationalité dans des structures formelles sont au cœur des thèmes sur lesquels je me spécialise.
+Par conséquent, les méthodes de preuve utilisées me seront sans doute bénéfiques pour mes travaux de recherche futurs.
+Malheureusement, les conditions actuelles ont freiné mon insertion à une équipe et ont rendu difficile la progression du travail de recherche.
+
 \section{Appendix}
 
 
-\subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini, Counter-example for Lemme 2 dans \cite{giyo80}}
+\subsection{La relation d'équivalence de Ginzburg et Yoeli n'est pas d'index fini}
 
 Ginzburg et Yoeli introduisent dans \cite{giyo80} une relation d'équivalence $\relGY$ sur les configurations et énoncent que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence dans $\reach(S)$ (\cite{giyo80}, Théorème 1).
 
@@ -1260,10 +1453,11 @@ mais en définissant une autre relation d'équivalence pour laquelle on obtiendr
 Soit $S=(A,\lambda,\xinit)$ un VAS. La relation $\relGY$ est définie pour tout $\vect{x},\vect{y} \in\reach(S)$ par : 
 $$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$$
 \end{Definition}
-\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
+%\alain{ça donne quoi si on définit $\relGY$ sur tout $\N^d$ ? Une classe de plus seulement ? Une infinité ?}
 
 \begin{Remark}
 $\relGY$ est une relation d'équivalence sur l'ensemble $\reach(S)$ des configurations accessibles.
+Il n'est pas intéressant de la prolonger à $\N^d$, cela ne rajoute qu'une seule classe d'équivalence, sans autre information pour distinguer les configurations inaccessibles.
 \end{Remark}
 
 On aurait envie d'obtenir un résultat similaire à celui de Nérode, à savoir dire que $\lang(S)$ est rationnel si et seulement si $\relGY$ admet un nombre fini de classes d'équivalence.
@@ -1271,10 +1465,17 @@ Cela est malheureusement faux, puisque pour $\vect{x}\in\reach(S)$ et $w\in A^\a
 Il pourrait en effet exister une autre séquence $w'\in A^\ast$ franchissable à partir de $\vect{x}$ aboutissant à la configuration $\vect{x} +\valeur{w'} = \vect{x} +\valeur{w}$,
 voire même un moyen d'accéder à la configuration $\vect{x} +\valeur{w} = \xinit +\valeur{u}$ depuis la configuration initiale par une autre séquence d'action $u\in A^\ast$ sans que $\xinit +\valeur{u}$ ne soit accessible depuis $\vect{x}$.
 
-\alain{énoncer le lemma faux de Yoeli et expliquer et donner le contre-exemple}
-Plus précisément sur la preuve de \alain{non l'énoncé } de Ginzburg et Yoeli, 
+%\alain{énoncer le lemma faux de Yoeli et expliquer et donner le contre-exemple}
+
+\begin{Statement}[\cite{giyo80} théorème 1]
+Soit $S$ un VAS.
+Alors $\reach(S)/\relGY$ est fini si et seulement si $\lang(S)$ est rationnel
+\end{Statement}
+
+Cet énoncé est faux :
+%Plus précisément sur l'énoncé de Ginzburg et Yoeli, 
 avoir $\reach(S)/\relGY$ fini implique bien $\lang(S)$ rationnel, ce qui est prouvé en construisant explicitement l'automate.
-Par contre, la réciproque est fausse : 
+Par contre, la réciproque est fausse.
 L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) était d'affirmer que savoir $\xinit +\valeur{uw}\in\reach(S)$ pour $u\in\lang(S)$ et $w\in A^\ast$ permettait d'en déduire que $uw\in\lang(S)$.
 
 \vspace{5mm}
@@ -1282,19 +1483,19 @@ L'erreur (avant-dernière ligne de la preuve du théorème 1 de \cite{giyo80}) �
 On donne ci-dessous un contre-exemple pour illustrer ce point.
 Il est nécessaire de se placer au moins en dimension 3, car le résultat de Ginzburg et Yoeli reste vrai en dimension inférieure.
 
-\lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
+%\lucas{Ajouter preuve que le résultat reste vrai en dimension inférieure à 2.}
 
 \begin{Example}
 Soit le $3-$VAS $S = (A=\os{a,b,c}, \lambda, \xinit=(0,0,0))$ dont les actions sont étiquetés par $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
 Le langage reconnu $\lang(S)=a^\ast$ est rationnel, et les configurations accessibles sont les $\vect{x}_n=(n,0,0)$ pour $n\in\N$.
 
-Cependant, pour deux entiers $m>n>0$, bien que $\lang(S,\vect{x}_m) =\lang(S,\vect{x}_n) =\lang(S)$, on a $\vect{x}_m \not\relGY \vect{x}_n$ :
+Cependant, pour deux entiers $m>n>0$, bien qu'on ait $\lang(S,\vect{x}_m) =\lang(S,\vect{x}_n) =\lang(S)$, il apparaît que $\vect{x}_m \not\relGY \vect{x}_n$ :
 Cela se constate en considérant la séquence d'actions $b^{n+1}c^{n+1}$ qui n'est jamais franchissable, mais qui vérifie $\vect{x}_m +\valeur{b^{n+1}c^{n+1}} = (m-n-1,0,0)\in \reach(S)$ alors que $\vect{x}_n +\valeur{b^{n+1}c^{n+1}} = (-1,0,0)\notin \reach(S)$.
 
 La relation $\relGY$ admet alors une infinité de classes d'équivalences $(\os{\vect{x}_n})_{n\in\N}$ sur $S$.
 \end{Example}
 
-
+\iffalse
 \section{FSTTCS 2021}  
 41st IARCS Annual Conference on
 Foundations of Software Technology and Theoretical Computer Science
@@ -1305,6 +1506,8 @@ Foundations of Software Technology and Theoretical Computer Science
 deadline: unknown but usually 15-25 july, say {\bf 15 july}
 
 Submissions must be in electronic form via EasyChair using the LIPIcs LaTeX style file. Submissions must not exceed 12 pages (excluding bibliography), but may include a clearly marked appendix containing technical details. The appendix will be read only at the discretion of the program committee. Simultaneous submissions to journals or other conferences with published proceedings are disallowed. 
+
+\fi
 
 %==============================================
 
