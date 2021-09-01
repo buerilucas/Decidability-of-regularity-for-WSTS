@@ -137,7 +137,24 @@ $\lang(S)= a^\ast$ est rationnel, et $\reach(S)= \set{\vect{x}_n= (n,0,0)} {n\in
 
 
 \begin{frame}{Clover et le graphe de couverture}
+\begin{definition}[Arbre de Karp-Miller]
+Nœud racine $\xinit \in\N^d$.
+Pour chaque nœud $s$ étiqueté par $\vect{x}\in\Nomega^d$, si $\vect{x} \trans{a}{S} \vect{y}$, on crée une arête $a$ :
+\begin{itemize}
+    \item Si $s$ a un ancêtre $\vect{y}$, vers une nouvelle feuille $\vect{y}$ ;
+    \item Si $s$ a un ancêtre $\vect{z} > \vect{y}$, vers un nouveau nœud $\vect{y'}$
     
+    (on pose $\vect{y'}(i)= \omega$ si $\vect{y}(i)>\vect{z}(i)$, $\vect{y'}(i)= \vect{y}(i)$ sinon) ;
+    \item Sinon, vers un nouveau nœud $\vect{y}$.
+\end{itemize}
+\end{definition}
+
+\vspace{3mm}
+Clover est alors défini par
+\begin{itemize}
+    \item l'ensemble des feuilles de l'arbre de couverture ;
+    \item l'ensemble des idéaux maximaux de $\cover(S) \defeq \downarrow \reach(S,\xinit)$.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Une relation d'équivalence sur $\N^d$}
@@ -259,6 +276,31 @@ $\Min(\overline{\inirat(S)})$ est fini
 Si $\vect{h}\in\N^d$, on transporte le franchissement $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ en
 
 $\vect{x} +\vect{h} \trans{u}{S} \vect{y}_k +\vect{h} \trans{v}{S} \vect{z}_k +\vect{h}$.
+\end{frame}
+
+\begin{frame}{Calcul de $\inirat(S)$}
+\begin{theorem}
+Soit $K \subseteq \N^d$ clos par le haut.
+Alors $\Min(K)$ est calculable ssi
+
+pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \vect{x} \cap K \neq \vide)$ est décidable.
+\end{theorem}
+
+\vspace{3mm}
+Problème à résoudre alors
+\begin{itemize}
+	\item[$\bullet$] Donnée : un VAS $S$ et une $\omega$-configuration $\vect{x}\in\Nomega^d$ ;
+	\item[$\bullet$] Question : $S$ admet une configuration rationnelle dans $\downarrow \vect{x}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Pistes pour calculer $\Min(\overline{\inirat(S)})$}
+\begin{enumerate}
+    \item Redéfinir le graphe de Karp-Miller et Clover lorsque la configuration initiale varie ;
+    \item Mélanger la rationalité classique et structurelle en distinguant les coordonnées finies et infinies de $\vect{x}$ ;
+    \item Modifier le VAS pour se ramener à un problème de rationalité de VAS classique (et gérer autrement les omegas) ;
+    \item Complexifier la formule de Presburger (rationalité structurelle) pour gérer les actions ne pouvant être interverties.
+\end{enumerate}
 \end{frame}
 
 \end{document}
