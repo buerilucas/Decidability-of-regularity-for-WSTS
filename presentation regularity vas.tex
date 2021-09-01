@@ -1,0 +1,183 @@
+\documentclass[french]{beamer}
+\usepackage[utf8]{inputenc}
+
+\usepackage[T1]{fontenc}
+\usepackage{babel}
+
+\usepackage{xcolor}
+%\usepackage{enumitem}
+\usepackage{xspace}
+\usepackage{amsmath, amssymb}
+\usepackage{amsthm}
+%\usepackage{graphicx}
+
+%\usepackage{tikz} %to draw automata
+%\usetikzlibrary{automata, positioning, arrows}
+
+%\setbeamertemplate{footline}[frame number]
+\usetheme{Warsaw}
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+  \insertshorttitle\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+\beamertemplatenavigationsymbolsempty
+%\setbeamertemplate{footline}[frame number]
+
+\newcommand{\set}[2]{\left\{#1\mathrel{\left|\vphantom{#1}\vphantom{#2}\right.}#2\right\}}
+\newcommand{\os}[1]{\left\{\mathinner{#1}\right\}}
+\newcommand{\defeq}{\ensuremath{\stackrel{\textit{def}}{=}}}
+\newcommand{\eqfin}{\ensuremath{=_\text{fin}}}
+\let\union\cup
+\let\inter\cap
+\newcommand{\abs}[1]{\ensuremath{\displaystyle\left\lvert #1 \right\rvert}}
+\let\vide\varnothing
+\newcommand{\Min}{\textit{Min}}
+\newcommand{\Max}{\textit{Max}}
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Nomega}{\ensuremath{\mathbb{N}_\omega}}
+\newcommand{\indicatrice}[1]{\ensuremath{\mathds{1}_{#1}}}
+\newcommand{\card}[1]{|#1|}
+
+\newcommand{\petri}{réseau de Petri\xspace}
+\newcommand{\fire}[2]{\ensuremath{#1 (#2\rangle}}
+\newcommand{\lang}{\ensuremath{\mathcal{L}}}
+\newcommand{\reach}{\ensuremath{\textit{Reach}}}
+\newcommand{\cover}{\ensuremath{\mathcal{C}}}
+\newcommand{\clover}{\textit{Clover}\xspace}
+\newcommand{\trans}[2]{\ensuremath{\stackrel{#1}{\longrightarrow}_{#2}}}
+\newcommand{\transZ}[1]{\ensuremath{\stackrel{#1}{\rightsquigarrow}}}
+
+\newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
+%\newcommand{\action}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\rel}{\ensuremath{\equiv}}
+\newcommand{\relGY}{\ensuremath{\equiv^\text{GY}_S}}
+\newcommand{\ssi}{\ensuremath{\text{ ssi }}}
+\newcommand{\equivaut}{\ensuremath{\Leftrightarrow}}
+\newcommand{\xinit}{\ensuremath{\vect{x}_\text{init}}}
+\newcommand{\valeur}[1]{\ensuremath{\overline{#1}}}
+\newcommand{\inirat}{\mathcal{R}}
+\newcommand{\unite}[1]{\ensuremath{\vect{u}_{#1}}}
+
+\newcommand{\Jfin}[1]{J^\text{fin}_{#1}}
+\newcommand{\Jinf}[1]{J^\text{inf}_{#1}}
+
+\newtheorem{proposition}{Proposition}
+\newtheorem{syntax}{Syntax}
+\newtheorem{semantic}{Semantic}
+\newtheorem{summary}{Summary}
+
+\let\oldemph\emph
+\renewcommand{\emph}[1]{\oldemph{\color{blue}#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[Decidability of Regularity for VAS]{Décidabilité de la Rationalité pour les VAS}
+\author[Lucas Bueri - avec Alain Finkel (LMF)]{\textbf{Lucas Bueri}}
+\institute{\normalsize Stage de recherche de M2 - du 22 mars au 30 juillet 2021\\
+\vspace{10pt}
+avec Alain Finkel\\
+\textit{LMF, Université Paris-Saclay}}
+\date{\textit{MPRI} \\ Jeudi 2 septembre 2021}
+
+\begin{document}
+ \maketitle
+ 
+\begin{frame}
+\frametitle{L'environnement de recherche}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Système d'Addition de Vecteurs}
+\begin{definition}[Syntaxe]
+Un $d-$VAS $S=(A,\lambda)$ est composé
+\begin{itemize}
+    \item d'un alphabet fini $A$ d'actions,
+    \item d'un étiquetage $\lambda:A\to\Z^d$ injectif.
+    On notera $\valeur{a}=\lambda(a)$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Sémantique]
+Les \emph{configurations} de $S$ sont les vecteurs de $\N^d$.
+
+L'action $a\in A$ est \emph{franchissable} 
+à partir de $\vect{x}\in \N^d$ lorsque $\vect{x} + \valeur{a} \geq \vect{0}$.
+Son franchissement donne $\vect{x}\trans{a}{S} \vect{y} = \vect{x} + \valeur{a}$.
+\end{definition}
+\end{frame}
+
+\begin{frame}{Exemple d'un VAS}
+\begin{definition}[Langage]
+\begin{itemize}
+    \item 
+    $\lang(S,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ est le langage des séquences d'actions franchissables à partir de $\vect{x}$,
+    
+    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ est l'ensemble des configurations accessibles à partir de $\vect{x}$. 
+\end{itemize}
+\end{definition}
+
+\vspace{3mm}
+Exemple : 
+Soit $S = (\os{a,b,c}, \lambda, \xinit=(0,0,0))$ 
+
+%dont les actions sont étiquetés par 
+avec $\valeur{a}=(1,0,0)$, $\valeur{b}=(0,1,-1)$ et $\valeur{c}=(-1,-1,1)$.
+
+\vspace{3mm}
+$\lang(S)= a^\ast$ est rationnel, et $\reach(S)= \set{\vect{x}_n= (n,0,0)} {n\in\N}$.
+\end{frame}
+
+
+\begin{frame}{Clover et le graphe de couverture}
+    
+\end{frame}
+
+\begin{frame}{Une relation d'équivalence sur $\N^d$}
+\begin{definition}[Relation sur les configurations de $S$] 
+$\forall \vect{x},\vect{y}\in\N^d, \vect{x} \rel_S \vect{y} \ssi \lang(S,\vect{x}) = \lang(S,\vect{y})$
+\end{definition}
+
+\begin{definition}[Relation de Ginzburg et Yoeli] 
+$\vect{x}\relGY\vect{y} \ssi \forall w\in A^\ast, \big( \vect{x} +\valeur{w}\in\reach(S) \equivaut \vect{y} +\valeur{w}\in\reach(S) \big)$
+\end{definition}
+
+\begin{proposition}
+Si $\vect{x} \relGY \vect{y}$ alors $\vect{x} \rel_S \vect{y}$.
+Mais $\rel_S \not\subseteq \relGY$.
+\end{proposition}
+
+Contre-exemple : 
+si $m>n>0$, on a 
+\begin{itemize}
+    \item $\lang(S,\vect{x}_m) =\lang(S,\vect{x}_n) =\lang(S)$,
+    \item mais $\vect{x}_m \not\relGY \vect{x}_n$ (prendre $w= b^{n+1}c^{n+1}$).
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Caractérisation pour la rationalité}
+\begin{theorem}
+On a équivalence entre
+\begin{enumerate}
+    \item $\lang(S)$ est rationnel
+    \item $\reach(S)/\rel_S$ est fini
+    \item $\exists k\in\N, \forall \vect{x},\vect{y}\in\N^d, 
+\big( \xinit\trans{*}{S} \vect{x} \trans{*}{S} \vect{y}\implies
+\vect{y}\geq \vect{x} -\vect{k} \big)$
+\end{enumerate}
+\end{theorem}
+
+\vspace{3mm}
+Méthode de Valk et Vidal-Naquet : 
+chercher un circuit négatif du graphe de couverture
+
+Méthode corrigée de Ginzburg et Yoeli :
+se ramener au problème de bornitude d'un VAS pour chaque élément de Clover. 
+%en isolant les coordonnées infinies.
+\end{frame}
+
+\end{document}
