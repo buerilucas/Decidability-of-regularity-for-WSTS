@@ -62,10 +62,14 @@
 \newcommand{\Jfin}[1]{J^\text{fin}_{#1}}
 \newcommand{\Jinf}[1]{J^\text{inf}_{#1}}
 
+
+\newcommand{\alain}[1]{\textcolor{blue}{#1}}
+
 \newtheorem{proposition}{Proposition}
 \newtheorem{syntax}{Syntax}
 \newtheorem{semantic}{Semantic}
 \newtheorem{summary}{Summary}
+%\newtheorem{example}{Exemple}
 
 \let\oldemph\emph
 \renewcommand{\emph}[1]{\oldemph{\color{blue}#1}}
@@ -178,6 +182,83 @@ chercher un circuit négatif du graphe de couverture
 Méthode corrigée de Ginzburg et Yoeli :
 se ramener au problème de bornitude d'un VAS pour chaque élément de Clover. 
 %en isolant les coordonnées infinies.
+\end{frame}
+
+%************************************
+
+\begin{frame}{Rationalité structurelle}
+\begin{definition}
+$S$ est \emph{structurellement rationnel} ssi $\lang(S,\vect{x})$ est rationnel pour tout $\vect{x} \in \N^d$.
+\end{definition}
+
+\begin{theorem}
+$S=(A,\lambda)$ n'est pas structurellement rationnel ssi il existe $u,v\in A^*$ tels que 
+\begin{enumerate}
+    \item $\valeur{u} > \vect{0}$,
+    \item Pour tout $i \in I$, $\valeur{u}(i)=0$ implique $\valeur{v}(i) \geq 0$ ,
+    \item Il existe $i\in I$ tel que $\valeur{v}(i) < 0$.
+\end{enumerate}
+\end{theorem}
+    
+\end{frame}
+
+\begin{frame}{Preuve sur un exemple}
+\begin{theorem}[rappel]
+%$S=(A,\lambda)$ n'est pas structurellement rationnel ssi il existe $u,v\in A^*$ tels que 
+\begin{enumerate}
+    \item $\valeur{u} > \vect{0}$,
+    \item $\forall i \in I$, $\valeur{u}(i)=0 \implies \valeur{v}(i) \geq 0$ ,
+    \item $\exists i\in I, \valeur{v}(i) < 0$.
+\end{enumerate}
+\end{theorem}
+
+\begin{example}[pas structurellement rationnel]
+Pour tout $k\in\N$, $(0,0,1) \trans{a^k}{S} (k,0,1) \trans{(bc)^k}{S} (0,0,1)$.
+
+\vspace{2mm}
+Prendre $u=a$ et $v=bc$ dans le théorème.
+Dans le graphe de couverture :
+$(0,0,1) \trans{a}{S} (\omega,0,1) \trans{b}{S} (\omega,1,0) \trans{c}{S} (\omega,0,1)$
+avec $\valeur{bc}(1)= -1$
+\end{example}
+
+%Si $\forall k, \xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k$ avec $\valeur{v_k}(i) \leq -k$
+\end{frame}
+
+\begin{frame}{Complexité de la rationalité structurelle}
+\begin{theorem}
+Le  problème de la rationalité structurelle est dans co-NP pour les VAS.
+\end{theorem}
+
+On retrouve la satisfaisabilité d'un formule de Presburger :
+
+\vspace{3mm}
+Donnée : $n$ vecteurs $\lambda(A)=\{\vect{a_1}, \vect{a_1}, ..., \vect{a_n}\} \subseteq \Z^d$
+
+Question : Existe-t-il $x_1,x_2,...,x_n, y_1,y_2,...,y_n \in\N$ tels que
+\begin{enumerate}
+    \item $\Sigma_{i=1}^n x_i \vect{a_i} > \vect{0}$
+    \item Pour tout $j \in I$, $\Sigma_{i=1}^n x_i \vect{a_i}(j)=0$ implique $\Sigma_{i=1}^n y_i \vect{a_i}(j) \geq \vect{0}$,
+    \item  $\lnot(\Sigma_{i=1}^n y_i \vect{a_i}, \geq \vect{0})$.
+\end{enumerate}
+\end{frame}
+
+
+\begin{frame}{Configurations maximales rationnelles}
+\begin{definition}
+$\vect{x} \in \N^d$ est \emph{rationnelle pour $S$} ssi $\lang(S,\vect{x})$ est rationnel.
+
+$$\inirat(S) \defeq \set{\vect{x} \in \N^d} {\lang(S,\vect{x}) \in Rat}$$
+\end{definition}
+
+\begin{theorem}
+$\overline{\inirat(S)}$ est clos par le haut et 
+$\Min(\overline{\inirat(S)})$ est fini
+\end{theorem}
+
+Si $\vect{h}\in\N^d$, on transporte le franchissement $\vect{x} \trans{u}{S} \vect{y}_k \trans{v}{S} \vect{z}_k$ en
+
+$\vect{x} +\vect{h} \trans{u}{S} \vect{y}_k +\vect{h} \trans{v}{S} \vect{z}_k +\vect{h}$.
 \end{frame}
 
 \end{document}
