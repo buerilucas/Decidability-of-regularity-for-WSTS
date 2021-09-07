@@ -68,7 +68,8 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{syntax}{Syntax}
 \newtheorem{semantic}{Semantic}
-\newtheorem{summary}{Summary}
+\newtheorem{summary}{Contributions}
+%\newtheorem{corollary}{Corollaire}
 %\newtheorem{example}{Exemple}
 
 \let\oldemph\emph
@@ -87,9 +88,25 @@ avec Alain Finkel\\
 \begin{document}
  \maketitle
  
-\begin{frame}
-\frametitle{L'environnement de recherche}
+%\begin{frame}
+%\frametitle{L'environnement de recherche}
+%\end{frame}
 
+\begin{frame}{Contexte}
+    Avantages des VAS rationnels :
+    \begin{itemize}
+        \item Construction d'un \emph{automate fini équivalent} (taille au plus Ackermann)
+        \item Ensemble des configurations \emph{semi-linéaire}
+        \item Plusieurs problèmes deviennent \emph{décidables} (inclusion des langages / des ensembles d'accessibilité)
+        \item Diminue la \emph{complexité} de certains problèmes (model-checking)
+    \end{itemize}
+    
+    \vspace{3mm}
+    Problème de la rationalité du \emph{langage des traces} :
+    \begin{itemize}
+        \item Prouvé \emph{décidable} dès 1977 par Valk et Vidal-Naquet, puis Ginzburg et Yoeli.
+        \item Prouvé \emph{EXPSPACE-complet} par Blockelet et Schmitz, puis Demri
+    \end{itemize}
 \end{frame}
 
 
@@ -99,7 +116,7 @@ avec Alain Finkel\\
 \begin{definition}[Syntaxe]
 Un $d-$VAS $S=(A,\lambda)$ est composé
 \begin{itemize}
-    \item d'un alphabet fini $A$ d'actions,
+    \item d'un alphabet fini $A$ d'\emph{actions},
     \item d'un étiquetage $\lambda:A\to\Z^d$ injectif.
     On notera $\valeur{a}=\lambda(a)$.
 \end{itemize}
@@ -118,9 +135,9 @@ Son franchissement donne $\vect{x}\trans{a}{S} \vect{y} = \vect{x} + \valeur{a}$
 \begin{definition}[Langage]
 \begin{itemize}
     \item 
-    $\lang(S,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ est le langage des séquences d'actions franchissables à partir de $\vect{x}$,
+    $\lang(S,\vect{x})\defeq \set{w\in A^\ast} {\exists \vect{y}\in\N^d, \vect{x}\trans{w}{S}\vect{y}}$ est le \emph{langage} des séquences d'actions franchissables à partir de $\vect{x}$,
     
-    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ est l'ensemble des configurations accessibles à partir de $\vect{x}$. 
+    \item $\reach(S,\vect{x})\defeq \set{\vect{y}\in\N^d} {\exists w\in A^\ast, \vect{x}\trans{w}{S} \vect{y}}$ est l'ensemble des \emph{configurations accessibles} à partir de $\vect{x}$. 
 \end{itemize}
 \end{definition}
 
@@ -150,7 +167,7 @@ Pour chaque nœud $s$ étiqueté par $\vect{x}\in\Nomega^d$, si $\vect{x} \trans
 \end{definition}
 
 \vspace{3mm}
-Clover est alors défini par
+\emph{Clover} est alors défini par
 \begin{itemize}
     \item l'ensemble des feuilles de l'arbre de couverture ;
     \item l'ensemble des idéaux maximaux de $\cover(S) \defeq \downarrow \reach(S,\xinit)$.
@@ -192,23 +209,47 @@ On a équivalence entre
 \end{enumerate}
 \end{theorem}
 
-\vspace{3mm}
+\vspace{5mm}
 Méthode de Valk et Vidal-Naquet : 
-chercher un circuit négatif du graphe de couverture
+chercher un \emph{circuit négatif} du graphe de couverture
 
 Méthode corrigée de Ginzburg et Yoeli :
-se ramener au problème de bornitude d'un VAS pour chaque élément de Clover. 
+se ramener au problème de \emph{bornitude} d'un VAS pour chaque élément de Clover. 
 %en isolant les coordonnées infinies.
+\end{frame}
+
+\begin{frame}{Preuve de la caractérisation}
+
+\begin{corollary}
+$S$ est non-rationnel ssi $\exists i\in I, \forall k\in\N, \exists \; \xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k \land v_k(i) \leq -k$.
+\end{corollary}
+
+\vspace{5mm}
+On divise $v_k$ pour avoir $q_0(i) > q_1(i) > \dots > q_\ell(i) \in\N^d$ tels que $\vect{x_k} = q_0 \trans{*}{S} q_1 \trans{*}{S} \cdots \trans{*}{S} q_\ell = \vect{y_k}$.
+
+\vspace{3mm}
+%Plus $k$ est grand, 
+Si $\reach(S)/\rel_S$ est fini : \hspace{5mm}
+$k$ grand fournit $q_\alpha \rel_S q_\beta$.
+
+On prend $q_\alpha \trans{v}{S} q_\beta$ et
+on répète $v$ pour épuiser la coordonnée $i$.
+%donnant $\valeur{v}(\Jfin{x_k}) =\vect{0}$
 \end{frame}
 
 %************************************
 
 \begin{frame}{Rationalité structurelle}
+\begin{corollary}[Rappel]
+$\lang(S,\xinit) \notin Rat$ ssi
+$\exists i\in I, \forall k\in\N, \exists \; \xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k \land v_k(i) \leq -k$.
+\end{corollary}
+
 \begin{definition}
 $S$ est \emph{structurellement rationnel} ssi $\lang(S,\vect{x})$ est rationnel pour tout $\vect{x} \in \N^d$.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}[inspiré de Vidal-Naquet]
 $S=(A,\lambda)$ n'est pas structurellement rationnel ssi il existe $u,v\in A^*$ tels que 
 \begin{enumerate}
     \item $\valeur{u} > \vect{0}$,
@@ -217,6 +258,30 @@ $S=(A,\lambda)$ n'est pas structurellement rationnel ssi il existe $u,v\in A^*$ 
 \end{enumerate}
 \end{theorem}
     
+\end{frame}
+
+\begin{frame}{Preuve avec le graphe de couverture}
+    Si pour $\xinit$ initial, on a
+    $$\forall k\in\N, \exists \; \xinit \trans{u_k}{S} \vect{x}_k \trans{v_k}{S} \vect{y}_k \land v_k(i) \leq -k$$
+    
+    Pour les brins $\vect{z} \trans{w}{G} \vect{z'}$ ajoutant des $\omega$ en lisant $u_k$, on a
+%    \begin{itemize}
+%        \item $\valeur{w}(\Jfin{z'})=\vect{0}$
+%        \item $\valeur{w}(\Jfin{z}\inter \Jinf{z'})\geq \vect{1}$
+%        \item $\valeur{w}(\Jinf{z})$ quelconque
+%    \end{itemize}
+$$\valeur{w}(\Jfin{z'})=\vect{0} \hspace{10mm}
+\valeur{w}(\Jfin{z}\inter \Jinf{z'})\geq \vect{1} \hspace{10mm}
+\valeur{w}(\Jinf{z}) \text{ quelconque}$$
+
+On les combinent pour avoir $u$ vérifiant $\valeur{u}(\Jfin{\vect{x_k}}) =\vect{0}$ et $\valeur{u}(\Jinf{\vect{x_k}}) \geq\vect{1}$.
+
+\vspace{8mm}
+On divise $v_k$ pour avoir $q_0(i) > q_1(i) > \dots > q_\ell(i) \in\Nomega^d$ tels que $\vect{x_k} = q_0 \trans{*}{G} q_1 \trans{*}{G} \cdots \trans{*}{G} q_\ell = \vect{y_k}$.
+
+\vspace{3mm}
+$k$ grand fournit $q_\alpha = q_\beta$, on prend $q_\alpha \trans{v}{G} q_\beta$ donnant $\valeur{v}(\Jfin{x_k}) =\vect{0}$
+
 \end{frame}
 
 \begin{frame}{Preuve sur un exemple}
@@ -247,7 +312,7 @@ avec $\valeur{bc}(1)= -1$
 Le  problème de la rationalité structurelle est dans co-NP pour les VAS.
 \end{theorem}
 
-On retrouve la satisfaisabilité d'un formule de Presburger :
+On retrouve la satisfaisabilité d'une \emph{formule de Presburger} :
 
 \vspace{3mm}
 Donnée : $n$ vecteurs $\lambda(A)=\{\vect{a_1}, \vect{a_1}, ..., \vect{a_n}\} \subseteq \Z^d$
@@ -279,7 +344,7 @@ $\vect{x} +\vect{h} \trans{u}{S} \vect{y}_k +\vect{h} \trans{v}{S} \vect{z}_k +\
 \end{frame}
 
 \begin{frame}{Calcul de $\inirat(S)$}
-\begin{theorem}
+\begin{theorem}[Valk et Jantzen - 1985]
 Soit $K \subseteq \N^d$ clos par le haut.
 Alors $\Min(K)$ est calculable ssi
 
@@ -290,7 +355,7 @@ pour tout $\vect{x} \in \Nomega^d$, le prédicat $p_K(\vect{x}) = (\downarrow \v
 Problème à résoudre alors
 \begin{itemize}
 	\item[$\bullet$] Donnée : un VAS $S$ et une $\omega$-configuration $\vect{x}\in\Nomega^d$ ;
-	\item[$\bullet$] Question : $S$ admet une configuration rationnelle dans $\downarrow \vect{x}$.
+	\item[$\bullet$] Question : $S$ admet une configuration non-rationnelle dans $\downarrow \vect{x}$.
 \end{itemize}
 \end{frame}
 
@@ -301,6 +366,35 @@ Problème à résoudre alors
     \item Modifier le VAS pour se ramener à un problème de rationalité de VAS classique (et gérer autrement les omegas) ;
     \item Complexifier la formule de Presburger (rationalité structurelle) pour gérer les actions ne pouvant être interverties.
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{Conclusion et références}
+
+\begin{summary}
+\begin{enumerate}
+    \item Caractérisation de la rationalité des VAS et correction de la preuve de Ginzburg et Yoeli
+    \item Preuve de décision pour la rationalité structurelle des VAS
+    \item Résultats pour structurer les configurations rationnelles, et pistes pour trouver ces configurations
+\end{enumerate}
+\end{summary}
+
+\vspace{5mm}
+\footnotesize{
+\begin{itemize}
+    \item R. Valk et G. Vidal-Naquet.
+    Petri Nets and Regular Languages.
+    \textit{Journal of Computer and System Sciences}, 1981
+    
+    \item A. Ginzburg et M. Yoeli.
+	Vector addition systems and regular languages.
+	\textit{J. Comput. Syst. Sci.}, 1980
+	
+	\item R. Valk et M. Jantzen.
+	The Residue of Vector Sets with Applications to Decidability Problems in Petri Nets.
+    \textit{Acta Informatica}, 1985
+\end{itemize}
+}
+    
 \end{frame}
 
 \end{document}
